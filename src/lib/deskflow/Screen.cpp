@@ -467,4 +467,14 @@ std::vector<std::string> Screen::getDragFiles() const
   return m_screen->getDragFiles();
 }
 
+std::vector<std::string> Screen::getClipboardFiles()
+{
+  return m_screen->getClipboardFiles();
+}
+
+void Screen::setClipboardFile(const std::string &path)
+{
+  m_screen->setClipboardFile(path);
+}
+
 } // namespace deskflow

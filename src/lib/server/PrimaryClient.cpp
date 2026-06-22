@@ -216,6 +216,11 @@ std::vector<std::string> PrimaryClient::getDragFiles() const
   return m_screen->getDragFiles();
 }
 
+std::vector<std::string> PrimaryClient::getClipboardFiles()
+{
+  return m_screen->getClipboardFiles();
+}
+
 void PrimaryClient::secureInputNotification(const std::string &app) const
 {
   LOG_INFO("application \"%s\" is blocking the keyboard", app.c_str());

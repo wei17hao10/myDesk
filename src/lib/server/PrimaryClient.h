@@ -131,6 +131,7 @@ public:
 
   // Return files currently being dragged on this primary screen.
   std::vector<std::string> getDragFiles() const;
+  std::vector<std::string> getClipboardFiles();
   void secureInputNotification(const std::string &app) const override;
 
   deskflow::IStream *getStream() const override

@@ -235,6 +235,11 @@ void Client::setClipboard(ClipboardID id, const IClipboard *clipboard)
   m_sentClipboard[id] = false;
 }
 
+void Client::setClipboardFile(const std::string &path)
+{
+  m_screen->setClipboardFile(path);
+}
+
 void Client::grabClipboard(ClipboardID id)
 {
   m_screen->grabClipboard(id);

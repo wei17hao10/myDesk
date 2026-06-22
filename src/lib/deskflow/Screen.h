@@ -281,6 +281,8 @@ public:
 
   // Delegate to platform screen: return files currently being dragged.
   std::vector<std::string> getDragFiles() const;
+  std::vector<std::string> getClipboardFiles();
+  void setClipboardFile(const std::string &path);
 
 
 protected:

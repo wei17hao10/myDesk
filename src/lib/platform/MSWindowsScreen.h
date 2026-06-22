@@ -342,4 +342,6 @@ private:
 
 public:
   std::vector<std::string> getDragFiles() const override;
+  std::vector<std::string> getClipboardFiles() override;
+  void setClipboardFile(const std::string &path) override;
 };

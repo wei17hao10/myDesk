@@ -1765,3 +1765,58 @@ std::vector<std::string> MSWindowsScreen::getDragFiles() const
   }
   return {};
 }
+
+std::vector<std::string> MSWindowsScreen::getClipboardFiles()
+{
+  // Windows is only ever the client (secondary screen) in our setup,
+  // so file detection on Windows clipboard is not needed for now.
+  return {};
+}
+
+void MSWindowsScreen::setClipboardFile(const std::string &path)
+{
+  // Convert UTF-8 path to wide string.
+  int wlen = MultiByteToWideChar(CP_UTF8, 0, path.c_str(), -1, nullptr, 0);
+  if (wlen <= 0) {
+    LOG_WARN("setClipboardFile: failed to convert path to wide string");
+    return;
+  }
+  std::wstring wpath(wlen - 1, L'\0');
+  MultiByteToWideChar(CP_UTF8, 0, path.c_str(), -1, wpath.data(), wlen);
+
+  // Build a DROPFILES structure: header + double-null-terminated wide path list.
+  const size_t pathBytes = (wpath.size() + 2) * sizeof(wchar_t); // +2 for double null
+  const size_t totalSize = sizeof(DROPFILES) + pathBytes;
+
+  HGLOBAL hMem = GlobalAlloc(GMEM_MOVEABLE | GMEM_ZEROINIT, totalSize);
+  if (!hMem) {
+    LOG_ERR("setClipboardFile: GlobalAlloc failed");
+    return;
+  }
+
+  DROPFILES *pDrop = static_cast<DROPFILES *>(GlobalLock(hMem));
+  if (!pDrop) {
+    GlobalFree(hMem);
+    return;
+  }
+  pDrop->pFiles = sizeof(DROPFILES);
+  pDrop->fWide  = TRUE;
+  wchar_t *dest = reinterpret_cast<wchar_t *>(reinterpret_cast<BYTE *>(pDrop) + sizeof(DROPFILES));
+  std::copy(wpath.begin(), wpath.end(), dest);
+  dest[wpath.size()]     = L'\0';
+  dest[wpath.size() + 1] = L'\0'; // double-null terminator
+  GlobalUnlock(hMem);
+
+  if (!OpenClipboard(m_window)) {
+    GlobalFree(hMem);
+    LOG_ERR("setClipboardFile: OpenClipboard failed");
+    return;
+  }
+  EmptyClipboard();
+  if (!SetClipboardData(CF_HDROP, hMem)) {
+    LOG_ERR("setClipboardFile: SetClipboardData failed");
+    GlobalFree(hMem);
+  }
+  CloseClipboard();
+  LOG_INFO("file transfer: put '%s' into clipboard (CF_HDROP)", path.c_str());
+}

@@ -162,6 +162,16 @@ public:
     return {};
   }
 
+  // Return file paths that were copied to the clipboard (Cmd+C / Ctrl+C on files).
+  // Each call consumes the result — returns empty until the clipboard changes again.
+  virtual std::vector<std::string> getClipboardFiles()
+  {
+    return {};
+  }
+
+  // Place a received file into the local clipboard so the user can Ctrl+V it.
+  virtual void setClipboardFile(const std::string & /*path*/) {}
+
 protected:
   //! Handle system event
   /*!

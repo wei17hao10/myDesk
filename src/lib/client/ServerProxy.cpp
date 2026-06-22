@@ -929,5 +929,8 @@ void ServerProxy::saveReceivedFile(const std::string &filename, const std::strin
 
   LOG_INFO("file transfer: saved '%s' (%zu bytes)", qPrintable(targetPath), data.size());
 
+  // Put the received file into the local clipboard so the user can Ctrl+V it.
+  m_client->setClipboardFile(targetPath.toStdString());
+
   m_events->addEvent(Event(EventTypes::FileReceived, m_client, static_cast<void *>(nullptr)));
 }

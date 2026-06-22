@@ -1977,4 +1977,49 @@ std::vector<std::string> OSXScreen::getDragFiles() const
   return m_draggingFiles ? m_dragFiles : std::vector<std::string>{};
 }
 
+std::vector<std::string> OSXScreen::getClipboardFiles()
+{
+  @autoreleasepool {
+    NSPasteboard *pb = [NSPasteboard generalPasteboard];
+    NSInteger currentGeneration = [pb changeCount];
+
+    // Only transfer if the clipboard changed since the last transfer.
+    if (currentGeneration == m_lastClipboardTransferGeneration) {
+      return {};
+    }
+
+    NSArray *fileURLs = [pb readObjectsForClasses:@[ [NSURL class] ]
+                                          options:@{NSPasteboardURLReadingFileURLsOnlyKey : @YES}];
+    if (!fileURLs || [fileURLs count] == 0) {
+      return {};
+    }
+
+    std::vector<std::string> files;
+    for (NSURL *url in fileURLs) {
+      if ([url isFileURL]) {
+        files.push_back([[url path] UTF8String]);
+      }
+    }
+
+    if (!files.empty()) {
+      m_lastClipboardTransferGeneration = currentGeneration;
+      LOG_DEBUG("clipboard files detected: %zu file(s)", files.size());
+    }
+    return files;
+  }
+}
+
+void OSXScreen::setClipboardFile(const std::string &path)
+{
+  @autoreleasepool {
+    NSPasteboard *pb = [NSPasteboard generalPasteboard];
+    [pb clearContents];
+    NSURL *url = [NSURL fileURLWithPath:[NSString stringWithUTF8String:path.c_str()]];
+    [pb writeObjects:@[ url ]];
+    // Update generation so we don't re-send the file we just received.
+    m_lastClipboardTransferGeneration = [pb changeCount];
+    LOG_DEBUG("set clipboard to received file: %s", path.c_str());
+  }
+}
+
 #pragma GCC diagnostic error "-Wdeprecated-declarations"

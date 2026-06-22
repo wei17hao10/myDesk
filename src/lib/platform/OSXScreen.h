@@ -97,6 +97,8 @@ public:
   void waitForCarbonLoop() const;
 
   std::vector<std::string> getDragFiles() const override;
+  std::vector<std::string> getClipboardFiles() override;
+  void setClipboardFile(const std::string &path) override;
 
 protected:
   // IPlatformScreen overrides
@@ -271,6 +273,10 @@ private:
   // Drag detection: populated when the user is dragging files on this screen.
   bool m_draggingFiles = false;
   std::vector<std::string> m_dragFiles;
+
+  // Clipboard file detection: tracks NSPasteboard changeCount to avoid re-sending.
+  // NSInteger is 'long' on 64-bit macOS — use long to keep this header C++-compatible.
+  long m_lastClipboardTransferGeneration = -1;
 
   // window object that gets user input events when the server
   // has focus.
