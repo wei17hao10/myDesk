@@ -211,6 +211,11 @@ std::string PrimaryClient::getSecureInputApp() const
   return m_screen->getSecureInputApp();
 }
 
+std::vector<std::string> PrimaryClient::getDragFiles() const
+{
+  return m_screen->getDragFiles();
+}
+
 void PrimaryClient::secureInputNotification(const std::string &app) const
 {
   LOG_INFO("application \"%s\" is blocking the keyboard", app.c_str());

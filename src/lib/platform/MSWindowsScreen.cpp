@@ -8,6 +8,8 @@
 
 #include "platform/MSWindowsScreen.h"
 
+#include "platform/MSWindowsDropTarget.h"
+
 #include "arch/Arch.h"
 #include "arch/win32/ArchMiscWindows.h"
 #include "arch/win32/XArchWindows.h"
@@ -195,6 +197,19 @@ void MSWindowsScreen::enable()
 
     // watch jump zones
     m_hook.setMode(kHOOK_WATCH_JUMP_ZONE);
+
+    // Register COM drag-drop target for file drag detection.
+    if (m_window && !m_dropTarget) {
+      OleInitialize(nullptr);
+      m_dropTarget = new MSWindowsDropTarget();
+      if (FAILED(RegisterDragDrop(m_window, m_dropTarget))) {
+        LOG_WARN("failed to register drag-drop target");
+        m_dropTarget->Release();
+        m_dropTarget = nullptr;
+      } else {
+        LOG_DEBUG("registered drag-drop target on primary window");
+      }
+    }
   }
 }
 
@@ -212,6 +227,14 @@ void MSWindowsScreen::disable()
 
     // enable special key sequences on win95 family
     enableSpecialKeys(true);
+
+    // Unregister drag-drop target.
+    if (m_window && m_dropTarget) {
+      RevokeDragDrop(m_window);
+      m_dropTarget->Release();
+      m_dropTarget = nullptr;
+      OleUninitialize();
+    }
   }
 
   // tell key state
@@ -1733,4 +1756,12 @@ bool MSWindowsScreen::isModifierRepeat(KeyModifierMask oldState, KeyModifierMask
   }
 
   return result;
+}
+
+std::vector<std::string> MSWindowsScreen::getDragFiles() const
+{
+  if (m_dropTarget && m_dropTarget->hasPendingFiles()) {
+    return m_dropTarget->getPendingFiles();
+  }
+  return {};
 }

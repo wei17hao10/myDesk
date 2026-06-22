@@ -8,6 +8,7 @@
 
 #include "deskflow/ClipboardTypes.h"
 
+#include <string>
 #include <string_view>
 
 class IEventQueue;
@@ -19,4 +20,8 @@ public:
       const std::string_view &data, size_t size, ClipboardID id, uint32_t sequence, IEventQueue *events,
       void *eventTarget
   );
+
+  // Read filePath from disk and post FileSending events to eventTarget.
+  // eventTarget must be a ClientProxy1_5 (or subclass) that handles FileSending.
+  static void sendFile(const std::string &filePath, IEventQueue *events, void *eventTarget);
 };

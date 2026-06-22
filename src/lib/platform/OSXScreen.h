@@ -96,6 +96,8 @@ public:
 
   void waitForCarbonLoop() const;
 
+  std::vector<std::string> getDragFiles() const override;
+
 protected:
   // IPlatformScreen overrides
   void handleSystemEvent(const Event &e) override;
@@ -265,6 +267,10 @@ private:
 
   EventQueueTimer *m_axTimer;
   int m_axPermissionFailCount = 0;
+
+  // Drag detection: populated when the user is dragging files on this screen.
+  bool m_draggingFiles = false;
+  std::vector<std::string> m_dragFiles;
 
   // window object that gets user input events when the server
   // has focus.

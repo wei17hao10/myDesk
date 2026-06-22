@@ -462,4 +462,9 @@ std::string Screen::getSecureInputApp() const
   return m_screen->getSecureInputApp();
 }
 
+std::vector<std::string> Screen::getDragFiles() const
+{
+  return m_screen->getDragFiles();
+}
+
 } // namespace deskflow

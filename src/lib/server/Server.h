@@ -176,6 +176,11 @@ public:
     m_clientListener = p;
   }
 
+  void setEnableFileTransfer(bool enable)
+  {
+    m_enableFileTransfer = enable;
+  }
+
   //@}
   //! @name accessors
   //@{
@@ -222,6 +227,9 @@ private:
 
   // change the active screen
   void switchScreen(BaseClientProxy *, int32_t x, int32_t y, bool forScreenSaver);
+
+  // Initiate file transfer when the user drags files across the screen edge.
+  void initiateFileTransfer(BaseClientProxy *dst, const std::vector<std::string> &files);
 
   // jump to screen
   void jumpToScreen(BaseClientProxy *);
@@ -472,4 +480,5 @@ private:
   bool m_defaultLockToScreenState = false;
   bool m_disableLockToScreen = false;
   bool m_enableClipboard = true;
+  bool m_enableFileTransfer = true;
 };

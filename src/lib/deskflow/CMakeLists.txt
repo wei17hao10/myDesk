@@ -37,6 +37,8 @@ add_library(${lib_name} STATIC ${PLATFORM_CODE}
   Clipboard.h
   ClipboardChunk.cpp
   ClipboardChunk.h
+  FileChunk.cpp
+  FileChunk.h
   DeskflowException.cpp
   DeskflowException.h
   DisplayInvalidException.h

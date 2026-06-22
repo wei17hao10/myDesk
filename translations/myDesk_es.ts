@@ -1332,6 +1332,10 @@ Al habilitar esta opción, se deshabilitará la interfaz gráfica de usuario (GU
         <source>Using a log level higher than Info may affect performance.</source>
         <translation type="unfinished">Utilizar un nivel de registro superior a Info puede afectar el rendimiento.</translation>
     </message>
+    <message>
+        <source>Enable file transfer (drag files across screens)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>StatusBar</name>

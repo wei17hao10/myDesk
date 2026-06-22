@@ -1334,6 +1334,10 @@ Enabling this setting will disable the server config GUI.</source>
         <source>Using a log level higher than Info may affect performance.</source>
         <translation type="unfinished">Infoよりも高いログレベルを使用すると、パフォーマンスに影響を及ぼす可能性があります。</translation>
     </message>
+    <message>
+        <source>Enable file transfer (drag files across screens)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>StatusBar</name>

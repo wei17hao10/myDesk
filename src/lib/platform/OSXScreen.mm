@@ -34,6 +34,8 @@
 #include "platform/OSXScreenSaver.h"
 
 #include <AppKit/NSEvent.h>
+#include <AppKit/NSPasteboard.h>
+#include <Foundation/NSURL.h>
 #include <AvailabilityMacros.h>
 #include <IOKit/hidsystem/event_status_driver.h>
 #include <dispatch/dispatch.h>
@@ -1687,14 +1689,41 @@ CGEventRef OSXScreen::handleCGInputEvent(CGEventTapProxy proxy, CGEventType type
   case kCGEventLeftMouseDown:
   case kCGEventRightMouseDown:
   case kCGEventOtherMouseDown:
+    // Clear any stale drag state on a new mouse-down.
+    if (type == kCGEventLeftMouseDown) {
+      screen->m_draggingFiles = false;
+      screen->m_dragFiles.clear();
+    }
     screen->onMouseButton(true, CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1);
     break;
   case kCGEventLeftMouseUp:
   case kCGEventRightMouseUp:
   case kCGEventOtherMouseUp:
+    if (type == kCGEventLeftMouseUp) {
+      screen->m_draggingFiles = false;
+      screen->m_dragFiles.clear();
+    }
     screen->onMouseButton(false, CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1);
     break;
   case kCGEventLeftMouseDragged:
+    // Lazily detect drag from Finder: check the OS drag pasteboard.
+    if (!screen->m_draggingFiles) {
+      @autoreleasepool {
+        NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSPasteboardNameDrag];
+        NSArray *fileURLs = [pb readObjectsForClasses:@[ [NSURL class] ]
+                                             options:@{NSPasteboardURLReadingFileURLsOnlyKey : @YES}];
+        if (fileURLs && [fileURLs count] > 0) {
+          screen->m_draggingFiles = true;
+          screen->m_dragFiles.clear();
+          for (NSURL *url in fileURLs) {
+            screen->m_dragFiles.push_back([[url path] UTF8String]);
+          }
+          LOG_DEBUG("drag detected: %zu file(s)", screen->m_dragFiles.size());
+        }
+      }
+    }
+    // fall through to common mouse-dragged handling
+    [[fallthrough]];
   case kCGEventRightMouseDragged:
   case kCGEventOtherMouseDragged:
   case kCGEventMouseMoved:
@@ -1941,6 +1970,11 @@ void avoidHesitatingCursor()
   // but now is just to avoid a hesitating cursor when transitioning to
   // the primary (this) screen.
   CGSetLocalEventsSuppressionInterval(0.0001);
+}
+
+std::vector<std::string> OSXScreen::getDragFiles() const
+{
+  return m_draggingFiles ? m_dragFiles : std::vector<std::string>{};
 }
 
 #pragma GCC diagnostic error "-Wdeprecated-declarations"

@@ -24,6 +24,10 @@
 #include "server/ClientProxy.h"
 #include "server/ClientProxyUnknown.h"
 #include "server/PrimaryClient.h"
+#include "deskflow/FileChunk.h"
+
+#include <QFileInfo>
+#include <QString>
 
 #ifdef _WIN32
 #include <algorithm>
@@ -434,6 +438,15 @@ void Server::switchScreen(BaseClientProxy *dst, int32_t x, int32_t y, bool forSc
   // since that's a waste of time we skip that and just warp the
   // mouse.
   if (m_active != dst) {
+    // If a file drag is in progress on the primary screen, start the transfer now.
+    if (m_active == m_primaryClient && m_enableFileTransfer) {
+      const auto files = m_primaryClient->getDragFiles();
+      if (!files.empty()) {
+        LOG_INFO("file drag detected: initiating transfer of %zu file(s) to '%s'", files.size(), getName(dst).c_str());
+        initiateFileTransfer(dst, files);
+      }
+    }
+
     // leave active screen
     if (!m_active->leave()) {
       // cannot leave screen
@@ -488,6 +501,24 @@ void Server::switchScreen(BaseClientProxy *dst, int32_t x, int32_t y, bool forSc
     m_events->addEvent(Event(EventTypes::ServerScreenSwitched, this, info));
   } else {
     m_active->mouseMove(x, y);
+  }
+}
+
+void Server::initiateFileTransfer(BaseClientProxy *dst, const std::vector<std::string> &files)
+{
+  // Build drag info: null-separated basenames.
+  std::string info;
+  for (const auto &path : files) {
+    const std::string name = QFileInfo(QString::fromStdString(path)).fileName().toStdString();
+    info += name;
+    info += '\0';
+  }
+  dst->sendDragInfo(static_cast<uint32_t>(files.size()), info.c_str(), info.size());
+
+  // Queue file chunk events. ClientProxy1_5 registered a FileSending handler
+  // in its constructor that writes each chunk to the client's stream.
+  for (const auto &filePath : files) {
+    StreamChunker::sendFile(filePath, m_events, dst);
   }
 }
 

@@ -8,18 +8,25 @@
 
 #include "client/ServerProxy.h"
 
+#include "base/EventTypes.h"
 #include "base/IEventQueue.h"
 #include "base/Log.h"
 #include "client/Client.h"
 #include "deskflow/Clipboard.h"
 #include "deskflow/ClipboardChunk.h"
 #include "deskflow/DeskflowException.h"
+#include "deskflow/FileChunk.h"
 #include "deskflow/OptionTypes.h"
 #include "deskflow/ProtocolTypes.h"
 #include "deskflow/ProtocolUtil.h"
 #include "deskflow/StreamChunker.h"
 #include "deskflow/ipc/CoreIpc.h"
 #include "io/IStream.h"
+
+#include <QDir>
+#include <QFile>
+#include <QFileInfo>
+#include <QStandardPaths>
 
 #include <cstring>
 
@@ -294,6 +301,14 @@ ServerProxy::ConnectionResult ServerProxy::parseMessage(const uint8_t *code)
 
   else if (memcmp(code, kMsgDClipboard, 4) == 0) {
     setClipboard();
+  }
+
+  else if (memcmp(code, kMsgDFileTransfer, 4) == 0) {
+    fileTransfer();
+  }
+
+  else if (memcmp(code, kMsgDDragInfo, 4) == 0) {
+    dragInfo();
   }
 
   else if (memcmp(code, kMsgCResetOptions, 4) == 0) {
@@ -849,4 +864,70 @@ void ServerProxy::setActiveServerLanguage(const std::string_view &language)
   } else {
     LOG_VERBOSE("active server layout is empty");
   }
+}
+
+void ServerProxy::fileTransfer()
+{
+  auto state = FileChunk::assemble(m_stream, m_fileDataCached, m_transferFilename);
+  if (state == TransferState::Finished) {
+    saveReceivedFile(m_transferFilename, m_fileDataCached);
+    m_fileDataCached.clear();
+    m_transferFilename.clear();
+  } else if (state == TransferState::Error) {
+    LOG_WARN("file transfer from server failed");
+    m_fileDataCached.clear();
+    m_transferFilename.clear();
+  }
+}
+
+void ServerProxy::dragInfo()
+{
+  uint32_t fileCount = 0;
+  std::string info;
+  if (!ProtocolUtil::readf(m_stream, kMsgDDragInfo + 4, &fileCount, &info)) {
+    LOG_WARN("failed to parse drag info from server");
+    return;
+  }
+  m_fileDataCached.clear();
+  LOG_INFO("incoming file drag: %u file(s)", fileCount);
+}
+
+void ServerProxy::saveReceivedFile(const std::string &filename, const std::string &data)
+{
+  const QString safeBase = QFileInfo(QString::fromStdString(filename)).fileName();
+  if (safeBase.isEmpty()) {
+    LOG_WARN("file transfer: empty filename, discarding");
+    return;
+  }
+
+  const QString downloadsDir = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
+  QDir dir(downloadsDir);
+  if (!dir.exists()) {
+    LOG_WARN("file transfer: downloads dir not found: %s", qPrintable(downloadsDir));
+    return;
+  }
+
+  // Avoid overwriting existing files.
+  QString targetPath = dir.filePath(safeBase);
+  if (QFile::exists(targetPath)) {
+    const QFileInfo fi(safeBase);
+    const QString base = fi.baseName();
+    const QString ext = fi.suffix().isEmpty() ? QString() : "." + fi.suffix();
+    int n = 1;
+    do {
+      targetPath = dir.filePath(QStringLiteral("%1_%2%3").arg(base).arg(n++).arg(ext));
+    } while (QFile::exists(targetPath));
+  }
+
+  QFile out(targetPath);
+  if (!out.open(QIODevice::WriteOnly)) {
+    LOG_ERR("file transfer: can't write to %s", qPrintable(targetPath));
+    return;
+  }
+  out.write(data.c_str(), static_cast<qint64>(data.size()));
+  out.close();
+
+  LOG_INFO("file transfer: saved '%s' (%zu bytes)", qPrintable(targetPath), data.size());
+
+  m_events->addEvent(Event(EventTypes::FileReceived, m_client, static_cast<void *>(nullptr)));
 }

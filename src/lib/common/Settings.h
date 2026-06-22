@@ -61,6 +61,7 @@ public:
     inline static const auto ScreenEnterCommand = QStringLiteral("core/enterCommand");
     inline static const auto EnableExitCommand = QStringLiteral("core/enableExitCommand");
     inline static const auto ScreenExitCommand = QStringLiteral("core/exitCommand");
+    inline static const auto EnableFileTransfer = QStringLiteral("core/enableFileTransfer");
 
     // TODO: REMOVE In 2.0
     inline static const auto ScreenName = QStringLiteral("core/screenName"); // Replaced By ComputerName
@@ -283,6 +284,7 @@ private:
   // When checking the default values this list contains the ones that default to true.
   inline static const QStringList m_defaultTrueValues = {
       Settings::Core::UseHooks
+    , Settings::Core::EnableFileTransfer
     , Settings::Client::LanguageSync
     , Settings::Gui::CloseToTray
     , Settings::Gui::CloseReminder

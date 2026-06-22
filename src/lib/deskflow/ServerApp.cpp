@@ -462,6 +462,7 @@ ClientListener *ServerApp::openClientListener(const NetworkAddress &address)
 Server *ServerApp::openServer(ServerConfig &config, PrimaryClient *primaryClient)
 {
   auto *server = new Server(config, primaryClient, m_serverScreen, getEvents());
+  server->setEnableFileTransfer(Settings::value(Settings::Core::EnableFileTransfer).toBool());
   try {
     getEvents()->addHandler(EventTypes::ServerScreenSwitched, server, [this](const auto &) { handleScreenSwitched(); });
 

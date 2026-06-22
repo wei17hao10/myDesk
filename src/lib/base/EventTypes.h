@@ -229,6 +229,12 @@ enum class EventTypes : uint32_t
   /// This event is sent whenever a clipboard chunk is transferred.
   ClipboardSending,
 
+  /// This event is sent whenever a file chunk is transferred to a client.
+  FileSending,
+
+  /// This event is sent when a file has been fully received and saved.
+  FileReceived,
+
   /// Start libei
   EIConnected,
 

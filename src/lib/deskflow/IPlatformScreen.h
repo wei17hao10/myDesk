@@ -15,6 +15,9 @@
 #include "deskflow/ISecondaryScreen.h"
 #include "deskflow/OptionTypes.h"
 
+#include <string>
+#include <vector>
+
 class IClipboard;
 
 //! Screen interface
@@ -151,6 +154,13 @@ public:
   bool
   fakeKeyRepeat(KeyID id, KeyModifierMask mask, int32_t count, KeyButton button, const std::string &lang) override = 0;
   bool fakeMediaKey(KeyID) override;
+
+  // Return file paths currently being dragged by the user on this screen.
+  // Empty when no drag is in progress or the platform doesn't support detection.
+  virtual std::vector<std::string> getDragFiles() const
+  {
+    return {};
+  }
 
 protected:
   //! Handle system event

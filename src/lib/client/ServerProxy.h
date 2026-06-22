@@ -99,6 +99,11 @@ private:
   void setServerLanguages();
   void setActiveServerLanguage(const std::string_view &language);
 
+  // File transfer message handlers (server → client direction).
+  void fileTransfer();
+  void dragInfo();
+  void saveReceivedFile(const std::string &filename, const std::string &data);
+
 private:
   using MessageParser = ConnectionResult (ServerProxy::*)(const uint8_t *);
 
@@ -126,4 +131,8 @@ private:
   std::string m_serverLayout = "";
   bool m_isUserNotifiedAboutLayoutSyncError = false;
   deskflow::KeyboardLayoutManager m_layoutManager;
+
+  // File transfer state (server → client).
+  std::string m_fileDataCached;
+  std::string m_transferFilename;
 };

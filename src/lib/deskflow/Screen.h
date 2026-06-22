@@ -279,6 +279,10 @@ public:
     return m_screen;
   }
 
+  // Delegate to platform screen: return files currently being dragged.
+  std::vector<std::string> getDragFiles() const;
+
+
 protected:
   void enablePrimary();
   void enableSecondary();

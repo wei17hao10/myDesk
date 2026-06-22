@@ -336,4 +336,10 @@ private:
 
   PrimaryKeyDownList m_primaryKeyDownList;
   MSWindowsPowerManager m_powerManager;
+
+  // File drag-and-drop support (primary screen only).
+  MSWindowsDropTarget *m_dropTarget = nullptr;
+
+public:
+  std::vector<std::string> getDragFiles() const override;
 };

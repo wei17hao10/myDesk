@@ -128,6 +128,9 @@ public:
   void sendDragInfo(uint32_t fileCount, const char *info, size_t size) override;
   void fileChunkSending(uint8_t mark, char *data, size_t dataSize) override;
   std::string getSecureInputApp() const override;
+
+  // Return files currently being dragged on this primary screen.
+  std::vector<std::string> getDragFiles() const;
   void secureInputNotification(const std::string &app) const override;
 
   deskflow::IStream *getStream() const override
