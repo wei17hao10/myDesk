@@ -1983,14 +1983,20 @@ std::vector<std::string> OSXScreen::getClipboardFiles()
     NSPasteboard *pb = [NSPasteboard generalPasteboard];
     NSInteger currentGeneration = [pb changeCount];
 
-    // Only transfer if the clipboard changed since the last transfer.
+    // Fast path: nothing changed at all.
     if (currentGeneration == m_lastClipboardTransferGeneration) {
       return {};
     }
+    // Always advance the generation so we don't re-read on the next call
+    // unless the clipboard actually changes again.
+    m_lastClipboardTransferGeneration = currentGeneration;
 
     NSArray *fileURLs = [pb readObjectsForClasses:@[ [NSURL class] ]
                                           options:@{NSPasteboardURLReadingFileURLsOnlyKey : @YES}];
     if (!fileURLs || [fileURLs count] == 0) {
+      // Clipboard no longer holds files — clear the remembered set so the user can
+      // re-copy the same files later and have them transfer again.
+      m_lastTransferredFiles.clear();
       return {};
     }
 
@@ -2001,10 +2007,25 @@ std::vector<std::string> OSXScreen::getClipboardFiles()
       }
     }
 
-    if (!files.empty()) {
-      m_lastClipboardTransferGeneration = currentGeneration;
-      LOG_DEBUG("clipboard files detected: %zu file(s)", files.size());
+    if (files.empty()) {
+      m_lastTransferredFiles.clear();
+      return {};
     }
+
+    // Guard against re-sending the same files when the Windows clipboard sync
+    // pushes content back to Mac and changes changeCount without the user doing
+    // a new Cmd+C. Compare sorted path lists.
+    std::vector<std::string> sortedCurrent = files;
+    std::vector<std::string> sortedLast = m_lastTransferredFiles;
+    std::sort(sortedCurrent.begin(), sortedCurrent.end());
+    std::sort(sortedLast.begin(), sortedLast.end());
+    if (sortedCurrent == sortedLast) {
+      LOG_DEBUG("clipboard files unchanged since last transfer, skipping re-send");
+      return {};
+    }
+
+    m_lastTransferredFiles = files;
+    LOG_DEBUG("clipboard files detected: %zu file(s)", files.size());
     return files;
   }
 }
@@ -2016,8 +2037,10 @@ void OSXScreen::setClipboardFile(const std::string &path)
     [pb clearContents];
     NSURL *url = [NSURL fileURLWithPath:[NSString stringWithUTF8String:path.c_str()]];
     [pb writeObjects:@[ url ]];
-    // Update generation so we don't re-send the file we just received.
+    // Update generation and clear remembered files so we don't loop:
+    // the file we just wrote to the pasteboard must not be sent back.
     m_lastClipboardTransferGeneration = [pb changeCount];
+    m_lastTransferredFiles = {path};
     LOG_DEBUG("set clipboard to received file: %s", path.c_str());
   }
 }

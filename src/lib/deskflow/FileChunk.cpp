@@ -108,6 +108,11 @@ TransferState FileChunk::assemble(deskflow::IStream *stream, std::string &dataCa
 
 void FileChunk::send(deskflow::IStream *stream, void *data)
 {
+  if (!stream || !data) {
+    LOG_WARN("file transfer: stream or chunk is null, dropping chunk");
+    return;
+  }
+
   const auto *chunk = static_cast<FileChunk *>(data);
 
   uint8_t mark = static_cast<uint8_t>(chunk->m_chunk[0]);

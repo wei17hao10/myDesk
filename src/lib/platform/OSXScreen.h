@@ -274,9 +274,12 @@ private:
   bool m_draggingFiles = false;
   std::vector<std::string> m_dragFiles;
 
-  // Clipboard file detection: tracks NSPasteboard changeCount to avoid re-sending.
+  // Clipboard file detection.
   // NSInteger is 'long' on 64-bit macOS — use long to keep this header C++-compatible.
   long m_lastClipboardTransferGeneration = -1;
+  // Paths of the last batch of files sent — compared against current clipboard to
+  // avoid re-sending the same files when clipboard sync from Windows changes changeCount.
+  std::vector<std::string> m_lastTransferredFiles;
 
   // window object that gets user input events when the server
   // has focus.
