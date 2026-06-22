@@ -104,7 +104,7 @@ void I18NTests::reDetectTest()
   I18N::reDetectLanguages();
   QCOMPARE(spy.count(), 0);
 
-  QFile::remove(QStringLiteral("%1/deskflow_en.qm").arg(m_myTDir));
+  QFile::remove(QStringLiteral("%1/myDesk_en.qm").arg(m_myTDir));
 
   I18N::reDetectLanguages();
   QCOMPARE(spy.count(), 1);

@@ -264,6 +264,7 @@ private:
   EventQueueTimer *m_clipboardTimer;
 
   EventQueueTimer *m_axTimer;
+  int m_axPermissionFailCount = 0;
 
   // window object that gets user input events when the server
   // has focus.

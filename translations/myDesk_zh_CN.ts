@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ru_RU" sourcelanguage="en_US">
+<TS version="2.1" language="zh_CN" sourcelanguage="en_US">
 <context>
     <name>AboutDialog</name>
     <message>
         <source>About Deskflow</source>
-        <translation>О Deskflow</translation>
+        <translation type="vanished">关于 Deskflow</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -17,15 +17,15 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://www.gnu.org/licenses/old-licenses/gpl-2.0.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#508ed8;&quot;&gt;Лицензия: GNU GPL версии 2&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://www.gnu.org/licenses/old-licenses/gpl-2.0.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#508ed8;&quot;&gt;许可证：GNU GPL 版本 2&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Version: </source>
-        <translation>Версия: </translation>
+        <translation>版本： </translation>
     </message>
     <message>
         <source>Copy version info</source>
-        <translation>Скопировать сведения о версии</translation>
+        <translation>复制版本信息</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -37,473 +37,477 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/deskflow/deskflow/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#508ed8;&quot;&gt;Авторы кода&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/deskflow/deskflow/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#508ed8;&quot;&gt;代码贡献者&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Icons from &lt;a href=&quot;https://develop.kde.org/frameworks/breeze-icons/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;KDE Breeze&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Иконки &lt;a href=&quot;https://develop.kde.org/frameworks/breeze-icons/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;KDE Breeze&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;图标来源： &lt;a href=&quot;https://develop.kde.org/frameworks/breeze-icons/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;KDE Breeze&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Important Developers</source>
-        <translation>Ключевые разработчики</translation>
+        <translation>主要开发者</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation>&amp;Закрыть</translation>
+        <translation>关闭(&amp;C)</translation>
+    </message>
+    <message>
+        <source>About myDesk</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ActionDialog</name>
     <message>
         <source>Configure Action</source>
-        <translation>Настроить действие</translation>
+        <translation>配置动作</translation>
     </message>
     <message>
         <source>When the hotkey is pressed</source>
-        <translation>При нажатии горячей клавиши</translation>
+        <translation>当按下热键时</translation>
     </message>
     <message>
         <source>When the hotkey is released</source>
-        <translation>При отпускании горячей клавиши</translation>
+        <translation>当释放热键时</translation>
     </message>
     <message>
         <source>Press key(s)</source>
-        <translation>Нажать клавишу(и)</translation>
+        <translation>按下按键</translation>
     </message>
     <message>
         <source>Release key(s)</source>
-        <translation>Отпустить клавишу(и)</translation>
+        <translation>释放按键</translation>
     </message>
     <message>
         <source>Press and release key(s)</source>
-        <translation>Нажать и отпустить клавишу(и)</translation>
+        <translation>按下并释放按键</translation>
     </message>
     <message>
         <source>Switch to a computer</source>
-        <translation>Переключиться на компьютер</translation>
+        <translation>切换到某台计算机</translation>
     </message>
     <message>
         <source>Switch in a direction</source>
-        <translation>Перейти в направлении</translation>
+        <translation>向指定方向切换</translation>
     </message>
     <message>
         <source>Switch to next computer</source>
-        <translation>Переключиться на следующий компьютер</translation>
+        <translation>切换到下一台计算机</translation>
     </message>
     <message>
         <source>Modify the cursor lock</source>
-        <translation>Изменить блокировку курсора</translation>
+        <translation>修改光标锁定状态</translation>
     </message>
     <message>
         <source>Restart the server</source>
-        <translation>Перезапустить сервер</translation>
+        <translation>重启服务器</translation>
     </message>
     <message>
         <source>Switch to the computer on the left</source>
-        <translation>Переключиться на компьютер слева</translation>
+        <translation>切换到左侧的计算机</translation>
     </message>
     <message>
         <source>Switch to the computer on the right</source>
-        <translation>Переключиться на компьютер справа</translation>
+        <translation>切换到右侧的计算机</translation>
     </message>
     <message>
         <source>Switch to the computer above</source>
-        <translation>Переключиться на компьютер выше</translation>
+        <translation>切换到上方的计算机</translation>
     </message>
     <message>
         <source>Switch to the computer below</source>
-        <translation>Переключиться на компьютер ниже</translation>
+        <translation>切换到下方的计算机</translation>
     </message>
     <message>
         <source>Toggle the cursor lock</source>
-        <translation>Переключить блокировку курсора</translation>
+        <translation>切换光标锁定</translation>
     </message>
     <message>
         <source>Enable the cursor lock</source>
-        <translation>Включить блокировку курсора</translation>
+        <translation>启用光标锁定</translation>
     </message>
     <message>
         <source>Disable the cursor lock</source>
-        <translation>Выключить блокировку курсора</translation>
+        <translation>禁用光标锁定</translation>
     </message>
     <message>
         <source>Computers to receive this event</source>
-        <translation>Компьютеры, получающие это событие</translation>
+        <translation>接收此事件的计算机</translation>
     </message>
     <message>
         <source>Switch to %1</source>
-        <translation>Переключиться на %1</translation>
+        <translation>切换到 %1</translation>
     </message>
 </context>
 <context>
     <name>ClientConfigDialog</name>
     <message>
         <source>Client Configuration</source>
-        <translation type="unfinished">Конфигурация клиента</translation>
+        <translation type="unfinished">客户端配置</translation>
     </message>
     <message>
         <source>Use server&apos;s keyboard language on this computer</source>
-        <translation type="unfinished">Использовать язык клавиатуры сервера на этом компьютере</translation>
+        <translation type="unfinished">在此计算机上使用服务器的键盘语言</translation>
     </message>
     <message>
         <source>Scroll Modifiers</source>
-        <translation type="unfinished">Модификаторы прокрутки</translation>
+        <translation type="unfinished">滚动修饰符</translation>
     </message>
     <message>
         <source>Invert</source>
-        <translation type="unfinished">Инвертировать</translation>
+        <translation type="unfinished">倒置</translation>
     </message>
     <message>
         <source>Horizontal Scroll</source>
-        <translation type="unfinished">Горизонтальная прокрутка</translation>
+        <translation type="unfinished">水平滚动</translation>
     </message>
     <message>
         <source>Vertical Scroll</source>
-        <translation type="unfinished">Вертикальная прокрутка</translation>
+        <translation type="unfinished">垂直滚动</translation>
     </message>
     <message>
         <source>Scale</source>
-        <translation type="unfinished">Шкала</translation>
+        <translation type="unfinished">规模</translation>
     </message>
     <message>
         <source>Close and save changes</source>
-        <translation type="unfinished">Закрыть и сохранить изменения</translation>
+        <translation type="unfinished">关闭并保存更改</translation>
     </message>
     <message>
         <source>Close and forget changes</source>
-        <translation type="unfinished">Закройте изменения и забудьте о них</translation>
+        <translation>关闭并放弃修改</translation>
     </message>
     <message>
         <source>Reset to stored values</source>
-        <translation type="unfinished">Сбросить до сохраненных значений</translation>
+        <translation type="unfinished">重置为存储值</translation>
     </message>
     <message>
         <source>Reset to default values</source>
-        <translation type="unfinished">Сбросить до значений по умолчанию</translation>
+        <translation type="unfinished">重置为默认值</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Allow the client to slow the rate it attempts to reconnect to the server when connections attempts are failing. The delay between connection attempts will  start at 1 second intervals and can be a maxium of 5 minutes between connection attempts.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Позволить клиенту замедлять частоту попыток повторного подключения к серверу в случае неудачных попыток соединения. Интервал между попытками подключения будет начинаться с 1 секунды и может достигать максимума в 5 минут.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;允许客户端在连接尝试失败时，降低其重连服务器的频率。连接尝试之间的间隔将从 1 秒开始，最长可达 5 分钟。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Use dynamic reconnection time based on connection attempts</source>
-        <translation type="unfinished">Использовать динамическое время переподключения в зависимости от попыток подключения</translation>
+        <translation type="unfinished">根据连接尝试次数，采用动态重连时间</translation>
     </message>
 </context>
 <context>
     <name>FingerprintDialog</name>
     <message>
         <source>Local Fingerprints</source>
-        <translation>Локальные отпечатки</translation>
+        <translation>本地指纹</translation>
     </message>
     <message>
         <source>Local computer&apos;s fingerprint</source>
-        <translation>Отпечаток локального компьютера</translation>
+        <translation>本地计算机的指纹</translation>
     </message>
     <message>
         <source>Compare the fingerprints in this dialog to those on the %1.
 Only connect if they match!</source>
-        <translation>Сравните отпечатки в этом окне с отпечатками на %1. 
-Подключайтесь только в случае их совпадения!</translation>
+        <translation>请将此对话框中的指纹与 %1 上的指纹进行比对。
+只有两者匹配时才进行连接！</translation>
     </message>
     <message>
         <source>New client connecting</source>
-        <translation>Подключение нового клиента</translation>
+        <translation>新客户端正在连接</translation>
     </message>
     <message>
         <source>client</source>
-        <translation>клиент</translation>
+        <translation>客户端</translation>
     </message>
     <message>
         <source>
 Trust client and allow connection?
 </source>
         <translation>
-Доверять клиенту и разрешить подключение?
+信任此客户端并允许连接吗？
 </translation>
     </message>
     <message>
         <source>Connecting to a new server</source>
-        <translation>Подключение к новому серверу</translation>
+        <translation>正在连接到新服务器</translation>
     </message>
     <message>
         <source>server</source>
-        <translation>сервер</translation>
+        <translation>服务器</translation>
     </message>
     <message>
         <source>
 Do you want to connect to the server?
 </source>
         <translation>
-Вы хотите подключиться к серверу?
+您想连接到此服务器吗？
 </translation>
     </message>
     <message>
         <source>Server Fingerprint</source>
-        <translation>Отпечаток сервера</translation>
+        <translation>服务器指纹</translation>
     </message>
     <message>
         <source>Client Fingerprint</source>
-        <translation>Отпечаток клиента</translation>
+        <translation>客户端指纹</translation>
     </message>
     <message>
         <source>Show image</source>
-        <translation>Показать изображение</translation>
+        <translation>显示图像</translation>
     </message>
     <message>
         <source>Show hash</source>
-        <translation>Показать хэш</translation>
+        <translation>显示哈希值</translation>
     </message>
     <message>
         <source>Display the fingerprint as an image</source>
-        <translation>Показать отпечаток как изображение</translation>
+        <translation>以图像形式显示指纹</translation>
     </message>
     <message>
         <source>Display the fingerprint as a hash</source>
-        <translation>Показать отпечаток как хэш</translation>
+        <translation>以哈希值形式显示指纹</translation>
     </message>
 </context>
 <context>
     <name>FingerprintPreview</name>
     <message>
         <source>Invalid hash format</source>
-        <translation>Неверный формат хэша</translation>
+        <translation>无效的哈希格式</translation>
     </message>
 </context>
 <context>
     <name>HotkeyDialog</name>
     <message>
         <source>Hotkey</source>
-        <translation>Горячая клавиша</translation>
+        <translation>热键</translation>
     </message>
     <message>
         <source>Enter the specification for the hotkey:</source>
-        <translation>Введите сочетание для горячей клавиши:</translation>
+        <translation>输入热键定义：</translation>
     </message>
 </context>
 <context>
     <name>LogDock</name>
     <message>
         <source>Log</source>
-        <translation>Журнал</translation>
+        <translation>日志</translation>
     </message>
     <message>
         <source>Detach from window</source>
-        <translation>Открепить от окна</translation>
+        <translation>从窗口分离</translation>
     </message>
     <message>
         <source>Close Log</source>
-        <translation>Закрыть журнал</translation>
+        <translation>关闭日志</translation>
     </message>
     <message>
         <source>Attach to window</source>
-        <translation>Прикрепить к окну</translation>
+        <translation>吸附到窗口</translation>
     </message>
 </context>
 <context>
     <name>LogLevel</name>
     <message>
         <source>Fatal</source>
-        <translation type="unfinished">Критический</translation>
+        <translation type="unfinished">致命</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Ошибка</translation>
+        <translation type="unfinished">错误</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished">Предупреждение</translation>
+        <translation type="unfinished">警告</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished">Инфо</translation>
+        <translation type="unfinished">信息</translation>
     </message>
     <message>
         <source>Debug</source>
-        <translation type="unfinished">Отладка</translation>
+        <translation type="unfinished">调试</translation>
     </message>
     <message>
         <source>Verbose</source>
-        <translation type="unfinished">Многословный</translation>
+        <translation type="unfinished">冗长的</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>This computer&apos;s name:</source>
-        <translation>Имя этого компьютера:</translation>
+        <translation>此计算机名称：</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Name can&apos;t have have spaces or special characters&lt;/p&gt;&lt;p&gt;Use Enter to save the name change.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Имя не может содержать пробелы или специальные символы.&lt;/p&gt;&lt;p&gt;Нажмите Enter, чтобы сохранить изменения.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;名称不能包含空格或特殊字符&lt;/p&gt;&lt;p&gt;按 Enter 键保存更改。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Edit Computer Name</source>
-        <translation>Изменить имя компьютера</translation>
+        <translation>编辑计算机名称</translation>
     </message>
     <message>
         <source>Use this computer&apos;s keyboard and mouse
 (make this computer the server)</source>
-        <translation>Использовать мышь и клавиатуру этого компьютера
-(сделать этот компьютер сервером)</translation>
+        <translation>使用此计算机的键盘和鼠标
+(将此计算机设为服务器)</translation>
     </message>
     <message>
         <source>Use another computer’s mouse and keyboard
 (make this computer the client)</source>
-        <translation>Использовать мышь и клавиатуру другого компьютера
-(сделать этот компьютер клиентом)</translation>
+        <translation>使用另一台计算机的鼠标和键盘
+(将此计算机设为客户端)</translation>
     </message>
     <message>
         <source>&amp;Configure Server</source>
-        <translation>&amp;Настроить сервер</translation>
+        <translation>配置服务器(&amp;C)</translation>
     </message>
     <message>
         <source>Export server configuration</source>
-        <translation>Экспортировать конфигурацию сервера</translation>
+        <translation>导出服务器配置</translation>
     </message>
     <message>
         <source>You must select a mode</source>
-        <translation>Необходимо выбрать режим</translation>
+        <translation>您必须选择一种模式</translation>
     </message>
     <message>
         <source>&amp;Start</source>
-        <translation>&amp;Запуск</translation>
+        <translation>启动(&amp;S)</translation>
     </message>
     <message>
         <source>Restart</source>
-        <translation>Перезапуск</translation>
+        <translation>重启</translation>
     </message>
     <message>
         <source>Your current TLS key is smaller than the minimum allowed size, A new key 2048-bit key will be generated.</source>
-        <translation>Текущий ключ TLS меньше минимально допустимого размера. Будет создан новый 2048-битный ключ.</translation>
+        <translation>您当前的 TLS 密钥长度小于允许的最小值，将生成一个新的 2048 位密钥。</translation>
     </message>
     <message>
         <source>invalid certificate, generating a new one</source>
-        <translation>недействительный сертификат, создание нового</translation>
+        <translation type="unfinished">证书无效，正在生成新证书</translation>
     </message>
     <message>
         <source>Address missing</source>
-        <translation>Адрес не указан</translation>
+        <translation>缺少地址</translation>
     </message>
     <message>
         <source>Please enter the hostname or IP address of the other computer.</source>
-        <translation>Пожалуйста, введите имя хоста или IP-адрес другого компьютера.</translation>
+        <translation>请输入另一台计算机的主机名或 IP 地址。</translation>
     </message>
     <message>
         <source>Save server configuration as...</source>
-        <translation>Сохранить конфигурацию сервера как...</translation>
+        <translation>另存服务器配置为...</translation>
     </message>
     <message>
         <source>Save failed</source>
-        <translation>Ошибка сохранения</translation>
+        <translation>保存失败</translation>
     </message>
     <message>
         <source>Could not save server configuration to file.</source>
-        <translation>Не удалось сохранить файл конфигурации сервера.</translation>
+        <translation>无法将服务器配置保存到文件。</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>Запуск</translation>
+        <translation>启动</translation>
     </message>
     <message>
         <source>Stop</source>
-        <translation>Стоп</translation>
+        <translation>停止</translation>
     </message>
     <message>
         <source>Connect</source>
-        <translation>Подключиться</translation>
+        <translation>连接</translation>
     </message>
     <message>
         <source>Disconnect</source>
-        <translation>Отключиться</translation>
+        <translation>断开</translation>
     </message>
     <message>
         <source>&lt;p&gt;Failed to connect to the server &apos;%1&apos;.&lt;/p&gt;&lt;p&gt;A Client with your name is already connected to the server.&lt;/p&gt;Please ensure that you&apos;re using a unique name and that only a single instance of the client process is running.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Не удалось подключиться к серверу &apos;%1&apos;.&lt;/p&gt;&lt;p&gt;Клиент с таким именем уже подключен к серверу.&lt;/p&gt;Убедитесь, что вы используете уникальное имя и запущен только один процесс клиента.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;连接到服务器“%1”失败。&lt;/p&gt;&lt;p&gt;一个同名的客户端已连接到服务器。&lt;/p&gt;请确保您使用的名称唯一，且只有一个客户端进程实例在运行。&lt;/p&gt;</translation>
     </message>
     <message>
         <source>No IP Detected</source>
-        <translation>IP-адрес не обнаружен</translation>
+        <translation>未检测到 IP</translation>
     </message>
     <message>
         <source>Unable to detect an IP address. Check your network connection is active.</source>
-        <translation>Не удалось определить IP-адрес. Проверьте сетевое соединение.</translation>
+        <translation>无法检测到 IP 地址。请检查您的网络连接是否正常。</translation>
     </message>
     <message>
         <source>Using IP: </source>
-        <translation>Использование IP-адреса: </translation>
+        <translation type="unfinished">使用IP地址： </translation>
     </message>
     <message>
         <source>&lt;p&gt;If connecting via the hostname fails, try %1&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Если подключение по имени хоста не удается, попробуйте %1&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;如果通过主机名连接失败，请尝试 %1&lt;/p&gt;</translation>
     </message>
     <message>
         <source>the suggested IP.</source>
-        <translation>рекомендуемый IP-адрес.</translation>
+        <translation>建议的 IP 地址。</translation>
     </message>
     <message>
         <source>one of the following IPs:&lt;br/&gt;%1</source>
-        <translation>один из следующих IP-адресов:&lt;br/&gt;%1</translation>
+        <translation>以下 IP 地址之一：&lt;br/&gt;%1</translation>
     </message>
     <message>
         <source>
 A bound IP is now invalid, you may need to restart the server.</source>
-        <translation>
-Привязанный IP-адрес стал недействительным. Возможно требуется перезапуск сервера.</translation>
+        <translation type="unfinished">
+绑定的IP地址现在无效，您可能需要重启服务器。</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation>&amp;Файл</translation>
+        <translation>文件(&amp;F)</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation>&amp;Правка</translation>
+        <translation>编辑(&amp;E)</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation>&amp;Вид</translation>
+        <translation>视图(&amp;V)</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation>&amp;Справка</translation>
+        <translation>帮助(&amp;H)</translation>
     </message>
     <message>
         <source>Clear settings</source>
-        <translation>Сбросить настройки</translation>
+        <translation>清除设置</translation>
     </message>
     <message>
         <source>Report a Bug</source>
-        <translation>Сообщить об ошибке</translation>
+        <translation>报告 Bug</translation>
     </message>
     <message>
         <source>&amp;Minimize to tray</source>
-        <translation>&amp;Свернуть в трей</translation>
+        <translation>最小化到托盘(&amp;M)</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation>&amp;Выход</translation>
+        <translation>退出(&amp;Q)</translation>
     </message>
     <message>
         <source>&amp;Open %1</source>
         <extracomment>%1 will be the replaced with the appname</extracomment>
-        <translation>&amp;Открыть %1</translation>
+        <translation>打开 %1(&amp;O)</translation>
     </message>
     <message>
         <source>&amp;Preferences</source>
-        <translation>&amp;Настройки</translation>
+        <translation>首选项(&amp;P)</translation>
     </message>
     <message>
         <source>Rest&amp;art</source>
-        <translation>Переза&amp;пуск</translation>
+        <translation>重启(&amp;A)</translation>
     </message>
     <message>
         <source>S&amp;top</source>
-        <translation>Ос&amp;тановить</translation>
+        <translation>停止(&amp;T)</translation>
     </message>
     <message>
         <source>About %1...</source>
         <extracomment>%1 will be the replaced with the appname</extracomment>
-        <translation>О %1...</translation>
+        <translation>关于 %1...</translation>
     </message>
     <message>
         <source>Ctrl+S</source>
@@ -522,11 +526,11 @@ A bound IP is now invalid, you may need to restart the server.</source>
     </message>
     <message>
         <source>Invalid Screen Name</source>
-        <translation>Недопустимое имя экрана</translation>
+        <translation>无效的屏幕名称</translation>
     </message>
     <message>
         <source>Screen name already exists</source>
-        <translation>Имя экрана уже существует</translation>
+        <translation>屏幕名称已存在</translation>
     </message>
     <message>
         <source>The name you have chosen is invalid.
@@ -535,52 +539,52 @@ Valid names:
 • Use letters and numbers
 • May also use _ or -
 • Are between 1 and 255 characters</source>
-        <translation>Выбранное имя недопустимо.
+        <translation>您选择的名称无效。
 
-Требования:
-• Используйте буквы и цифры
-• Можно использовать _ или -
-• Длина от 1 до 255 символов</translation>
+有效名称：
+• 使用字母和数字
+• 可以使用 _ 或 -
+• 长度在 1 到 255 个字符之间</translation>
     </message>
     <message>
         <source>%1 Connection Error</source>
-        <translation>Ошибка соединения %1</translation>
+        <translation>%1 连接错误</translation>
     </message>
     <message>
         <source>Suggested IP: </source>
-        <translation>Рекомендуемый IP-адрес: </translation>
+        <translation type="unfinished">建议 IP： </translation>
     </message>
     <message>
         <source>&amp;Configure Client</source>
-        <translation type="unfinished">&amp;Настройка клиента</translation>
+        <translation type="unfinished">配置客户端(&amp;C)</translation>
     </message>
     <message>
         <source>Connect to:</source>
-        <translation type="unfinished">Подключиться к:</translation>
+        <translation type="unfinished">连接到：</translation>
     </message>
     <message>
         <source>&lt;html&gt;Hostname or IP address of the server computer.&lt;br/&gt;May contain a comma seperated list.&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;Имя хоста или IP-адрес серверного компьютера.&lt;br/&gt;Может содержать список, разделенный запятыми.&lt;/html&gt;</translation>
+        <translation type="unfinished">&lt;html&gt;服务器计算机的主机名或 IP 地址。&lt;br/&gt;可以包含以逗号分隔的列表。&lt;/html&gt;</translation>
     </message>
     <message>
         <source>read</source>
-        <translation type="unfinished">прочитать</translation>
+        <translation type="unfinished">读取</translation>
     </message>
     <message>
         <source>read and write</source>
-        <translation type="unfinished">читать и записывать</translation>
+        <translation type="unfinished">读取和写入</translation>
     </message>
     <message>
         <source>The Core executable could not be started.
 Please check if you have sufficient permissions to run %1.</source>
-        <translation type="unfinished">Не удалось запустить исполняемый файл Core.
-Проверьте, достаточно ли у вас прав для запуска %1.</translation>
+        <translation type="unfinished">无法启动Core可执行文件。
+请检查您是否有足够的权限来运行%1。</translation>
     </message>
     <message>
         <source>
 Additionally, check you are able to %1 the server config file: %2</source>
         <translation type="unfinished">
-Также убедитесь, что вы можете %1 файл конфигурации сервера: %2</translation>
+另外，请检查您是否能够%1服务器配置文件：%2</translation>
     </message>
     <message>
         <source>Don&apos;t show this again</source>
@@ -600,184 +604,186 @@ Additionally, check you are able to %1 the server config file: %2</source>
     <message>
         <source>Unnamed</source>
         <extracomment>Used as the hostname. Translation may not contain spaces</extracomment>
-        <translation>Без_имени</translation>
+        <translation>未命名</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>fatal error</source>
-        <translation>критическая ошибка</translation>
+        <translation>致命错误</translation>
     </message>
     <message>
         <source>error</source>
-        <translation>ошибка</translation>
+        <translation>错误</translation>
     </message>
     <message>
         <source>&lt;p&gt;Sorry, a fatal error has occurred and the application must now exit.&lt;/p&gt;
 </source>
-        <translation>&lt;p&gt;К сожалению, произошла критическая ошибка, приложение будет закрыто.&lt;/p&gt;
+        <translation>&lt;p&gt;抱歉，发生了致命错误，应用程序现在必须退出。&lt;/p&gt;
 </translation>
     </message>
     <message>
         <source>&lt;p&gt;Sorry, a critical error has occurred.&lt;/p&gt;
 </source>
-        <translation>&lt;p&gt;К сожалению, произошла критическая ошибка.&lt;/p&gt;
+        <translatorcomment>&lt;p&gt;抱歉，发生了严重错误。&lt;/p&gt;
+</translatorcomment>
+        <translation>&lt;p&gt;抱歉，发生了严重错误。&lt;/p&gt;
 </translation>
     </message>
     <message>
         <source>&lt;p&gt;%1 will continue to run in the background and can be accessed via the %1 icon in your system notifications area. This setting can be disabled.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;%1 продолжит работу в фоновом режиме. Доступ к нему можно получить через иконку в области уведомлений. Эту настройку можно отключить.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;%1 将在后台继续运行，可通过系统通知区域的 %1 图标访问。此设置可以禁用。&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;Please &lt;a href=&quot;%1&quot;&gt;report a bug&lt;/a&gt; and copy/paste the following error:&lt;/p&gt;&lt;pre&gt;v%2
 %3
 %4&lt;/pre&gt;</source>
-        <translation>&lt;p&gt;Пожалуйста, &lt;a href=&quot;%1&quot;&gt;сообщите об ошибке&lt;/a&gt; и приложите следующий текст:&lt;/p&gt;&lt;pre&gt;v%2
+        <translation>&lt;p&gt;请 &lt;a href=&quot;%1&quot;&gt;报告 Bug&lt;/a&gt; 并复制/粘贴以下错误：&lt;/p&gt;&lt;pre&gt;v%2
 %3
 %4&lt;/pre&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;On Linux systems using GNOME 3, the notification area might be disabled. You may need to &lt;a href=&quot;%1&quot;&gt;enable an extension&lt;/a&gt; to see the %2 tray icon.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;В системах Linux с GNOME 3 область уведомлений может быть отключена. Возможно, потребуется &lt;a href=&quot;%1&quot;&gt;включить расширение&lt;/a&gt;, чтобы видеть иконку %2.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;在使用 GNOME 3 的 Linux 系统上，通知区域可能被禁用。您可能需要 &lt;a href=&quot;%1&quot;&gt;启用扩展&lt;/a&gt; 才能看到 %2 托盘图标。&lt;/p&gt;</translation>
     </message>
     <message>
         <source>%1 Server</source>
-        <translation>Сервер %1</translation>
+        <translation>%1 服务器</translation>
     </message>
     <message>
         <source>&lt;p&gt;Great, the %1 server is now running.&lt;/p&gt;&lt;p&gt;Now you can connect your client computers to this server. You should see a prompt here on the server when a new client tries to connect.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Сервер %1 запущен.&lt;/p&gt;&lt;p&gt;Теперь вы можете подключить клиентские компьютеры к этому серверу. При попытке подключения нового клиента на сервере появится соответствующий запрос.&lt;/p&gt;</translation>
+        <translation type="unfinished">&lt;p&gt;太好了，服务器 %1 已在运行。&lt;/p&gt;&lt;p&gt;现在您可以将客户端计算机连接到此服务器。当新客户端尝试连接时，您会在服务器端看到提示。&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;%1 is now connected!&lt;/p&gt;</source>
-        <translation>&lt;p&gt;%1 подключен!&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;%1 已连接！&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;Try moving your mouse to your other computer. Once there, go ahead and type something.&lt;/p&gt;&lt;p&gt;Don&apos;t forget, you can copy and paste between computers too.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Попробуйте переместить курсор на другой компьютер и что-нибудь напечатать.&lt;/p&gt;&lt;p&gt;Не забывайте, что вы также можете использовать общий буфер обмена.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;试着将鼠标移动到另一台计算机。移动过去后，尝试输入一些内容。&lt;/p&gt;&lt;p&gt;别忘了，您还可以在计算机之间进行复制和粘贴。&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;Try controlling this computer remotely.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Попробуйте управлять этим компьютером удаленно.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;尝试远程控制此计算机。&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;As you do not have the setting enabled to keep %1 running in the background, you&apos;ll need to keep this window open or minimized to keep %1 running.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Так как работа в фоновом режиме отключена, необходимо держать это окно открытым или свернутым для работы %1.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;由于您未启用让 %1 在后台运行的设置，您需要保持此窗口打开或最小化以使 %1 保持运行。&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can now close this window and %1 will continue to run in the background. This setting can be disabled.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Теперь вы можете закрыть это окно, %1 продолжит работу в фоне. Эту настройку можно отключить.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;您现在可以关闭此窗口，%1 将在后台继续运行。此设置可以禁用。&lt;/p&gt;</translation>
     </message>
     <message>
         <source>%1 Connected</source>
-        <translation>%1 подключено</translation>
+        <translation>%1 已连接</translation>
     </message>
     <message>
         <source>%1 - New Client</source>
-        <translation>%1 - Новый клиент</translation>
+        <translation>%1 - 新客户端</translation>
     </message>
     <message>
         <source>A new client called &apos;%1&apos; has been accepted. You&apos;ll need to add it to your server&apos;s screen layout.</source>
-        <translation>Новый клиент «%1» принят. Вам необходимо добавить его на макет экранов сервера.</translation>
+        <translation type="unfinished">已接受名为“%1”的新客户端。您需要将其添加到服务器的屏幕布局中。</translation>
     </message>
     <message>
         <source>Ignore</source>
-        <translation>Игнорировать</translation>
+        <translation>忽略</translation>
     </message>
     <message>
         <source>Add client</source>
-        <translation>Добавить клиента</translation>
+        <translation>添加客户端</translation>
     </message>
     <message>
         <source>A new client called &apos;%1&apos; wants to connect</source>
-        <translation>Новый клиент &apos;%1&apos; хочет подключиться</translation>
+        <translation>名为“%1”的新客户端请求连接</translation>
     </message>
     <message>
         <source>%1 Clear Settings</source>
-        <translation>%1 Сброс настроек</translation>
+        <translation>%1 清除设置</translation>
     </message>
     <message>
         <source>&lt;p&gt;Are you sure you want to clear all settings and restart %1?&lt;/p&gt;&lt;p&gt;This action cannot be undone.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Вы уверены, что хотите сбросить все настройки и перезапустить %1?&lt;/p&gt;&lt;p&gt;Это действие нельзя отменить.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;您确定要清除所有设置并重启 %1 吗？&lt;/p&gt;&lt;p&gt;此操作无法撤销。&lt;/p&gt;</translation>
     </message>
     <message>
         <source>%1 Read-only settings</source>
-        <translation>%1 Настройки только для чтения</translation>
+        <translation>%1 只读设置</translation>
     </message>
     <message>
         <source>&lt;p&gt;Settings are read-only because you only have read access to the file:&lt;/p&gt;&lt;p&gt;%1&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Настройки доступны только для чтения, так как у вас есть доступ только на чтение к файлу:&lt;/p&gt;&lt;p&gt;%1&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;设置是只读的，因为您对该文件只有读取权限：&lt;/p&gt;&lt;p&gt;%1&lt;/p&gt;</translation>
     </message>
     <message>
         <source>No thanks</source>
-        <translation>Нет, спасибо</translation>
+        <translation>不，谢谢</translation>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation>Проверить обновления</translation>
+        <translation>检查更新</translation>
     </message>
     <message>
         <source>&lt;p&gt;Would you like to check for updates when %1 starts?&lt;/p&gt;&lt;p&gt;Checking for updates requires an Internet connection.&lt;/p&gt;&lt;p&gt;URL: &lt;pre&gt;%2&lt;/pre&gt;&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Проверять наличие обновлений при запуске %1?&lt;/p&gt;&lt;p&gt;Для проверки обновлений требуется интернет-соединение.&lt;/p&gt;&lt;p&gt;URL: &lt;pre&gt;%2&lt;/pre&gt;&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;您希望在 %1 启动时检查更新吗？&lt;/p&gt;&lt;p&gt;检查更新需要互联网连接。&lt;/p&gt;&lt;p&gt;URL: &lt;pre&gt;%2&lt;/pre&gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Background service offline</source>
-        <translation>Фоновая служба отключена</translation>
+        <translation>后台服务离线</translation>
     </message>
     <message>
         <source>Retry</source>
-        <translation>Повторить</translation>
+        <translation>重试</translation>
     </message>
     <message>
         <source>Disable</source>
-        <translation>Отключить</translation>
+        <translation>禁用</translation>
     </message>
     <message>
         <source>&lt;p&gt;There was a problem finding the %1 background service (daemon).&lt;/p&gt;&lt;p&gt;The background service makes %1 work with UAC prompts and the login screen.&lt;/p&gt;&lt;p&gt;If don&apos;t want to use the background service and intentionally stopped it, you can prevent it&apos;s use by disabling this feature.&lt;/p&gt;&lt;p&gt;If you did not stop the background service intentionally, there may be a problem with it. Please retry or try restarting the %1 service from the Windows services program.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Возникла проблема с поиском фоновой службы (демона) %1.&lt;/p&gt;&lt;p&gt;Эта служба позволяет %1 работать с запросами UAC и на экране входа.&lt;/p&gt;&lt;p&gt;Если вы не хотите использовать службу, вы можете отключить эту функцию.&lt;/p&gt;</translation>
+        <translation type="unfinished">&lt;p&gt;查找 %1 后台服务（守护进程）时出现问题。&lt;/p&gt;&lt;p&gt;%1 需后台服务来与 UAC 提示和登录屏幕配合工作。&lt;/p&gt;&lt;p&gt;如果您不想使用后台服务并已将其停止，可以通过禁用此功能来阻止使用它。&lt;/p&gt;&lt;p&gt;如果您并非有意停止后台服务，则可能存在问题。请重试，或尝试从 Windows 服务程序中重启 %1 服务。&lt;/p&gt;</translation>
     </message>
     <message>
         <source>failed to read key from certificate file: %1</source>
         <extracomment>%1 will be replaced by the certificate path</extracomment>
-        <translation>не удалось прочитать ключ из файла сертификата: %1</translation>
+        <translation type="unfinished">无法从证书文件中读取密钥：%1</translation>
     </message>
     <message>
         <source>failed to parse certificate file: %1</source>
         <extracomment>%1 will be replaced by the certificate path</extracomment>
-        <translation>не удалось разобрать файл сертификата: %1</translation>
+        <translation type="unfinished">解析证书文件失败：%1</translation>
     </message>
     <message>
         <source>key detected is the incorrect size</source>
-        <translation>обнаружен ключ неверного размера</translation>
+        <translation type="unfinished">检测到的密钥大小不正确</translation>
     </message>
     <message>
         <source>failed to read RSA key from certificate file: %1</source>
         <extracomment>%1 will be replaced by the certificate path</extracomment>
-        <translation>не удалось прочитать RSA-ключ из файла сертификата: %1</translation>
+        <translation type="unfinished">无法从证书文件中读取 RSA 密钥：%1</translation>
     </message>
     <message>
         <source>%1 is already running</source>
-        <translation>%1 уже запущен</translation>
+        <translation>%1 已经在运行中</translation>
     </message>
 </context>
 <context>
     <name>ScreenSettingsDialog</name>
     <message>
         <source>Computer settings</source>
-        <translation>Настройки компьютера</translation>
+        <translation>计算机设置</translation>
     </message>
     <message>
         <source>Computer Info</source>
-        <translation>Информация о компьютере</translation>
+        <translation>计算机信息</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Имя</translation>
+        <translation>名称</translation>
     </message>
     <message>
         <source>Modifier Keys</source>
-        <translation>Клавиши-модификаторы</translation>
+        <translation>修饰键</translation>
     </message>
     <message>
         <source>M&amp;eta</source>
@@ -817,7 +823,7 @@ Additionally, check you are able to %1 the server config file: %2</source>
     </message>
     <message>
         <source>None</source>
-        <translation>Нет</translation>
+        <translation>无</translation>
     </message>
     <message>
         <source>&amp;Shift</source>
@@ -825,75 +831,75 @@ Additionally, check you are able to %1 the server config file: %2</source>
     </message>
     <message>
         <source>Dead Corners</source>
-        <translation>Мертвые зоны в углах</translation>
+        <translation>屏幕死角</translation>
     </message>
     <message>
         <source>Top Left</source>
-        <translation>Сверху слева</translation>
+        <translation>左上</translation>
     </message>
     <message>
         <source>Top Right</source>
-        <translation>Сверху справа</translation>
+        <translation>右上</translation>
     </message>
     <message>
         <source>Corner si&amp;ze</source>
-        <translation>Разм&amp;ер угла</translation>
+        <translation>角落大小(&amp;Z)</translation>
     </message>
     <message>
         <source>Bottom Left</source>
-        <translation>Снизу слева</translation>
+        <translation>左下</translation>
     </message>
     <message>
         <source>Bottom Right</source>
-        <translation>Снизу справа</translation>
+        <translation>右下</translation>
     </message>
     <message>
         <source>Fixes</source>
-        <translation>Исправления</translation>
+        <translation>修正</translation>
     </message>
     <message>
         <source>SCROLL LOCK key</source>
-        <translation>Клавиша SCROLL LOCK</translation>
+        <translation>SCROLL LOCK 键</translation>
     </message>
     <message>
         <source>CAPS LOCK key</source>
-        <translation>Клавиша CAPS LOCK</translation>
+        <translation>CAPS LOCK 键</translation>
     </message>
     <message>
         <source>NUM LOCK key</source>
-        <translation>Клавиша NUM LOCK</translation>
+        <translation>NUM LOCK 键</translation>
     </message>
     <message>
         <source>XTest for Xinerama</source>
-        <translation>XTest для Xinerama</translation>
+        <translation type="unfinished">用于 Xinerama 的 XTest</translation>
     </message>
     <message>
         <source>Aliases</source>
-        <translation>Псевдонимы</translation>
+        <translation>别名</translation>
     </message>
     <message>
         <source>&amp;Add</source>
-        <translation>&amp;Добавить</translation>
+        <translation>添加(&amp;A)</translation>
     </message>
     <message>
         <source>&amp;Remove</source>
-        <translation>&amp;Удалить</translation>
+        <translation>移除(&amp;R)</translation>
     </message>
     <message>
         <source>Screen name is empty</source>
-        <translation>Имя экрана пустое</translation>
+        <translation>屏幕名称为空</translation>
     </message>
     <message>
         <source>The screen name cannot be empty. Please either fill in a name or cancel the dialog.</source>
-        <translation>Имя экрана не может быть пустым. Введите имя или закройте окно.</translation>
+        <translation>屏幕名称不能为空。请填写名称或取消对话框。</translation>
     </message>
     <message>
         <source>Screen name matches alias</source>
-        <translation>Имя экрана совпадает с псевдонимом</translation>
+        <translation>屏幕名称与别名匹配</translation>
     </message>
     <message>
         <source>The screen name cannot be the same as an alias. Please either remove the alias or change the screen name.</source>
-        <translation>Имя экрана не может совпадать с псевдонимом. Удалите псевдоним или измените имя экрана.</translation>
+        <translation>屏幕名称不能与别名相同。请移除别名或更改屏幕名称。</translation>
     </message>
     <message>
         <source>Alt Gr</source>
@@ -908,497 +914,497 @@ Additionally, check you are able to %1 the server config file: %2</source>
     <name>ScreenSetupModel</name>
     <message>
         <source>&lt;center&gt;Screen: &lt;b&gt;%1&lt;/b&gt;&lt;/center&gt;&lt;br&gt;Double click to edit settings&lt;br&gt;Drag screen to the trashcan to remove it</source>
-        <translation>&lt;center&gt;Экран: &lt;b&gt;%1&lt;/b&gt;&lt;/center&gt;&lt;br&gt;Двойной клик для настроек&lt;br&gt;Перетащите экран в корзину для удаления</translation>
+        <translation>&lt;center&gt;屏幕：&lt;b&gt;%1&lt;/b&gt;&lt;/center&gt;&lt;br&gt;双击编辑设置&lt;br&gt;将屏幕拖到垃圾桶以移除</translation>
     </message>
 </context>
 <context>
     <name>SearchWidget</name>
     <message>
         <source>Search</source>
-        <translation type="unfinished">Поиск</translation>
+        <translation type="unfinished">搜索</translation>
     </message>
     <message>
         <source>Find next</source>
-        <translation type="unfinished">Найти следующее</translation>
+        <translation type="unfinished">查找下一个</translation>
     </message>
     <message>
         <source>Find previous</source>
-        <translation type="unfinished">Найти предыдущее</translation>
+        <translation type="unfinished">查找上一个</translation>
     </message>
     <message>
         <source>Find...</source>
-        <translation type="unfinished">Поиск...</translation>
+        <translation type="unfinished">寻找...</translation>
     </message>
 </context>
 <context>
     <name>ServerConfigDialog</name>
     <message>
         <source>Server Configuration</source>
-        <translation>Конфигурация сервера</translation>
+        <translation>服务器配置</translation>
     </message>
     <message>
         <source>Computers</source>
-        <translation>Компьютеры</translation>
+        <translation>计算机</translation>
     </message>
     <message>
         <source>Drag a computer from the grid to the trashcan to remove it.</source>
-        <translation>Перетащите компьютер в корзину, чтобы удалить его.</translation>
+        <translation>将计算机从网格拖到垃圾桶以将其移除。</translation>
     </message>
     <message>
         <source>Configure the layout of your computer displays by dragging to where you want.</source>
-        <translation>Настройте расположение мониторов, перетаскивая их в нужные места.</translation>
+        <translation>通过将计算机显示器拖动到所需位置来配置布局。</translation>
     </message>
     <message>
         <source>Drag to the grid to add a new computer.</source>
-        <translation>Перетащите на сетку, чтобы добавить компьютер.</translation>
+        <translation>拖动到网格以添加新计算机。</translation>
     </message>
     <message>
         <source>Hotkeys</source>
-        <translation>Горячие клавиши</translation>
+        <translation>热键</translation>
     </message>
     <message>
         <source>&amp;Hotkeys</source>
-        <translation>&amp;Горячие клавиши</translation>
+        <translation>热键(&amp;H)</translation>
     </message>
     <message>
         <source>&amp;New</source>
-        <translation>&amp;Создать</translation>
+        <translation>新建(&amp;N)</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation>&amp;Правка</translation>
+        <translation>编辑(&amp;E)</translation>
     </message>
     <message>
         <source>&amp;Remove</source>
-        <translation>&amp;Удалить</translation>
+        <translation>移除(&amp;R)</translation>
     </message>
     <message>
         <source>A&amp;ctions</source>
-        <translation>Дей&amp;ствия</translation>
+        <translation>动作(&amp;A)</translation>
     </message>
     <message>
         <source>Ne&amp;w</source>
-        <translation>Но&amp;вое</translation>
+        <translation>新建(&amp;W)</translation>
     </message>
     <message>
         <source>E&amp;dit</source>
-        <translation>Реда&amp;ктировать</translation>
+        <translation>编辑(&amp;D)</translation>
     </message>
     <message>
         <source>Re&amp;move</source>
-        <translation>Уда&amp;лить</translation>
+        <translation>移除(&amp;M)</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Расширенные</translation>
+        <translation>高级</translation>
     </message>
     <message>
         <source>&amp;Dead corners (for this computer)</source>
-        <translation>&amp;Мертвые зоны (для этого компьютера)</translation>
+        <translation>屏幕死角 (针对此计算机)(&amp;D)</translation>
     </message>
     <message>
         <source>&amp;Bottom-left</source>
-        <translation>&amp;Снизу слева</translation>
+        <translation>左下(&amp;B)</translation>
     </message>
     <message>
         <source>To&amp;p-left</source>
-        <translation>Свер&amp;ху слева</translation>
+        <translation>左上(&amp;P)</translation>
     </message>
     <message>
         <source>Bottom-ri&amp;ght</source>
-        <translation>Снизу с&amp;права</translation>
+        <translation>右下(&amp;G)</translation>
     </message>
     <message>
         <source>Top-rig&amp;ht</source>
-        <translation>Сверху спр&amp;ава</translation>
+        <translation>右上(&amp;H)</translation>
     </message>
     <message>
         <source>Cor&amp;ner size</source>
-        <translation>Разме&amp;р угла</translation>
+        <translation>角落大小(&amp;N)</translation>
     </message>
     <message>
         <source>px</source>
-        <translation>пикс</translation>
+        <translation>像素</translation>
     </message>
     <message>
         <source>&amp;Misc</source>
-        <translation>&amp;Разное</translation>
+        <translation>杂项(&amp;M)</translation>
     </message>
     <message>
         <source>Disable lock to computer (scroll lock key)</source>
-        <translation>Отключить привязку к компьютеру (Scroll Lock)</translation>
+        <translation>禁用锁定到计算机 (Scroll Lock 键)</translation>
     </message>
     <message>
         <source>Use &amp;relative mouse movements</source>
-        <translation>Использовать &amp;относительные перемещения мыши</translation>
+        <translation>使用相对鼠标移动(&amp;R)</translation>
     </message>
     <message>
         <source>Don&apos;t take &amp;foreground window (Windows only)</source>
-        <translation>Не захватывать &amp;переднее окно (только для Windows)</translation>
+        <translation>不获取前台窗口焦点 (仅限 Windows)(&amp;F)</translation>
     </message>
     <message>
         <source>Enable clipboard sharing</source>
-        <translation>Включить общий буфер обмена</translation>
+        <translation>启用剪贴板共享</translation>
     </message>
     <message>
         <source>Limit to:</source>
-        <translation>Ограничить до:</translation>
+        <translation>限制为：</translation>
     </message>
     <message>
         <source>MB</source>
-        <translation>МБ</translation>
+        <translation>MB</translation>
     </message>
     <message>
         <source>&amp;Network</source>
-        <translation>&amp;Сеть</translation>
+        <translation>网络(&amp;N)</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enables the network heartbeat to ping clients every &lt;span style=&quot; font-style:italic;&quot;&gt;n&lt;/span&gt; seconds. This may help to diagnose network problems by retrying the connection if the client becomes unresponsive.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Включает сетевой пульс для проверки клиентов каждые &lt;span style=&quot; font-style:italic;&quot;&gt;n&lt;/span&gt; секунд. Это помогает диагностировать проблемы сети.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;启用网络心跳，每 &lt;span style=&quot; font-style:italic;&quot;&gt;n&lt;/span&gt; 秒 ping 一次客户端。如果客户端无响应，通过重试连接可能有助于诊断网络问题。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&amp;Check clients every</source>
-        <translation>&amp;Проверять клиентов каждые</translation>
+        <translation>检查客户端间隔(&amp;C)</translation>
     </message>
     <message>
         <source>ms</source>
-        <translation>мс</translation>
+        <translation>毫秒</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enables compatibility with programs that use either the Synergy or Barrier protocols:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Synergy 3 uses the Synergy protocol.&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Barrier, Input-Leap and Synergy 1 uses the Barrier protocol.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;A Deskflow client will automatically use either the Synergy or Barrier protocol depending on the server protocol.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Включает совместимость с протоколами Synergy или Barrier.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;启用与使用 Synergy 或 Barrier 协议的程序的兼容性：&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Synergy 3 使用 Synergy 协议。&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Barrier, Input-Leap 和 Synergy 1 使用 Barrier 协议。&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Deskflow 客户端将根据服务器协议自动使用 Synergy 或 Barrier 协议。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Network protocol</source>
-        <translation>Сетевой протокол</translation>
+        <translation>网络协议</translation>
     </message>
     <message>
         <source>&amp;Switching</source>
-        <translation>&amp;Переключение</translation>
+        <translation>切换(&amp;S)</translation>
     </message>
     <message>
         <source>Switch &amp;after waiting</source>
-        <translation>Переключать &amp;после задержки</translation>
+        <translation>等待后切换(&amp;A)</translation>
     </message>
     <message>
         <source>Switch on double &amp;tap within</source>
-        <translation>Переключать по двойному &amp;касанию за</translation>
+        <translation>在指定时间内双击切换(&amp;T)</translation>
     </message>
     <message>
         <source>Config file</source>
-        <translation>Файл конфигурации</translation>
+        <translation>配置文件</translation>
     </message>
     <message>
         <source>Core server config file</source>
-        <translation>Файл конфигурации ядра сервера</translation>
+        <translation>核心服务器配置文件</translation>
     </message>
     <message>
         <source>Use a server config file to create complex computer layouts that are not possible with the simple grid-based computer layout editor.
 
 Enabling this setting will disable the server config GUI.</source>
-        <translation>Используйте файл конфигурации для сложных макетов. Включение этой опции отключит графический редактор.</translation>
+        <translation>使用服务器配置文件来创建简单的网格布局编辑器无法实现的复杂计算机布局。
+
+启用此设置将禁用服务器配置 GUI。</translation>
     </message>
     <message>
         <source>Use a server config file</source>
-        <translation>Использовать файл конфигурации сервера</translation>
+        <translation>使用服务器配置文件</translation>
     </message>
     <message>
         <source>Config file path</source>
-        <translation>Путь к файлу конфигурации</translation>
+        <translation>配置文件路径</translation>
     </message>
     <message>
         <source>%1 Configurations (*.conf);;All files (*.*)</source>
         <extracomment>%1 is replaced with the application names (*.conf) and (*.*) should not be translated</extracomment>
-        <translation>Конфигурации %1 (*.conf);;Все файлы (*.*)</translation>
+        <translation>%1 配置 (*.conf);;所有文件 (*.*)</translation>
     </message>
     <message>
         <source>Browse for a config file</source>
-        <translation>Выбор файла конфигурации</translation>
+        <translation>浏览配置文件</translation>
     </message>
     <message>
         <source>Enable lock to computer at startup</source>
-        <translation>Включать привязку к компьютеру при запуске</translation>
+        <translation type="unfinished">启动时启用锁定到计算机</translation>
     </message>
 </context>
 <context>
     <name>SettingsDialog</name>
     <message>
         <source>Preferences</source>
-        <translation>Настройки</translation>
+        <translation>首选项</translation>
     </message>
     <message>
         <source>Check for updates on startup</source>
-        <translation>Проверять обновления при запуске</translation>
+        <translation>启动时检查更新</translation>
     </message>
     <message>
         <source>Prevent this computer from going to sleep</source>
-        <translation>Запретить компьютеру переходить в спящий режим</translation>
+        <translation>防止此计算机进入睡眠状态</translation>
     </message>
     <message>
         <source>Tray icon style</source>
-        <translation>Стиль иконки трея</translation>
+        <translation>托盘图标样式</translation>
     </message>
     <message>
         <source>Colorful</source>
-        <translation>Цветной</translation>
+        <translation>彩色</translation>
     </message>
     <message>
         <source>Monocolor</source>
-        <translation>Монохромный</translation>
+        <translation>单色</translation>
     </message>
     <message>
         <source>Enable TLS Encryption</source>
-        <translation>Включить шифрование TLS</translation>
+        <translation>启用 TLS 加密</translation>
     </message>
     <message>
         <source>Certificate</source>
-        <translation>Сертификат</translation>
+        <translation>证书</translation>
     </message>
     <message>
         <source>Key length</source>
-        <translation>Длина ключа</translation>
+        <translation>密钥长度</translation>
     </message>
     <message>
         <source>Regenerate certificate</source>
-        <translation>Перевыпустить сертификат</translation>
+        <translation>重新生成证书</translation>
     </message>
     <message>
         <source>Require client certificates</source>
-        <translation>Требовать сертификаты клиентов</translation>
+        <translation>需要客户端证书</translation>
     </message>
     <message>
         <source>&amp;Advanced</source>
-        <translation>&amp;Расширенные</translation>
+        <translation>高级(&amp;A)</translation>
     </message>
     <message>
         <source>Port</source>
-        <translation>Порт</translation>
+        <translation>端口</translation>
     </message>
     <message>
         <source>Network IP</source>
-        <translation>Сетевой IP-адрес</translation>
+        <translation>网络 IP</translation>
     </message>
     <message>
         <source>Level</source>
-        <translation>Уровень</translation>
+        <translation>级别</translation>
     </message>
     <message>
         <source>Log path</source>
-        <translation>Путь к журналам</translation>
+        <translation>日志路径</translation>
     </message>
     <message>
         <source>Enable GUI debug messages</source>
-        <translation>Включить отладочные сообщения интерфейса</translation>
+        <translation>启用 GUI 调试消息</translation>
     </message>
     <message>
         <source>Use background service (daemon)</source>
-        <translation>Использовать фоновую службу (демон)</translation>
+        <translation>使用后台服务 (守护进程)</translation>
     </message>
     <message>
         <source>Always run as system (work at login screen and UAC)</source>
-        <translation>Всегда запускать от имени системы (работает на экране входа и UAC)</translation>
+        <translation type="unfinished">始终以系统身份运行 (在登录屏幕和 UAC 下工作)</translation>
     </message>
     <message>
         <source>Language</source>
-        <translation>Язык</translation>
-    </message>
-    <message>
-        <source>Enable wl-clipboard support</source>
-        <translation>Включить поддержку wl-clipboard</translation>
+        <translation>语言</translation>
     </message>
     <message>
         <source>TLS Certificate Regenerated</source>
-        <translation>Сертификат TLS перевыпущен</translation>
+        <translation>TLS 证书已重新生成</translation>
     </message>
     <message>
         <source>TLS certificate regenerated successfully.</source>
-        <translation>Сертификат TLS успешно перевыпущен.</translation>
+        <translation>TLS 证书重新生成成功。</translation>
     </message>
     <message>
         <source>Select a TLS certificate to use...</source>
-        <translation>Выберите сертификат TLS...</translation>
+        <translation>选择要使用的 TLS 证书...</translation>
     </message>
     <message>
         <source>Save log file to...</source>
-        <translation>Сохранить файл журнала в...</translation>
+        <translation>保存日志文件到...</translation>
     </message>
     <message>
         <source>Required messages</source>
-        <translation>Обязательные сообщения</translation>
+        <translation>必要消息</translation>
     </message>
     <message>
         <source>Non-fatal errors</source>
-        <translation>Не критические ошибки</translation>
+        <translation>非致命错误</translation>
     </message>
     <message>
         <source>General warnings</source>
-        <translation>Общие предупреждения</translation>
+        <translation>一般警告</translation>
     </message>
     <message>
         <source>General events [Default]</source>
-        <translation>Общие события [По умолчанию]</translation>
+        <translation>一般事件 [默认]</translation>
     </message>
     <message>
         <source>Debug entries</source>
-        <translation>Записи отладки</translation>
+        <translation>调试条目</translation>
     </message>
     <message>
         <source>Verbose debug output</source>
-        <translation>Подробный вывод отладки</translation>
+        <translation>详细调试输出</translation>
     </message>
     <message>
         <source>Close and save changes</source>
-        <translation type="unfinished">Закрыть и сохранить изменения</translation>
+        <translation type="unfinished">关闭并保存更改</translation>
     </message>
     <message>
         <source>Close and forget changes</source>
-        <translation type="unfinished">Закройте изменения и забудьте о них</translation>
+        <translation>关闭并放弃修改</translation>
     </message>
     <message>
         <source>Reset to stored values</source>
-        <translation type="unfinished">Сбросить до сохраненных значений</translation>
+        <translation type="unfinished">重置为存储值</translation>
     </message>
     <message>
         <source>Reset to default values</source>
-        <translation type="unfinished">Сбросить до значений по умолчанию</translation>
+        <translation type="unfinished">重置为默认值</translation>
+    </message>
+    <message>
+        <source>Enable wl-clipboard support</source>
+        <translation>启用 wl-clipboard 支持</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Requires the wl-clipboard package&lt;/p&gt;&lt;p&gt;When using wl-clipboard v2.2.1, there is a focus stealing bug that may make Deskflow harder to use. This has been fixed when using the wl-clipboard master branch, unless your Compositor lacks wlroots-data-control protocol support.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Требуется пакет wl-clipboard. В версии 2.2.1 есть ошибка перехвата фокуса.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;需要 wl-clipboard 包&lt;/p&gt;&lt;p&gt;使用 wl-clipboard v2.2.1 时存在一个焦点抢夺 Bug，可能导致 Deskflow 使用不便。该问题已在 wl-clipboard 的 master 分支中修复，除非您的合成器不支持 wlroots-data-control 协议。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Automatic</source>
-        <translation>Автоматически</translation>
+        <translation type="unfinished">自动的</translation>
     </message>
     <message>
         <source>Include version in the window title</source>
-        <translation type="unfinished">Включить номер версии в заголовок окна</translation>
+        <translation type="unfinished">在窗口标题中包含版本信息</translation>
     </message>
     <message>
         <source>Log to file</source>
-        <translation>Записывать в файл</translation>
+        <translation>记录日志到文件</translation>
     </message>
     <message>
         <source>&amp;Logs</source>
-        <translation>&amp;Журнал</translation>
+        <translation type="unfinished">日志(&amp;L)</translation>
     </message>
     <message>
         <source>&amp;General</source>
-        <translation type="unfinished">&amp;Общий</translation>
+        <translation>常规(&amp;G)</translation>
     </message>
     <message>
         <source>&amp;Network</source>
-        <translation>&amp;Сеть</translation>
+        <translation>网络(&amp;N)</translation>
     </message>
     <message>
         <source>&amp;Window</source>
-        <translation type="unfinished">&amp;Окно</translation>
+        <translation type="unfinished">窗户(&amp;W)</translation>
     </message>
     <message>
         <source>When the main window is closed</source>
-        <translation type="unfinished">Когда главное окно закрыто</translation>
+        <translation type="unfinished">主窗口关闭时</translation>
     </message>
     <message>
         <source>Exit</source>
-        <translation type="unfinished">Выход</translation>
+        <translation type="unfinished">出口</translation>
     </message>
     <message>
         <source>Send to background</source>
-        <translation type="unfinished">Отправить в фоновый режим</translation>
+        <translation type="unfinished">发送到后台</translation>
     </message>
     <message>
         <source>When the application starts</source>
-        <translation type="unfinished">Когда приложение запускается</translation>
+        <translation type="unfinished">应用程序启动时</translation>
     </message>
     <message>
         <source>Show the main window</source>
-        <translation type="unfinished">Показать главное окно</translation>
+        <translation type="unfinished">显示主窗口</translation>
     </message>
     <message>
         <source>Run command on enter</source>
-        <translation type="unfinished">Выполнять команду по нажатию Enter</translation>
+        <translation type="unfinished">按下回车键执行命令</translation>
     </message>
     <message>
         <source>Run command on exit</source>
-        <translation type="unfinished">Выполнить команду при выходе</translation>
+        <translation type="unfinished">退出时运行命令</translation>
     </message>
     <message>
         <source>Using a log level higher than Info may affect performance.</source>
-        <translation type="unfinished">Использование уровня логирования выше Info может повлиять на производительность.</translation>
+        <translation type="unfinished">使用高于 Info 级别的日志级别可能会影响性能。</translation>
     </message>
 </context>
 <context>
     <name>StatusBar</name>
     <message>
         <source>%1 is not running</source>
-        <translation>%1 не запущен</translation>
+        <translation>%1 未在运行</translation>
     </message>
     <message>
         <source>%1 is starting...</source>
-        <translation>%1 запускается...</translation>
+        <translation>%1 正在启动...</translation>
     </message>
     <message>
         <source>%1 will retry in a moment...</source>
-        <translation>%1 скоро повторит попытку...</translation>
+        <translation>%1 将稍后重试...</translation>
     </message>
     <message>
         <source>%1 is stopping...</source>
-        <translation>%1 останавливается...</translation>
+        <translation>%1 正在停止...</translation>
     </message>
     <message>
         <source>%1 is waiting for clients</source>
-        <translation>%1 ожидает подключения клиентов</translation>
+        <translation>%1 正在等待客户端连接</translation>
     </message>
     <message>
         <source>%1 is connected as client of %2</source>
-        <translation>%1 подключен как клиент к %2</translation>
+        <translation>%1 已作为 %2 的客户端连接</translation>
     </message>
     <message>
         <source>%1 is disconnected</source>
-        <translation>%1 отключен</translation>
+        <translation>%1 已断开连接</translation>
     </message>
     <message numerus="yes">
         <source>%1 is connected, with %n client(s): %2</source>
         <extracomment>Shown when in server mode and at least 1 client is connected %1 is replaced by the app name %2 will be a list of at least one client %n will be replaced by the number of clients (n is &gt;=1), it is not requried to be in the translation</extracomment>
         <translation>
-            <numerusform>%1 подключен к %n клиенту: %2</numerusform>
-            <numerusform>%1 подключен к %n клиентам: %2</numerusform>
-            <numerusform>%1 подключен к %n клиентам: %2</numerusform>
+            <numerusform>%1 已连接，共有 %n 个客户端：%2</numerusform>
         </translation>
     </message>
     <message>
         <source>Clients:
  %1</source>
-        <translation>Клиенты:
+        <translation>客户端：
  %1</translation>
     </message>
     <message>
         <source>A new version v%1 is available</source>
-        <translation>Доступна новая версия v%1</translation>
+        <translation>新版本 v%1 可用</translation>
     </message>
     <message>
         <source>View local fingerprint</source>
-        <translation>Показать локальный отпечаток</translation>
+        <translation>查看本地指纹</translation>
     </message>
     <message>
         <source>Update available</source>
-        <translation>Доступно обновление</translation>
+        <translation>有可用更新</translation>
     </message>
     <message>
         <source>%1 is connecting...</source>
-        <translation>%1 подключается...</translation>
+        <translation>%1 正在连接...</translation>
     </message>
     <message>
         <source>%1 is waiting %2 seconds before the next retry</source>
-        <translation type="unfinished">%1 ожидает %2 секунд перед следующей попыткой</translation>
+        <translation type="unfinished">%1 正在等待 %2 秒，然后进行下一次重试</translation>
     </message>
     <message>
         <source>%1 Encryption Enabled</source>
-        <translation>Шифрование %1 включено</translation>
+        <translation>%1 加密已启用</translation>
     </message>
     <message>
         <source>Encryption Disabled</source>
-        <translation>Шифрование отключено</translation>
+        <translation>加密已禁用</translation>
     </message>
 </context>
 <context>
@@ -1406,41 +1412,41 @@ Enabling this setting will disable the server config GUI.</source>
     <message>
         <source>LocalizedName</source>
         <extracomment>Replace with your Language name This is a required string</extracomment>
-        <translation>Русский</translation>
+        <translation>简体中文</translation>
     </message>
 </context>
 <context>
     <name>validators::AliasValidator</name>
     <message>
         <source>Computer name cannot contain spaces</source>
-        <translation>Имя компьютера не может содержать пробелы</translation>
+        <translation>计算机名称不能包含空格</translation>
     </message>
     <message>
         <source>Aliases may not be ip addresses</source>
-        <translation>Псевдонимы не могут быть IP-адресами</translation>
+        <translation>不能用 IP 地址作为别名</translation>
     </message>
     <message>
         <source>Contains invalid characters or is too long</source>
-        <translation>Содержит недопустимые символы или слишком длинный</translation>
+        <translation>包含无效字符或过长</translation>
     </message>
 </context>
 <context>
     <name>validators::ScreenNameValidator</name>
     <message>
         <source>Computer name cannot be empty</source>
-        <translation>Имя компьютера не может быть пустым</translation>
+        <translation>计算机名称不能为空</translation>
     </message>
     <message>
         <source>Computer name cannot contain spaces</source>
-        <translation>Имя компьютера не может содержать пробелы</translation>
+        <translation>计算机名称不能包含空格</translation>
     </message>
     <message>
         <source>Contains invalid characters or is too long</source>
-        <translation>Имя содержит недопустимые символы или слишком длинное</translation>
+        <translation>包含无效字符或过长</translation>
     </message>
     <message>
         <source>A computer with this name already exists</source>
-        <translation>Компьютер с таким именем уже существует</translation>
+        <translation>一台同名的计算机已经存在</translation>
     </message>
 </context>
 </TS>

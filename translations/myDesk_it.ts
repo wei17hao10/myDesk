@@ -5,7 +5,7 @@
     <name>AboutDialog</name>
     <message>
         <source>About Deskflow</source>
-        <translation>Informazioni su Deskflow</translation>
+        <translation type="vanished">Informazioni su Deskflow</translation>
     </message>
     <message>
         <source>Version: </source>
@@ -50,6 +50,10 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }  
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;  
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/deskflow/deskflow/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#508ed8;&quot;&gt;Collaboratori al codice&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>About myDesk</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

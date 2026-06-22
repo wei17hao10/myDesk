@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ko_KR" sourcelanguage="en_US">
+<TS version="2.1" language="ru_RU" sourcelanguage="en_US">
 <context>
     <name>AboutDialog</name>
     <message>
         <source>About Deskflow</source>
-        <translation>Deskflow 정보</translation>
+        <translation type="vanished">О Deskflow</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -17,15 +17,15 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://www.gnu.org/licenses/old-licenses/gpl-2.0.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#508ed8;&quot;&gt;라이선스: GNU GPL 버전 2&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://www.gnu.org/licenses/old-licenses/gpl-2.0.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#508ed8;&quot;&gt;Лицензия: GNU GPL версии 2&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Version: </source>
-        <translation>버전: </translation>
+        <translation>Версия: </translation>
     </message>
     <message>
         <source>Copy version info</source>
-        <translation>버전 정보 복사</translation>
+        <translation>Скопировать сведения о версии</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -37,473 +37,477 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/deskflow/deskflow/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#508ed8;&quot;&gt;코드 기여자&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/deskflow/deskflow/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#508ed8;&quot;&gt;Авторы кода&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Icons from &lt;a href=&quot;https://develop.kde.org/frameworks/breeze-icons/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;KDE Breeze&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;아이콘 제공: &lt;a href=&quot;https://develop.kde.org/frameworks/breeze-icons/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;KDE Breeze&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Иконки &lt;a href=&quot;https://develop.kde.org/frameworks/breeze-icons/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;KDE Breeze&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Important Developers</source>
-        <translation>주요 개발자</translation>
+        <translation>Ключевые разработчики</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation>닫기(&amp;C)</translation>
+        <translation>&amp;Закрыть</translation>
+    </message>
+    <message>
+        <source>About myDesk</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ActionDialog</name>
     <message>
         <source>Configure Action</source>
-        <translation>동작 설정</translation>
+        <translation>Настроить действие</translation>
     </message>
     <message>
         <source>When the hotkey is pressed</source>
-        <translation>단축키를 눌렀을 때</translation>
+        <translation>При нажатии горячей клавиши</translation>
     </message>
     <message>
         <source>When the hotkey is released</source>
-        <translation>단축키를 뗐을 때</translation>
+        <translation>При отпускании горячей клавиши</translation>
     </message>
     <message>
         <source>Press key(s)</source>
-        <translation>키 누르기</translation>
+        <translation>Нажать клавишу(и)</translation>
     </message>
     <message>
         <source>Release key(s)</source>
-        <translation>키 떼기</translation>
+        <translation>Отпустить клавишу(и)</translation>
     </message>
     <message>
         <source>Press and release key(s)</source>
-        <translation>키 누르고 떼기</translation>
+        <translation>Нажать и отпустить клавишу(и)</translation>
     </message>
     <message>
         <source>Switch to a computer</source>
-        <translation>지정한 컴퓨터로 전환</translation>
+        <translation>Переключиться на компьютер</translation>
     </message>
     <message>
         <source>Switch in a direction</source>
-        <translation>지정한 방향으로 전환</translation>
+        <translation>Перейти в направлении</translation>
     </message>
     <message>
         <source>Switch to next computer</source>
-        <translation>다음 컴퓨터로 전환</translation>
+        <translation>Переключиться на следующий компьютер</translation>
     </message>
     <message>
         <source>Modify the cursor lock</source>
-        <translation>커서 잠금 변경</translation>
+        <translation>Изменить блокировку курсора</translation>
     </message>
     <message>
         <source>Restart the server</source>
-        <translation>서버 재시작</translation>
+        <translation>Перезапустить сервер</translation>
     </message>
     <message>
         <source>Switch to the computer on the left</source>
-        <translation>왼쪽 컴퓨터로 전환</translation>
+        <translation>Переключиться на компьютер слева</translation>
     </message>
     <message>
         <source>Switch to the computer on the right</source>
-        <translation>오른쪽 컴퓨터로 전환</translation>
+        <translation>Переключиться на компьютер справа</translation>
     </message>
     <message>
         <source>Switch to the computer above</source>
-        <translation>위쪽 컴퓨터로 전환</translation>
+        <translation>Переключиться на компьютер выше</translation>
     </message>
     <message>
         <source>Switch to the computer below</source>
-        <translation>아래쪽 컴퓨터로 전환</translation>
+        <translation>Переключиться на компьютер ниже</translation>
     </message>
     <message>
         <source>Toggle the cursor lock</source>
-        <translation>커서 잠금 토글</translation>
+        <translation>Переключить блокировку курсора</translation>
     </message>
     <message>
         <source>Enable the cursor lock</source>
-        <translation>커서 잠금 사용</translation>
+        <translation>Включить блокировку курсора</translation>
     </message>
     <message>
         <source>Disable the cursor lock</source>
-        <translation>커서 잠금 해제</translation>
+        <translation>Выключить блокировку курсора</translation>
     </message>
     <message>
         <source>Computers to receive this event</source>
-        <translation>이 이벤트를 받을 컴퓨터</translation>
+        <translation>Компьютеры, получающие это событие</translation>
     </message>
     <message>
         <source>Switch to %1</source>
-        <translation>%1(으)로 전환</translation>
+        <translation>Переключиться на %1</translation>
     </message>
 </context>
 <context>
     <name>ClientConfigDialog</name>
     <message>
         <source>Client Configuration</source>
-        <translation type="unfinished">클라이언트 구성</translation>
+        <translation type="unfinished">Конфигурация клиента</translation>
     </message>
     <message>
         <source>Use server&apos;s keyboard language on this computer</source>
-        <translation type="unfinished">이 컴퓨터에서 서버의 키보드 언어 사용</translation>
+        <translation type="unfinished">Использовать язык клавиатуры сервера на этом компьютере</translation>
     </message>
     <message>
         <source>Scroll Modifiers</source>
-        <translation>스크롤 제어자</translation>
+        <translation type="unfinished">Модификаторы прокрутки</translation>
     </message>
     <message>
         <source>Invert</source>
-        <translation>반전</translation>
+        <translation type="unfinished">Инвертировать</translation>
     </message>
     <message>
         <source>Horizontal Scroll</source>
-        <translation type="unfinished">가로 스크롤</translation>
+        <translation type="unfinished">Горизонтальная прокрутка</translation>
     </message>
     <message>
         <source>Vertical Scroll</source>
-        <translation type="unfinished">세로 스크롤</translation>
+        <translation type="unfinished">Вертикальная прокрутка</translation>
     </message>
     <message>
         <source>Scale</source>
-        <translation type="unfinished">규모</translation>
+        <translation type="unfinished">Шкала</translation>
     </message>
     <message>
         <source>Close and save changes</source>
-        <translation>변경 사항 저장 후 닫기</translation>
+        <translation type="unfinished">Закрыть и сохранить изменения</translation>
     </message>
     <message>
         <source>Close and forget changes</source>
-        <translation>저장하지 않고 닫기</translation>
+        <translation type="unfinished">Закройте изменения и забудьте о них</translation>
     </message>
     <message>
         <source>Reset to stored values</source>
-        <translation type="unfinished">저장된 값으로 재설정</translation>
+        <translation type="unfinished">Сбросить до сохраненных значений</translation>
     </message>
     <message>
         <source>Reset to default values</source>
-        <translation type="unfinished">기본값으로 재설정</translation>
+        <translation type="unfinished">Сбросить до значений по умолчанию</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Allow the client to slow the rate it attempts to reconnect to the server when connections attempts are failing. The delay between connection attempts will  start at 1 second intervals and can be a maxium of 5 minutes between connection attempts.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;연결 시도가 실패할 경우, 클라이언트가 서버 재연결 시도 주기를 늦추도록 허용합니다. 연결 시도 간 지연 시간은 1초 간격으로 시작되며, 최대 5분까지 늘어날 수 있습니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Позволить клиенту замедлять частоту попыток повторного подключения к серверу в случае неудачных попыток соединения. Интервал между попытками подключения будет начинаться с 1 секунды и может достигать максимума в 5 минут.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Use dynamic reconnection time based on connection attempts</source>
-        <translation type="unfinished">연결 시도 횟수에 따라 동적 재연결 시간을 사용합니다</translation>
+        <translation type="unfinished">Использовать динамическое время переподключения в зависимости от попыток подключения</translation>
     </message>
 </context>
 <context>
     <name>FingerprintDialog</name>
     <message>
         <source>Local Fingerprints</source>
-        <translation>로컬 핑거프린팅</translation>
+        <translation>Локальные отпечатки</translation>
     </message>
     <message>
         <source>Local computer&apos;s fingerprint</source>
-        <translation>이 컴퓨터의 핑거프린팅</translation>
+        <translation>Отпечаток локального компьютера</translation>
     </message>
     <message>
         <source>Compare the fingerprints in this dialog to those on the %1.
 Only connect if they match!</source>
-        <translation>이 대화상자에 표시된 핑거프린팅을 %1의 핑거프린팅과 비교하세요.
-일치할 때만 연결하세요!</translation>
+        <translation>Сравните отпечатки в этом окне с отпечатками на %1. 
+Подключайтесь только в случае их совпадения!</translation>
     </message>
     <message>
         <source>New client connecting</source>
-        <translation>새 클라이언트 연결</translation>
+        <translation>Подключение нового клиента</translation>
     </message>
     <message>
         <source>client</source>
-        <translation>클라이언트</translation>
+        <translation>клиент</translation>
     </message>
     <message>
         <source>
 Trust client and allow connection?
 </source>
         <translation>
-클라이언트를 신뢰하고 연결을 허용할까요?
+Доверять клиенту и разрешить подключение?
 </translation>
     </message>
     <message>
         <source>Connecting to a new server</source>
-        <translation>새 서버에 연결 중</translation>
+        <translation>Подключение к новому серверу</translation>
     </message>
     <message>
         <source>server</source>
-        <translation>서버</translation>
+        <translation>сервер</translation>
     </message>
     <message>
         <source>
 Do you want to connect to the server?
 </source>
         <translation>
-이 서버에 연결할까요?
+Вы хотите подключиться к серверу?
 </translation>
     </message>
     <message>
         <source>Server Fingerprint</source>
-        <translation>서버 핑거프린팅</translation>
+        <translation>Отпечаток сервера</translation>
     </message>
     <message>
         <source>Client Fingerprint</source>
-        <translation>클라이언트 핑거프린팅</translation>
+        <translation>Отпечаток клиента</translation>
     </message>
     <message>
         <source>Show image</source>
-        <translation>이미지로 보기</translation>
+        <translation>Показать изображение</translation>
     </message>
     <message>
         <source>Show hash</source>
-        <translation>해시로 보기</translation>
+        <translation>Показать хэш</translation>
     </message>
     <message>
         <source>Display the fingerprint as an image</source>
-        <translation>핑거프린팅을 이미지로 표시</translation>
+        <translation>Показать отпечаток как изображение</translation>
     </message>
     <message>
         <source>Display the fingerprint as a hash</source>
-        <translation>핑거프린팅을 해시로 표시</translation>
+        <translation>Показать отпечаток как хэш</translation>
     </message>
 </context>
 <context>
     <name>FingerprintPreview</name>
     <message>
         <source>Invalid hash format</source>
-        <translation>잘못된 해시 형식</translation>
+        <translation>Неверный формат хэша</translation>
     </message>
 </context>
 <context>
     <name>HotkeyDialog</name>
     <message>
         <source>Hotkey</source>
-        <translation>단축키</translation>
+        <translation>Горячая клавиша</translation>
     </message>
     <message>
         <source>Enter the specification for the hotkey:</source>
-        <translation>단축키를 지정하세요:</translation>
+        <translation>Введите сочетание для горячей клавиши:</translation>
     </message>
 </context>
 <context>
     <name>LogDock</name>
     <message>
         <source>Log</source>
-        <translation>로그</translation>
+        <translation>Журнал</translation>
     </message>
     <message>
         <source>Detach from window</source>
-        <translation>창에서 분리</translation>
+        <translation>Открепить от окна</translation>
     </message>
     <message>
         <source>Close Log</source>
-        <translation>로그 닫기</translation>
+        <translation>Закрыть журнал</translation>
     </message>
     <message>
         <source>Attach to window</source>
-        <translation>창에 붙이기</translation>
+        <translation>Прикрепить к окну</translation>
     </message>
 </context>
 <context>
     <name>LogLevel</name>
     <message>
         <source>Fatal</source>
-        <translation type="unfinished">치명적 오류</translation>
+        <translation type="unfinished">Критический</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">오류</translation>
+        <translation type="unfinished">Ошибка</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished">경고</translation>
+        <translation type="unfinished">Предупреждение</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished">정보</translation>
+        <translation type="unfinished">Инфо</translation>
     </message>
     <message>
         <source>Debug</source>
-        <translation type="unfinished">디버그</translation>
+        <translation type="unfinished">Отладка</translation>
     </message>
     <message>
         <source>Verbose</source>
-        <translation type="unfinished">말 수가 많은</translation>
+        <translation type="unfinished">Многословный</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>This computer&apos;s name:</source>
-        <translation>이 컴퓨터 이름:</translation>
+        <translation>Имя этого компьютера:</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Name can&apos;t have have spaces or special characters&lt;/p&gt;&lt;p&gt;Use Enter to save the name change.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;이름에는 공백이나 특수문자를 사용할 수 없습니다&lt;/p&gt;&lt;p&gt;Enter 키로 이름 변경을 저장합니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Имя не может содержать пробелы или специальные символы.&lt;/p&gt;&lt;p&gt;Нажмите Enter, чтобы сохранить изменения.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Edit Computer Name</source>
-        <translation>컴퓨터 이름 편집</translation>
+        <translation>Изменить имя компьютера</translation>
     </message>
     <message>
         <source>Use this computer&apos;s keyboard and mouse
 (make this computer the server)</source>
-        <translation>이 컴퓨터의 키보드와 마우스를 사용
-(이 컴퓨터를 서버로 설정)</translation>
+        <translation>Использовать мышь и клавиатуру этого компьютера
+(сделать этот компьютер сервером)</translation>
     </message>
     <message>
         <source>Use another computer’s mouse and keyboard
 (make this computer the client)</source>
-        <translation>다른 컴퓨터의 키보드와 마우스를 사용
-(이 컴퓨터를 클라이언트로 설정)</translation>
+        <translation>Использовать мышь и клавиатуру другого компьютера
+(сделать этот компьютер клиентом)</translation>
     </message>
     <message>
         <source>&amp;Configure Server</source>
-        <translation>서버 설정(&amp;C)</translation>
+        <translation>&amp;Настроить сервер</translation>
     </message>
     <message>
         <source>Export server configuration</source>
-        <translation>서버 설정 내보내기</translation>
+        <translation>Экспортировать конфигурацию сервера</translation>
     </message>
     <message>
         <source>You must select a mode</source>
-        <translation>모드를 선택해야 합니다</translation>
+        <translation>Необходимо выбрать режим</translation>
     </message>
     <message>
         <source>&amp;Start</source>
-        <translation>시작(&amp;S)</translation>
+        <translation>&amp;Запуск</translation>
     </message>
     <message>
         <source>Restart</source>
-        <translation>재시작</translation>
+        <translation>Перезапуск</translation>
     </message>
     <message>
         <source>Your current TLS key is smaller than the minimum allowed size, A new key 2048-bit key will be generated.</source>
-        <translation>현재 TLS 키 길이가 허용되는 최소 길이보다 짧습니다. 새 2048비트 키를 생성합니다.</translation>
+        <translation>Текущий ключ TLS меньше минимально допустимого размера. Будет создан новый 2048-битный ключ.</translation>
     </message>
     <message>
         <source>invalid certificate, generating a new one</source>
-        <translation type="unfinished">유효하지 않은 인증서입니다. 새 인증서를 생성하는 중입니다</translation>
+        <translation>недействительный сертификат, создание нового</translation>
     </message>
     <message>
         <source>Address missing</source>
-        <translation>주소가 없습니다</translation>
+        <translation>Адрес не указан</translation>
     </message>
     <message>
         <source>Please enter the hostname or IP address of the other computer.</source>
-        <translation>다른 컴퓨터의 호스트 이름 또는 IP 주소를 입력하세요.</translation>
+        <translation>Пожалуйста, введите имя хоста или IP-адрес другого компьютера.</translation>
     </message>
     <message>
         <source>Save server configuration as...</source>
-        <translation>서버 설정을 다른 이름으로 저장...</translation>
+        <translation>Сохранить конфигурацию сервера как...</translation>
     </message>
     <message>
         <source>Save failed</source>
-        <translation>저장 실패</translation>
+        <translation>Ошибка сохранения</translation>
     </message>
     <message>
         <source>Could not save server configuration to file.</source>
-        <translation>서버 설정을 파일로 저장할 수 없습니다.</translation>
+        <translation>Не удалось сохранить файл конфигурации сервера.</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>시작</translation>
+        <translation>Запуск</translation>
     </message>
     <message>
         <source>Stop</source>
-        <translation>중지</translation>
+        <translation>Стоп</translation>
     </message>
     <message>
         <source>Connect</source>
-        <translation>연결</translation>
+        <translation>Подключиться</translation>
     </message>
     <message>
         <source>Disconnect</source>
-        <translation>연결 해제</translation>
+        <translation>Отключиться</translation>
     </message>
     <message>
         <source>&lt;p&gt;Failed to connect to the server &apos;%1&apos;.&lt;/p&gt;&lt;p&gt;A Client with your name is already connected to the server.&lt;/p&gt;Please ensure that you&apos;re using a unique name and that only a single instance of the client process is running.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;서버 &apos;%1&apos;에 연결하지 못했습니다.&lt;/p&gt;&lt;p&gt;같은 이름의 클라이언트가 이미 서버에 연결되어 있습니다.&lt;/p&gt;&lt;p&gt;고유한 이름을 사용하고, 클라이언트 프로세스가 하나만 실행 중인지 확인하세요.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Не удалось подключиться к серверу &apos;%1&apos;.&lt;/p&gt;&lt;p&gt;Клиент с таким именем уже подключен к серверу.&lt;/p&gt;Убедитесь, что вы используете уникальное имя и запущен только один процесс клиента.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>No IP Detected</source>
-        <translation>IP를 감지하지 못했습니다</translation>
+        <translation>IP-адрес не обнаружен</translation>
     </message>
     <message>
         <source>Unable to detect an IP address. Check your network connection is active.</source>
-        <translation>IP 주소를 감지할 수 없습니다. 네트워크 연결이 활성화되어 있는지 확인하세요.</translation>
+        <translation>Не удалось определить IP-адрес. Проверьте сетевое соединение.</translation>
     </message>
     <message>
         <source>Using IP: </source>
-        <translation type="unfinished">사용 중인 IP: </translation>
+        <translation>Использование IP-адреса: </translation>
     </message>
     <message>
         <source>&lt;p&gt;If connecting via the hostname fails, try %1&lt;/p&gt;</source>
-        <translation>&lt;p&gt;호스트 이름으로 연결에 실패하면 %1을(를) 시도해 보세요.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Если подключение по имени хоста не удается, попробуйте %1&lt;/p&gt;</translation>
     </message>
     <message>
         <source>the suggested IP.</source>
-        <translation>추천 IP 주소</translation>
+        <translation>рекомендуемый IP-адрес.</translation>
     </message>
     <message>
         <source>one of the following IPs:&lt;br/&gt;%1</source>
-        <translation>다음 IP 중 하나:&lt;br/&gt;%1</translation>
+        <translation>один из следующих IP-адресов:&lt;br/&gt;%1</translation>
     </message>
     <message>
         <source>
 A bound IP is now invalid, you may need to restart the server.</source>
         <translation>
-연결된 IP가 이제 유효하지 않습니다. 서버를 재시작해야 합니다.</translation>
+Привязанный IP-адрес стал недействительным. Возможно требуется перезапуск сервера.</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation>파일(&amp;F)</translation>
+        <translation>&amp;Файл</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation>편집(&amp;E)</translation>
+        <translation>&amp;Правка</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation>보기(&amp;V)</translation>
+        <translation>&amp;Вид</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation>도움말(&amp;H)</translation>
+        <translation>&amp;Справка</translation>
     </message>
     <message>
         <source>Clear settings</source>
-        <translation>설정 초기화</translation>
+        <translation>Сбросить настройки</translation>
     </message>
     <message>
         <source>Report a Bug</source>
-        <translation>버그 신고</translation>
+        <translation>Сообщить об ошибке</translation>
     </message>
     <message>
         <source>&amp;Minimize to tray</source>
-        <translation>트레이로 최소화(&amp;M)</translation>
+        <translation>&amp;Свернуть в трей</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation>종료(&amp;Q)</translation>
+        <translation>&amp;Выход</translation>
     </message>
     <message>
         <source>&amp;Open %1</source>
         <extracomment>%1 will be the replaced with the appname</extracomment>
-        <translation>%1 열기(&amp;O)</translation>
+        <translation>&amp;Открыть %1</translation>
     </message>
     <message>
         <source>&amp;Preferences</source>
-        <translation>환경설정(&amp;P)</translation>
+        <translation>&amp;Настройки</translation>
     </message>
     <message>
         <source>Rest&amp;art</source>
-        <translation>재시작(&amp;A)</translation>
+        <translation>Переза&amp;пуск</translation>
     </message>
     <message>
         <source>S&amp;top</source>
-        <translation>중지(&amp;T)</translation>
+        <translation>Ос&amp;тановить</translation>
     </message>
     <message>
         <source>About %1...</source>
         <extracomment>%1 will be the replaced with the appname</extracomment>
-        <translation>%1 정보...</translation>
+        <translation>О %1...</translation>
     </message>
     <message>
         <source>Ctrl+S</source>
@@ -522,11 +526,11 @@ A bound IP is now invalid, you may need to restart the server.</source>
     </message>
     <message>
         <source>Invalid Screen Name</source>
-        <translation>잘못된 컴퓨터 이름</translation>
+        <translation>Недопустимое имя экрана</translation>
     </message>
     <message>
         <source>Screen name already exists</source>
-        <translation>컴퓨터 이름이 이미 존재합니다</translation>
+        <translation>Имя экрана уже существует</translation>
     </message>
     <message>
         <source>The name you have chosen is invalid.
@@ -535,52 +539,52 @@ Valid names:
 • Use letters and numbers
 • May also use _ or -
 • Are between 1 and 255 characters</source>
-        <translation>선택한 이름이 유효하지 않습니다.
+        <translation>Выбранное имя недопустимо.
 
-유효한 이름:
-• 영문자와 숫자 사용
-• _ 또는 - 사용 가능
-• 1~255자</translation>
+Требования:
+• Используйте буквы и цифры
+• Можно использовать _ или -
+• Длина от 1 до 255 символов</translation>
     </message>
     <message>
         <source>%1 Connection Error</source>
-        <translation>%1 연결 오류</translation>
+        <translation>Ошибка соединения %1</translation>
     </message>
     <message>
         <source>Suggested IP: </source>
-        <translation type="unfinished">추천 IP: </translation>
+        <translation>Рекомендуемый IP-адрес: </translation>
     </message>
     <message>
         <source>&amp;Configure Client</source>
-        <translation type="unfinished">클라이언트 구성 (&amp;C)</translation>
+        <translation type="unfinished">&amp;Настройка клиента</translation>
     </message>
     <message>
         <source>Connect to:</source>
-        <translation type="unfinished">연결 대상:</translation>
+        <translation type="unfinished">Подключиться к:</translation>
     </message>
     <message>
         <source>&lt;html&gt;Hostname or IP address of the server computer.&lt;br/&gt;May contain a comma seperated list.&lt;/html&gt;</source>
-        <translation>&lt;html&gt;서버 컴퓨터의 호스트 이름 또는 IP 주소입니다.&lt;br/&gt;목록 요소는 쉼표로 구분됩니다.&lt;/html&gt;</translation>
+        <translation type="unfinished">&lt;html&gt;Имя хоста или IP-адрес серверного компьютера.&lt;br/&gt;Может содержать список, разделенный запятыми.&lt;/html&gt;</translation>
     </message>
     <message>
         <source>read</source>
-        <translation type="unfinished">읽기</translation>
+        <translation type="unfinished">прочитать</translation>
     </message>
     <message>
         <source>read and write</source>
-        <translation type="unfinished">읽기 및 쓰기</translation>
+        <translation type="unfinished">читать и записывать</translation>
     </message>
     <message>
         <source>The Core executable could not be started.
 Please check if you have sufficient permissions to run %1.</source>
-        <translation type="unfinished">Core 실행 파일을 시작할 수 없습니다.
-%1을 실행할 수 있는 충분한 권한이 있는지 확인하세요.</translation>
+        <translation type="unfinished">Не удалось запустить исполняемый файл Core.
+Проверьте, достаточно ли у вас прав для запуска %1.</translation>
     </message>
     <message>
         <source>
 Additionally, check you are able to %1 the server config file: %2</source>
         <translation type="unfinished">
-또한 서버 구성 파일을 %1할 수 있는지 확인하세요: %2</translation>
+Также убедитесь, что вы можете %1 файл конфигурации сервера: %2</translation>
     </message>
     <message>
         <source>Don&apos;t show this again</source>
@@ -600,184 +604,184 @@ Additionally, check you are able to %1 the server config file: %2</source>
     <message>
         <source>Unnamed</source>
         <extracomment>Used as the hostname. Translation may not contain spaces</extracomment>
-        <translation>이름없음</translation>
+        <translation>Без_имени</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>fatal error</source>
-        <translation>치명적 오류</translation>
+        <translation>критическая ошибка</translation>
     </message>
     <message>
         <source>error</source>
-        <translation>오류</translation>
+        <translation>ошибка</translation>
     </message>
     <message>
         <source>&lt;p&gt;Sorry, a fatal error has occurred and the application must now exit.&lt;/p&gt;
 </source>
-        <translation>&lt;p&gt;문제가 발생하여 애플리케이션을 종료합니다.&lt;/p&gt;
+        <translation>&lt;p&gt;К сожалению, произошла критическая ошибка, приложение будет закрыто.&lt;/p&gt;
 </translation>
     </message>
     <message>
         <source>&lt;p&gt;Sorry, a critical error has occurred.&lt;/p&gt;
 </source>
-        <translation>&lt;p&gt;에러 발생&lt;/p&gt;
+        <translation>&lt;p&gt;К сожалению, произошла критическая ошибка.&lt;/p&gt;
 </translation>
     </message>
     <message>
         <source>&lt;p&gt;%1 will continue to run in the background and can be accessed via the %1 icon in your system notifications area. This setting can be disabled.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;%1은(는) 백그라운드에서 계속 실행되며, 시스템 알림 영역의 %1 아이콘을 통해 접근할 수 있습니다. 이 설정은 비활성화할 수 있습니다.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;%1 продолжит работу в фоновом режиме. Доступ к нему можно получить через иконку в области уведомлений. Эту настройку можно отключить.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;Please &lt;a href=&quot;%1&quot;&gt;report a bug&lt;/a&gt; and copy/paste the following error:&lt;/p&gt;&lt;pre&gt;v%2
 %3
 %4&lt;/pre&gt;</source>
-        <translation>&lt;p&gt;&lt;a href=&quot;%1&quot;&gt;버그를 신고&lt;/a&gt;하고 다음 오류를 복사/붙여넣기 해주세요:&lt;/p&gt;&lt;pre&gt;v%2
+        <translation>&lt;p&gt;Пожалуйста, &lt;a href=&quot;%1&quot;&gt;сообщите об ошибке&lt;/a&gt; и приложите следующий текст:&lt;/p&gt;&lt;pre&gt;v%2
 %3
 %4&lt;/pre&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;On Linux systems using GNOME 3, the notification area might be disabled. You may need to &lt;a href=&quot;%1&quot;&gt;enable an extension&lt;/a&gt; to see the %2 tray icon.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;GNOME 3을 사용하는 Linux 시스템에서는 알림 영역이 비활성화되어 있을 수 있습니다. %2 트레이 아이콘을 보려면 &lt;a href=&quot;%1&quot;&gt;확장 기능을 활성화&lt;/a&gt;해야 합니다.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;В системах Linux с GNOME 3 область уведомлений может быть отключена. Возможно, потребуется &lt;a href=&quot;%1&quot;&gt;включить расширение&lt;/a&gt;, чтобы видеть иконку %2.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>%1 Server</source>
-        <translation>%1 서버</translation>
+        <translation>Сервер %1</translation>
     </message>
     <message>
         <source>&lt;p&gt;Great, the %1 server is now running.&lt;/p&gt;&lt;p&gt;Now you can connect your client computers to this server. You should see a prompt here on the server when a new client tries to connect.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;%1 서버가 실행되었습니다.&lt;/p&gt;&lt;p&gt;이제 클라이언트 컴퓨터를 이 서버에 연결할 수 있습니다. 새 클라이언트가 연결을 시도하면 여기에 안내가 표시됩니다.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Сервер %1 запущен.&lt;/p&gt;&lt;p&gt;Теперь вы можете подключить клиентские компьютеры к этому серверу. При попытке подключения нового клиента на сервере появится соответствующий запрос.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;%1 is now connected!&lt;/p&gt;</source>
-        <translation>&lt;p&gt;%1이(가) 연결!&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;%1 подключен!&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;Try moving your mouse to your other computer. Once there, go ahead and type something.&lt;/p&gt;&lt;p&gt;Don&apos;t forget, you can copy and paste between computers too.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;마우스를 다른 컴퓨터로 이동시켜 보세요. 이동한 뒤 키보드로 아무 글자나 입력해 보세요.&lt;/p&gt;&lt;p&gt;컴퓨터 간 복사/붙여넣기도 가능합니다.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Попробуйте переместить курсор на другой компьютер и что-нибудь напечатать.&lt;/p&gt;&lt;p&gt;Не забывайте, что вы также можете использовать общий буфер обмена.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;Try controlling this computer remotely.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;이 컴퓨터를 원격으로 제어해 보세요.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Попробуйте управлять этим компьютером удаленно.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;As you do not have the setting enabled to keep %1 running in the background, you&apos;ll need to keep this window open or minimized to keep %1 running.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;%1을(를) 백그라운드에서 실행하는 설정이 비활성화되어 있으므로, %1을(를) 계속 사용하려면 이 창을 열어 두거나 최소화해야 합니다.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Так как работа в фоновом режиме отключена, необходимо держать это окно открытым или свернутым для работы %1.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can now close this window and %1 will continue to run in the background. This setting can be disabled.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;이제 이 창을 닫아도 %1은(는) 백그라운드에서 계속 실행됩니다. 이 설정은 비활성화할 수 있습니다.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Теперь вы можете закрыть это окно, %1 продолжит работу в фоне. Эту настройку можно отключить.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>%1 Connected</source>
-        <translation>%1 연결됨</translation>
+        <translation>%1 подключено</translation>
     </message>
     <message>
         <source>%1 - New Client</source>
-        <translation>%1 - 새 클라이언트</translation>
+        <translation>%1 - Новый клиент</translation>
     </message>
     <message>
         <source>A new client called &apos;%1&apos; has been accepted. You&apos;ll need to add it to your server&apos;s screen layout.</source>
-        <translation>새 클라이언트 &apos;%1&apos;이(가) 허용되었습니다. 서버의 화면 배치에 추가해 주세요.</translation>
+        <translation>Новый клиент «%1» принят. Вам необходимо добавить его на макет экранов сервера.</translation>
     </message>
     <message>
         <source>Ignore</source>
-        <translation>무시</translation>
+        <translation>Игнорировать</translation>
     </message>
     <message>
         <source>Add client</source>
-        <translation>클라이언트 추가</translation>
+        <translation>Добавить клиента</translation>
     </message>
     <message>
         <source>A new client called &apos;%1&apos; wants to connect</source>
-        <translation>새 클라이언트 &apos;%1&apos;이(가) 연결을 요청합니다</translation>
+        <translation>Новый клиент &apos;%1&apos; хочет подключиться</translation>
     </message>
     <message>
         <source>%1 Clear Settings</source>
-        <translation>%1 설정 초기화</translation>
+        <translation>%1 Сброс настроек</translation>
     </message>
     <message>
         <source>&lt;p&gt;Are you sure you want to clear all settings and restart %1?&lt;/p&gt;&lt;p&gt;This action cannot be undone.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;모든 설정을 초기화하고 %1을(를) 재시작할까요?&lt;/p&gt;&lt;p&gt;이 작업은 번복될 수 없습니다.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Вы уверены, что хотите сбросить все настройки и перезапустить %1?&lt;/p&gt;&lt;p&gt;Это действие нельзя отменить.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>%1 Read-only settings</source>
-        <translation>%1 읽기 전용 설정</translation>
+        <translation>%1 Настройки только для чтения</translation>
     </message>
     <message>
         <source>&lt;p&gt;Settings are read-only because you only have read access to the file:&lt;/p&gt;&lt;p&gt;%1&lt;/p&gt;</source>
-        <translation>&lt;p&gt;다음 파일에 대한 쓰기 권한이 없어 설정이 읽기 전용입니다:&lt;/p&gt;&lt;p&gt;%1&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Настройки доступны только для чтения, так как у вас есть доступ только на чтение к файлу:&lt;/p&gt;&lt;p&gt;%1&lt;/p&gt;</translation>
     </message>
     <message>
         <source>No thanks</source>
-        <translation>아니요</translation>
+        <translation>Нет, спасибо</translation>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation>업데이트 확인</translation>
+        <translation>Проверить обновления</translation>
     </message>
     <message>
         <source>&lt;p&gt;Would you like to check for updates when %1 starts?&lt;/p&gt;&lt;p&gt;Checking for updates requires an Internet connection.&lt;/p&gt;&lt;p&gt;URL: &lt;pre&gt;%2&lt;/pre&gt;&lt;/p&gt;</source>
-        <translation>&lt;p&gt;%1 시작 시 업데이트를 확인할까요?&lt;/p&gt;&lt;p&gt;업데이트 확인에는 인터넷 연결이 필요합니다.&lt;/p&gt;&lt;p&gt;URL: &lt;pre&gt;%2&lt;/pre&gt;&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Проверять наличие обновлений при запуске %1?&lt;/p&gt;&lt;p&gt;Для проверки обновлений требуется интернет-соединение.&lt;/p&gt;&lt;p&gt;URL: &lt;pre&gt;%2&lt;/pre&gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Background service offline</source>
-        <translation>백그라운드 서비스 오프라인</translation>
+        <translation>Фоновая служба отключена</translation>
     </message>
     <message>
         <source>Retry</source>
-        <translation>재시도</translation>
+        <translation>Повторить</translation>
     </message>
     <message>
         <source>Disable</source>
-        <translation>비활성화</translation>
+        <translation>Отключить</translation>
     </message>
     <message>
         <source>&lt;p&gt;There was a problem finding the %1 background service (daemon).&lt;/p&gt;&lt;p&gt;The background service makes %1 work with UAC prompts and the login screen.&lt;/p&gt;&lt;p&gt;If don&apos;t want to use the background service and intentionally stopped it, you can prevent it&apos;s use by disabling this feature.&lt;/p&gt;&lt;p&gt;If you did not stop the background service intentionally, there may be a problem with it. Please retry or try restarting the %1 service from the Windows services program.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;%1 백그라운드 서비스(daemon)를 찾는 중 문제가 발생했습니다.&lt;/p&gt;&lt;p&gt;백그라운드 서비스는 %1이(가) UAC 프롬프트 및 로그인 화면에서 동작됩니다.&lt;/p&gt;&lt;p&gt;백그라운드 서비스를 사용하지 않으려고 의도적으로 중지한 경우, 이 기능을 비활성화하여 사용을 막을 수 있습니다.&lt;/p&gt;&lt;p&gt;의도적으로 중지한 것이 아니라면 서비스에 문제가 있을 수 있습니다. 재시도하거나 Windows 서비스 관리 프로그램에서 %1 서비스를 재시작해 보세요.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Возникла проблема с поиском фоновой службы (демона) %1.&lt;/p&gt;&lt;p&gt;Эта служба позволяет %1 работать с запросами UAC и на экране входа.&lt;/p&gt;&lt;p&gt;Если вы не хотите использовать службу, вы можете отключить эту функцию.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>failed to read key from certificate file: %1</source>
         <extracomment>%1 will be replaced by the certificate path</extracomment>
-        <translation type="unfinished">인증서 파일에서 키를 읽지 못했습니다: %1</translation>
+        <translation>не удалось прочитать ключ из файла сертификата: %1</translation>
     </message>
     <message>
         <source>failed to parse certificate file: %1</source>
         <extracomment>%1 will be replaced by the certificate path</extracomment>
-        <translation type="unfinished">인증서 파일을 파싱하지 못했습니다: %1</translation>
+        <translation>не удалось разобрать файл сертификата: %1</translation>
     </message>
     <message>
         <source>key detected is the incorrect size</source>
-        <translation type="unfinished">감지된 키의 크기가 올바르지 않습니다</translation>
+        <translation>обнаружен ключ неверного размера</translation>
     </message>
     <message>
         <source>failed to read RSA key from certificate file: %1</source>
         <extracomment>%1 will be replaced by the certificate path</extracomment>
-        <translation type="unfinished">인증서 파일에서 RSA 키를 읽지 못했습니다: %1</translation>
+        <translation>не удалось прочитать RSA-ключ из файла сертификата: %1</translation>
     </message>
     <message>
         <source>%1 is already running</source>
-        <translation>%1이(가) 이미 실행 중입니다</translation>
+        <translation>%1 уже запущен</translation>
     </message>
 </context>
 <context>
     <name>ScreenSettingsDialog</name>
     <message>
         <source>Computer settings</source>
-        <translation>컴퓨터 설정</translation>
+        <translation>Настройки компьютера</translation>
     </message>
     <message>
         <source>Computer Info</source>
-        <translation>컴퓨터 정보</translation>
+        <translation>Информация о компьютере</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>이름</translation>
+        <translation>Имя</translation>
     </message>
     <message>
         <source>Modifier Keys</source>
-        <translation>수정 키</translation>
+        <translation>Клавиши-модификаторы</translation>
     </message>
     <message>
         <source>M&amp;eta</source>
@@ -817,7 +821,7 @@ Additionally, check you are able to %1 the server config file: %2</source>
     </message>
     <message>
         <source>None</source>
-        <translation>없음</translation>
+        <translation>Нет</translation>
     </message>
     <message>
         <source>&amp;Shift</source>
@@ -825,75 +829,75 @@ Additionally, check you are able to %1 the server config file: %2</source>
     </message>
     <message>
         <source>Dead Corners</source>
-        <translation>화면 걸림 방지</translation>
+        <translation>Мертвые зоны в углах</translation>
     </message>
     <message>
         <source>Top Left</source>
-        <translation>왼쪽 위</translation>
+        <translation>Сверху слева</translation>
     </message>
     <message>
         <source>Top Right</source>
-        <translation>오른쪽 위</translation>
+        <translation>Сверху справа</translation>
     </message>
     <message>
         <source>Corner si&amp;ze</source>
-        <translation>모서리 크기(&amp;Z)</translation>
+        <translation>Разм&amp;ер угла</translation>
     </message>
     <message>
         <source>Bottom Left</source>
-        <translation>왼쪽 아래</translation>
+        <translation>Снизу слева</translation>
     </message>
     <message>
         <source>Bottom Right</source>
-        <translation>오른쪽 아래</translation>
+        <translation>Снизу справа</translation>
     </message>
     <message>
         <source>Fixes</source>
-        <translation>수정</translation>
+        <translation>Исправления</translation>
     </message>
     <message>
         <source>SCROLL LOCK key</source>
-        <translation>SCROLL LOCK 키</translation>
+        <translation>Клавиша SCROLL LOCK</translation>
     </message>
     <message>
         <source>CAPS LOCK key</source>
-        <translation>CAPS LOCK 키</translation>
+        <translation>Клавиша CAPS LOCK</translation>
     </message>
     <message>
         <source>NUM LOCK key</source>
-        <translation>NUM LOCK 키</translation>
+        <translation>Клавиша NUM LOCK</translation>
     </message>
     <message>
         <source>XTest for Xinerama</source>
-        <translation>Xinerama용 XTest</translation>
+        <translation>XTest для Xinerama</translation>
     </message>
     <message>
         <source>Aliases</source>
-        <translation>별칭</translation>
+        <translation>Псевдонимы</translation>
     </message>
     <message>
         <source>&amp;Add</source>
-        <translation>추가(&amp;A)</translation>
+        <translation>&amp;Добавить</translation>
     </message>
     <message>
         <source>&amp;Remove</source>
-        <translation>삭제(&amp;R)</translation>
+        <translation>&amp;Удалить</translation>
     </message>
     <message>
         <source>Screen name is empty</source>
-        <translation>컴퓨터 이름이 비어 있습니다</translation>
+        <translation>Имя экрана пустое</translation>
     </message>
     <message>
         <source>The screen name cannot be empty. Please either fill in a name or cancel the dialog.</source>
-        <translation>컴퓨터 이름은 비워 둘 수 없습니다. 이름을 입력하거나 대화상자를 취소하세요.</translation>
+        <translation>Имя экрана не может быть пустым. Введите имя или закройте окно.</translation>
     </message>
     <message>
         <source>Screen name matches alias</source>
-        <translation>컴퓨터 이름과 별칭이 일치합니다</translation>
+        <translation>Имя экрана совпадает с псевдонимом</translation>
     </message>
     <message>
         <source>The screen name cannot be the same as an alias. Please either remove the alias or change the screen name.</source>
-        <translation>컴퓨터 이름은 별칭과 같을 수 없습니다. 별칭을 삭제하거나 컴퓨터 이름을 변경하세요.</translation>
+        <translation>Имя экрана не может совпадать с псевдонимом. Удалите псевдоним или измените имя экрана.</translation>
     </message>
     <message>
         <source>Alt Gr</source>
@@ -908,497 +912,497 @@ Additionally, check you are able to %1 the server config file: %2</source>
     <name>ScreenSetupModel</name>
     <message>
         <source>&lt;center&gt;Screen: &lt;b&gt;%1&lt;/b&gt;&lt;/center&gt;&lt;br&gt;Double click to edit settings&lt;br&gt;Drag screen to the trashcan to remove it</source>
-        <translation>&lt;center&gt;컴퓨터: &lt;b&gt;%1&lt;/b&gt;&lt;/center&gt;&lt;br&gt;더블 클릭하여 설정 편집&lt;br&gt;휴지통으로 드래그하여 삭제</translation>
+        <translation>&lt;center&gt;Экран: &lt;b&gt;%1&lt;/b&gt;&lt;/center&gt;&lt;br&gt;Двойной клик для настроек&lt;br&gt;Перетащите экран в корзину для удаления</translation>
     </message>
 </context>
 <context>
     <name>SearchWidget</name>
     <message>
         <source>Search</source>
-        <translation type="unfinished">검색</translation>
+        <translation type="unfinished">Поиск</translation>
     </message>
     <message>
         <source>Find next</source>
-        <translation type="unfinished">다음 찾기</translation>
+        <translation type="unfinished">Найти следующее</translation>
     </message>
     <message>
         <source>Find previous</source>
-        <translation type="unfinished">이전 찾기</translation>
+        <translation type="unfinished">Найти предыдущее</translation>
     </message>
     <message>
         <source>Find...</source>
-        <translation type="unfinished">찾기...</translation>
+        <translation type="unfinished">Поиск...</translation>
     </message>
 </context>
 <context>
     <name>ServerConfigDialog</name>
     <message>
         <source>Server Configuration</source>
-        <translation>서버 설정</translation>
+        <translation>Конфигурация сервера</translation>
     </message>
     <message>
         <source>Computers</source>
-        <translation>컴퓨터</translation>
+        <translation>Компьютеры</translation>
     </message>
     <message>
         <source>Drag a computer from the grid to the trashcan to remove it.</source>
-        <translation>컴퓨터를 삭제하려면 휴지통으로 드래그하세요.</translation>
+        <translation>Перетащите компьютер в корзину, чтобы удалить его.</translation>
     </message>
     <message>
         <source>Configure the layout of your computer displays by dragging to where you want.</source>
-        <translation>원하는 위치로 드래그하여 컴퓨터 화면 배치를 설정하세요.</translation>
+        <translation>Настройте расположение мониторов, перетаскивая их в нужные места.</translation>
     </message>
     <message>
         <source>Drag to the grid to add a new computer.</source>
-        <translation>새 컴퓨터를 추가하려면 격자로 드래그하세요.</translation>
+        <translation>Перетащите на сетку, чтобы добавить компьютер.</translation>
     </message>
     <message>
         <source>Hotkeys</source>
-        <translation>단축키</translation>
+        <translation>Горячие клавиши</translation>
     </message>
     <message>
         <source>&amp;Hotkeys</source>
-        <translation>단축키(&amp;H)</translation>
+        <translation>&amp;Горячие клавиши</translation>
     </message>
     <message>
         <source>&amp;New</source>
-        <translation>새로 만들기(&amp;N)</translation>
+        <translation>&amp;Создать</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation>편집(&amp;E)</translation>
+        <translation>&amp;Правка</translation>
     </message>
     <message>
         <source>&amp;Remove</source>
-        <translation>삭제(&amp;R)</translation>
+        <translation>&amp;Удалить</translation>
     </message>
     <message>
         <source>A&amp;ctions</source>
-        <translation>동작(&amp;A)</translation>
+        <translation>Дей&amp;ствия</translation>
     </message>
     <message>
         <source>Ne&amp;w</source>
-        <translation>새로 만들기(&amp;W)</translation>
+        <translation>Но&amp;вое</translation>
     </message>
     <message>
         <source>E&amp;dit</source>
-        <translation>편집(&amp;D)</translation>
+        <translation>Реда&amp;ктировать</translation>
     </message>
     <message>
         <source>Re&amp;move</source>
-        <translation>삭제(&amp;M)</translation>
+        <translation>Уда&amp;лить</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>고급</translation>
+        <translation>Расширенные</translation>
     </message>
     <message>
         <source>&amp;Dead corners (for this computer)</source>
-        <translation>화면 걸림 방지(&amp;D) (이 컴퓨터)</translation>
+        <translation>&amp;Мертвые зоны (для этого компьютера)</translation>
     </message>
     <message>
         <source>&amp;Bottom-left</source>
-        <translation>왼쪽 아래(&amp;B)</translation>
+        <translation>&amp;Снизу слева</translation>
     </message>
     <message>
         <source>To&amp;p-left</source>
-        <translation>왼쪽 위(&amp;P)</translation>
+        <translation>Свер&amp;ху слева</translation>
     </message>
     <message>
         <source>Bottom-ri&amp;ght</source>
-        <translation>오른쪽 아래(&amp;G)</translation>
+        <translation>Снизу с&amp;права</translation>
     </message>
     <message>
         <source>Top-rig&amp;ht</source>
-        <translation>오른쪽 위(&amp;H)</translation>
+        <translation>Сверху спр&amp;ава</translation>
     </message>
     <message>
         <source>Cor&amp;ner size</source>
-        <translation>모서리 크기(&amp;N)</translation>
+        <translation>Разме&amp;р угла</translation>
     </message>
     <message>
         <source>px</source>
-        <translation>픽셀</translation>
+        <translation>пикс</translation>
     </message>
     <message>
         <source>&amp;Misc</source>
-        <translation>기타(&amp;M)</translation>
+        <translation>&amp;Разное</translation>
     </message>
     <message>
         <source>Disable lock to computer (scroll lock key)</source>
-        <translation>컴퓨터 잠금(Scroll Lock 키) 비활성화</translation>
+        <translation>Отключить привязку к компьютеру (Scroll Lock)</translation>
     </message>
     <message>
         <source>Use &amp;relative mouse movements</source>
-        <translation>상대 좌표 마우스 이동 사용(&amp;R)</translation>
+        <translation>Использовать &amp;относительные перемещения мыши</translation>
     </message>
     <message>
         <source>Don&apos;t take &amp;foreground window (Windows only)</source>
-        <translation>전면 창 포커스 유지(&amp;F) (Windows 전용)</translation>
+        <translation>Не захватывать &amp;переднее окно (только для Windows)</translation>
     </message>
     <message>
         <source>Enable clipboard sharing</source>
-        <translation>클립보드 공유 사용</translation>
+        <translation>Включить общий буфер обмена</translation>
     </message>
     <message>
         <source>Limit to:</source>
-        <translation>제한:</translation>
+        <translation>Ограничить до:</translation>
     </message>
     <message>
         <source>MB</source>
-        <translation>MB</translation>
+        <translation>МБ</translation>
     </message>
     <message>
         <source>&amp;Network</source>
-        <translation>네트워크(&amp;N)</translation>
+        <translation>&amp;Сеть</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enables the network heartbeat to ping clients every &lt;span style=&quot; font-style:italic;&quot;&gt;n&lt;/span&gt; seconds. This may help to diagnose network problems by retrying the connection if the client becomes unresponsive.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;지정한 초마다 클라이언트에 핑을 보내 네트워크 하트비트를 활성화합니다. 클라이언트가 응답하지 않을 때 연결을 재시도하여 네트워크 문제 진단에 도움이 될 수 있습니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Включает сетевой пульс для проверки клиентов каждые &lt;span style=&quot; font-style:italic;&quot;&gt;n&lt;/span&gt; секунд. Это помогает диагностировать проблемы сети.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&amp;Check clients every</source>
-        <translation>클라이언트 확인 주기(&amp;C)</translation>
+        <translation>&amp;Проверять клиентов каждые</translation>
     </message>
     <message>
         <source>ms</source>
-        <translation>ms</translation>
+        <translation>мс</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enables compatibility with programs that use either the Synergy or Barrier protocols:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Synergy 3 uses the Synergy protocol.&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Barrier, Input-Leap and Synergy 1 uses the Barrier protocol.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;A Deskflow client will automatically use either the Synergy or Barrier protocol depending on the server protocol.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Synergy 또는 Barrier 프로토콜을 사용하는 프로그램과의 호환성을 활성화합니다:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Synergy 3는 Synergy 프로토콜을 사용합니다.&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Barrier, Input-Leap, Synergy 1은 Barrier 프로토콜을 사용합니다.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Deskflow 클라이언트는 서버 프로토콜에 따라 Synergy 또는 Barrier 프로토콜을 자동으로 사용합니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Включает совместимость с протоколами Synergy или Barrier.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Network protocol</source>
-        <translation>네트워크 프로토콜</translation>
+        <translation>Сетевой протокол</translation>
     </message>
     <message>
         <source>&amp;Switching</source>
-        <translation>전환(&amp;S)</translation>
+        <translation>&amp;Переключение</translation>
     </message>
     <message>
         <source>Switch &amp;after waiting</source>
-        <translation>대기 후 전환(&amp;A)</translation>
+        <translation>Переключать &amp;после задержки</translation>
     </message>
     <message>
         <source>Switch on double &amp;tap within</source>
-        <translation>지정 시간 내 더블 탭으로 전환(&amp;T)</translation>
+        <translation>Переключать по двойному &amp;касанию за</translation>
     </message>
     <message>
         <source>Config file</source>
-        <translation>설정 파일</translation>
+        <translation>Файл конфигурации</translation>
     </message>
     <message>
         <source>Core server config file</source>
-        <translation>코어 서버 설정 파일</translation>
+        <translation>Файл конфигурации ядра сервера</translation>
     </message>
     <message>
         <source>Use a server config file to create complex computer layouts that are not possible with the simple grid-based computer layout editor.
 
 Enabling this setting will disable the server config GUI.</source>
-        <translation>격자 기반 레이아웃 편집기로는 만들 수 없는 복잡한 컴퓨터 배치를 구성하려면 서버 설정 파일을 사용하세요.
-
-이 설정을 활성화하면 서버 설정 GUI가 비활성화됩니다.</translation>
+        <translation>Используйте файл конфигурации для сложных макетов. Включение этой опции отключит графический редактор.</translation>
     </message>
     <message>
         <source>Use a server config file</source>
-        <translation>서버 설정 파일 사용</translation>
+        <translation>Использовать файл конфигурации сервера</translation>
     </message>
     <message>
         <source>Config file path</source>
-        <translation>설정 파일 경로</translation>
+        <translation>Путь к файлу конфигурации</translation>
     </message>
     <message>
         <source>%1 Configurations (*.conf);;All files (*.*)</source>
         <extracomment>%1 is replaced with the application names (*.conf) and (*.*) should not be translated</extracomment>
-        <translation>%1 설정 (*.conf);;모든 파일 (*.*)</translation>
+        <translation>Конфигурации %1 (*.conf);;Все файлы (*.*)</translation>
     </message>
     <message>
         <source>Browse for a config file</source>
-        <translation>설정 파일 찾아보기</translation>
+        <translation>Выбор файла конфигурации</translation>
     </message>
     <message>
         <source>Enable lock to computer at startup</source>
-        <translation>시작 시 컴퓨터 잠금 사용</translation>
+        <translation>Включать привязку к компьютеру при запуске</translation>
     </message>
 </context>
 <context>
     <name>SettingsDialog</name>
     <message>
         <source>Preferences</source>
-        <translation>환경설정</translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <source>Check for updates on startup</source>
-        <translation>시작 시 업데이트 확인</translation>
+        <translation>Проверять обновления при запуске</translation>
     </message>
     <message>
         <source>Prevent this computer from going to sleep</source>
-        <translation>이 컴퓨터를 절전 모드로 전환하지 않음</translation>
+        <translation>Запретить компьютеру переходить в спящий режим</translation>
     </message>
     <message>
         <source>Tray icon style</source>
-        <translation>트레이 아이콘 스타일</translation>
+        <translation>Стиль иконки трея</translation>
     </message>
     <message>
         <source>Colorful</source>
-        <translation>컬러</translation>
+        <translation>Цветной</translation>
     </message>
     <message>
         <source>Monocolor</source>
-        <translation>단색</translation>
+        <translation>Монохромный</translation>
     </message>
     <message>
         <source>Enable TLS Encryption</source>
-        <translation>TLS 암호화 사용</translation>
+        <translation>Включить шифрование TLS</translation>
     </message>
     <message>
         <source>Certificate</source>
-        <translation>인증서</translation>
+        <translation>Сертификат</translation>
     </message>
     <message>
         <source>Key length</source>
-        <translation>키 길이</translation>
+        <translation>Длина ключа</translation>
     </message>
     <message>
         <source>Regenerate certificate</source>
-        <translation>인증서 재생성</translation>
+        <translation>Перевыпустить сертификат</translation>
     </message>
     <message>
         <source>Require client certificates</source>
-        <translation>클라이언트 인증서 요구</translation>
+        <translation>Требовать сертификаты клиентов</translation>
     </message>
     <message>
         <source>&amp;Advanced</source>
-        <translation>고급(&amp;A)</translation>
+        <translation>&amp;Расширенные</translation>
     </message>
     <message>
         <source>Port</source>
-        <translation>포트</translation>
+        <translation>Порт</translation>
     </message>
     <message>
         <source>Network IP</source>
-        <translation>네트워크 IP</translation>
+        <translation>Сетевой IP-адрес</translation>
     </message>
     <message>
         <source>Level</source>
-        <translation>레벨</translation>
+        <translation>Уровень</translation>
     </message>
     <message>
         <source>Log path</source>
-        <translation>로그 경로</translation>
+        <translation>Путь к журналам</translation>
     </message>
     <message>
         <source>Enable GUI debug messages</source>
-        <translation>GUI 디버그 메시지 사용</translation>
+        <translation>Включить отладочные сообщения интерфейса</translation>
     </message>
     <message>
         <source>Use background service (daemon)</source>
-        <translation>백그라운드 서비스(daemon) 사용</translation>
+        <translation>Использовать фоновую службу (демон)</translation>
     </message>
     <message>
         <source>Always run as system (work at login screen and UAC)</source>
-        <translation>항상 시스템 권한으로 실행(로그인 화면 및 UAC에서 동작)</translation>
+        <translation>Всегда запускать от имени системы (работает на экране входа и UAC)</translation>
     </message>
     <message>
         <source>Language</source>
-        <translation>언어</translation>
-    </message>
-    <message>
-        <source>TLS Certificate Regenerated</source>
-        <translation>TLS 인증서 재생성됨</translation>
-    </message>
-    <message>
-        <source>TLS certificate regenerated successfully.</source>
-        <translation>TLS 인증서를 성공적으로 재생성했습니다.</translation>
-    </message>
-    <message>
-        <source>Select a TLS certificate to use...</source>
-        <translation>사용할 TLS 인증서 선택...</translation>
-    </message>
-    <message>
-        <source>Save log file to...</source>
-        <translation>로그 파일 저장 위치...</translation>
-    </message>
-    <message>
-        <source>Required messages</source>
-        <translation>필수 메시지</translation>
-    </message>
-    <message>
-        <source>Non-fatal errors</source>
-        <translation>치명적이지 않은 오류</translation>
-    </message>
-    <message>
-        <source>General warnings</source>
-        <translation>일반 경고</translation>
-    </message>
-    <message>
-        <source>General events [Default]</source>
-        <translation>일반 이벤트 [기본값]</translation>
-    </message>
-    <message>
-        <source>Debug entries</source>
-        <translation>디버그 항목</translation>
-    </message>
-    <message>
-        <source>Verbose debug output</source>
-        <translation>상세 디버그 출력</translation>
-    </message>
-    <message>
-        <source>Close and save changes</source>
-        <translation>변경 사항 저장 후 닫기</translation>
-    </message>
-    <message>
-        <source>Close and forget changes</source>
-        <translation>저장하지 않고 닫기</translation>
-    </message>
-    <message>
-        <source>Reset to stored values</source>
-        <translation type="unfinished">저장된 값으로 재설정</translation>
-    </message>
-    <message>
-        <source>Reset to default values</source>
-        <translation type="unfinished">기본값으로 재설정</translation>
+        <translation>Язык</translation>
     </message>
     <message>
         <source>Enable wl-clipboard support</source>
-        <translation>wl-clipboard 지원 사용</translation>
+        <translation>Включить поддержку wl-clipboard</translation>
+    </message>
+    <message>
+        <source>TLS Certificate Regenerated</source>
+        <translation>Сертификат TLS перевыпущен</translation>
+    </message>
+    <message>
+        <source>TLS certificate regenerated successfully.</source>
+        <translation>Сертификат TLS успешно перевыпущен.</translation>
+    </message>
+    <message>
+        <source>Select a TLS certificate to use...</source>
+        <translation>Выберите сертификат TLS...</translation>
+    </message>
+    <message>
+        <source>Save log file to...</source>
+        <translation>Сохранить файл журнала в...</translation>
+    </message>
+    <message>
+        <source>Required messages</source>
+        <translation>Обязательные сообщения</translation>
+    </message>
+    <message>
+        <source>Non-fatal errors</source>
+        <translation>Не критические ошибки</translation>
+    </message>
+    <message>
+        <source>General warnings</source>
+        <translation>Общие предупреждения</translation>
+    </message>
+    <message>
+        <source>General events [Default]</source>
+        <translation>Общие события [По умолчанию]</translation>
+    </message>
+    <message>
+        <source>Debug entries</source>
+        <translation>Записи отладки</translation>
+    </message>
+    <message>
+        <source>Verbose debug output</source>
+        <translation>Подробный вывод отладки</translation>
+    </message>
+    <message>
+        <source>Close and save changes</source>
+        <translation type="unfinished">Закрыть и сохранить изменения</translation>
+    </message>
+    <message>
+        <source>Close and forget changes</source>
+        <translation type="unfinished">Закройте изменения и забудьте о них</translation>
+    </message>
+    <message>
+        <source>Reset to stored values</source>
+        <translation type="unfinished">Сбросить до сохраненных значений</translation>
+    </message>
+    <message>
+        <source>Reset to default values</source>
+        <translation type="unfinished">Сбросить до значений по умолчанию</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Requires the wl-clipboard package&lt;/p&gt;&lt;p&gt;When using wl-clipboard v2.2.1, there is a focus stealing bug that may make Deskflow harder to use. This has been fixed when using the wl-clipboard master branch, unless your Compositor lacks wlroots-data-control protocol support.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;wl-clipboard 패키지가 필요합니다.&lt;/p&gt;&lt;p&gt;wl-clipboard v2.2.1 사용 시 포커스 탈취 버그로 인해 Deskflow 사용이 어려워질 수 있습니다. 이 문제는 wl-clipboard master 브랜치를 사용하면 해결되지만, 사용 중인 컴포지터가 wlroots-data-control 프로토콜을 지원하지 않으면 해결이 안 될 수 있습니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Требуется пакет wl-clipboard. В версии 2.2.1 есть ошибка перехвата фокуса.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Automatic</source>
-        <translation type="unfinished">자동</translation>
+        <translation>Автоматически</translation>
     </message>
     <message>
         <source>Include version in the window title</source>
-        <translation type="unfinished">창 제목에 버전 정보 포함</translation>
+        <translation type="unfinished">Включить номер версии в заголовок окна</translation>
     </message>
     <message>
         <source>Log to file</source>
-        <translation>파일로 로그 저장</translation>
+        <translation>Записывать в файл</translation>
     </message>
     <message>
         <source>&amp;Logs</source>
-        <translation>로그 (&amp;L)</translation>
+        <translation>&amp;Журнал</translation>
     </message>
     <message>
         <source>&amp;General</source>
-        <translation>일반(&amp;G)</translation>
+        <translation type="unfinished">&amp;Общий</translation>
     </message>
     <message>
         <source>&amp;Network</source>
-        <translation>네트워크(&amp;N)</translation>
+        <translation>&amp;Сеть</translation>
     </message>
     <message>
         <source>&amp;Window</source>
-        <translation type="unfinished">창문(&amp;W)</translation>
+        <translation type="unfinished">&amp;Окно</translation>
     </message>
     <message>
         <source>When the main window is closed</source>
-        <translation type="unfinished">메인 창이 닫혔을 때</translation>
+        <translation type="unfinished">Когда главное окно закрыто</translation>
     </message>
     <message>
         <source>Exit</source>
-        <translation type="unfinished">출구</translation>
+        <translation type="unfinished">Выход</translation>
     </message>
     <message>
         <source>Send to background</source>
-        <translation type="unfinished">백그라운드로 보내기</translation>
+        <translation type="unfinished">Отправить в фоновый режим</translation>
     </message>
     <message>
         <source>When the application starts</source>
-        <translation type="unfinished">애플리케이션이 시작될 때</translation>
+        <translation type="unfinished">Когда приложение запускается</translation>
     </message>
     <message>
         <source>Show the main window</source>
-        <translation type="unfinished">메인 창을 표시합니다</translation>
+        <translation type="unfinished">Показать главное окно</translation>
     </message>
     <message>
         <source>Run command on enter</source>
-        <translation type="unfinished">Enter 키를 누르면 명령 실행</translation>
+        <translation type="unfinished">Выполнять команду по нажатию Enter</translation>
     </message>
     <message>
         <source>Run command on exit</source>
-        <translation type="unfinished">종료 시 명령 실행</translation>
+        <translation type="unfinished">Выполнить команду при выходе</translation>
     </message>
     <message>
         <source>Using a log level higher than Info may affect performance.</source>
-        <translation type="unfinished">Info보다 높은 로그 레벨을 사용하면 성능에 영향을 미칠 수 있습니다.</translation>
+        <translation type="unfinished">Использование уровня логирования выше Info может повлиять на производительность.</translation>
     </message>
 </context>
 <context>
     <name>StatusBar</name>
     <message>
         <source>%1 is not running</source>
-        <translation>%1 실행 중이 아닙니다</translation>
+        <translation>%1 не запущен</translation>
     </message>
     <message>
         <source>%1 is starting...</source>
-        <translation>%1 시작 중...</translation>
+        <translation>%1 запускается...</translation>
     </message>
     <message>
         <source>%1 will retry in a moment...</source>
-        <translation>%1 잠시 후 재시도합니다...</translation>
+        <translation>%1 скоро повторит попытку...</translation>
     </message>
     <message>
         <source>%1 is stopping...</source>
-        <translation>%1 중지 중...</translation>
+        <translation>%1 останавливается...</translation>
     </message>
     <message>
         <source>%1 is waiting for clients</source>
-        <translation>%1 클라이언트를 기다리는 중</translation>
+        <translation>%1 ожидает подключения клиентов</translation>
     </message>
     <message>
         <source>%1 is connected as client of %2</source>
-        <translation>%1이(가) %2의 클라이언트로 연결되었습니다</translation>
+        <translation>%1 подключен как клиент к %2</translation>
     </message>
     <message>
         <source>%1 is disconnected</source>
-        <translation>%1 연결이 해제되었습니다</translation>
+        <translation>%1 отключен</translation>
     </message>
     <message numerus="yes">
         <source>%1 is connected, with %n client(s): %2</source>
         <extracomment>Shown when in server mode and at least 1 client is connected %1 is replaced by the app name %2 will be a list of at least one client %n will be replaced by the number of clients (n is &gt;=1), it is not requried to be in the translation</extracomment>
         <translation>
-            <numerusform>%1이(가) %n대의 클라이언트와 연결됨: %2</numerusform>
+            <numerusform>%1 подключен к %n клиенту: %2</numerusform>
+            <numerusform>%1 подключен к %n клиентам: %2</numerusform>
+            <numerusform>%1 подключен к %n клиентам: %2</numerusform>
         </translation>
     </message>
     <message>
         <source>Clients:
  %1</source>
-        <translation>클라이언트:
+        <translation>Клиенты:
  %1</translation>
     </message>
     <message>
         <source>A new version v%1 is available</source>
-        <translation>새 버전(v%1)을 사용할 수 있습니다</translation>
+        <translation>Доступна новая версия v%1</translation>
     </message>
     <message>
         <source>View local fingerprint</source>
-        <translation>로컬 핑거프린팅 보기</translation>
+        <translation>Показать локальный отпечаток</translation>
     </message>
     <message>
         <source>Update available</source>
-        <translation>업데이트 사용 가능</translation>
+        <translation>Доступно обновление</translation>
     </message>
     <message>
         <source>%1 is connecting...</source>
-        <translation>%1 연결 중...</translation>
+        <translation>%1 подключается...</translation>
     </message>
     <message>
         <source>%1 is waiting %2 seconds before the next retry</source>
-        <translation type="unfinished">%1이 다음 재시도까지 %2초 대기 중입니다</translation>
+        <translation type="unfinished">%1 ожидает %2 секунд перед следующей попыткой</translation>
     </message>
     <message>
         <source>%1 Encryption Enabled</source>
-        <translation>%1 암호화 사용</translation>
+        <translation>Шифрование %1 включено</translation>
     </message>
     <message>
         <source>Encryption Disabled</source>
-        <translation>암호화 사용 안 함</translation>
+        <translation>Шифрование отключено</translation>
     </message>
 </context>
 <context>
@@ -1406,41 +1410,41 @@ Enabling this setting will disable the server config GUI.</source>
     <message>
         <source>LocalizedName</source>
         <extracomment>Replace with your Language name This is a required string</extracomment>
-        <translation>한국어</translation>
+        <translation>Русский</translation>
     </message>
 </context>
 <context>
     <name>validators::AliasValidator</name>
     <message>
         <source>Computer name cannot contain spaces</source>
-        <translation>컴퓨터 이름에는 공백을 포함할 수 없습니다</translation>
+        <translation>Имя компьютера не может содержать пробелы</translation>
     </message>
     <message>
         <source>Aliases may not be ip addresses</source>
-        <translation>별칭에는 IP 주소를 사용할 수 없습니다</translation>
+        <translation>Псевдонимы не могут быть IP-адресами</translation>
     </message>
     <message>
         <source>Contains invalid characters or is too long</source>
-        <translation>유효하지 않은 문자가 포함되어 있거나 너무 깁니다</translation>
+        <translation>Содержит недопустимые символы или слишком длинный</translation>
     </message>
 </context>
 <context>
     <name>validators::ScreenNameValidator</name>
     <message>
         <source>Computer name cannot be empty</source>
-        <translation>컴퓨터 이름은 비워 둘 수 없습니다</translation>
+        <translation>Имя компьютера не может быть пустым</translation>
     </message>
     <message>
         <source>Computer name cannot contain spaces</source>
-        <translation>컴퓨터 이름에는 공백을 포함할 수 없습니다</translation>
+        <translation>Имя компьютера не может содержать пробелы</translation>
     </message>
     <message>
         <source>Contains invalid characters or is too long</source>
-        <translation>유효하지 않은 문자가 포함되어 있거나 너무 깁니다</translation>
+        <translation>Имя содержит недопустимые символы или слишком длинное</translation>
     </message>
     <message>
         <source>A computer with this name already exists</source>
-        <translation>동명의 컴퓨터가 이미 존재합니다</translation>
+        <translation>Компьютер с таким именем уже существует</translation>
     </message>
 </context>
 </TS>

@@ -3,9 +3,9 @@
 # SPDX-License-Identifier: MIT
 
 if(APPLE)
-  set(target Deskflow)
+  set(target myDesk)
 else()
-  set(target deskflow)
+  set(target mydesk)
 endif()
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -26,18 +26,18 @@ elseif(BUILD_OSX_BUNDLE)
   set(BUNDLE_COPYRIGHT "${CMAKE_PROJECT_COPYRIGHT}")
 
   configure_file(
-    ${CMAKE_CURRENT_SOURCE_DIR}/../res/deskflow.plist.in
-    ${CMAKE_CURRENT_BINARY_DIR}/deskflow.plist
+    ${CMAKE_CURRENT_SOURCE_DIR}/../res/myDesk.plist.in
+    ${CMAKE_CURRENT_BINARY_DIR}/myDesk.plist
     @ONLY
   )
 
-  set(platform_extra ../res/Deskflow.icns)
+  set(platform_extra ../res/myDesk.icns)
   set_source_files_properties(${platform_extra} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 endif()
 
 add_executable(${target} WIN32 MACOSX_BUNDLE
   ${platform_extra}
-  ../res/deskflow.qrc
+  ../res/myDesk.qrc
   deskflow-gui.cpp
 )
 
@@ -94,7 +94,7 @@ elseif(APPLE)
   if (BUILD_OSX_BUNDLE)
     set_target_properties(${target} PROPERTIES
       INSTALL_RPATH "@loader_path/../Libraries;@loader_path/../Frameworks"
-      MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_BINARY_DIR}/deskflow.plist"
+      MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_BINARY_DIR}/myDesk.plist"
     )
     if (APPLE_CODESIGN_DEV)
       configure_mac_codesign(${target})

@@ -22,7 +22,7 @@ ArchDaemonWindows *ArchDaemonWindows::s_daemon = nullptr;
 
 ArchDaemonWindows::ArchDaemonWindows() : m_daemonThreadID(0)
 {
-  m_quitMessage = RegisterWindowMessage(L"DeskflowDaemonExit");
+  m_quitMessage = RegisterWindowMessage(L"myDeskDaemonExit");
 }
 
 int ArchDaemonWindows::runDaemon(RunFunc runFunc)

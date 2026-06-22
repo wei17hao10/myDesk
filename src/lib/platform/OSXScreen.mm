@@ -124,9 +124,11 @@ OSXScreen::OSXScreen(IEventQueue *events, bool isPrimary, bool enableLangSync)
 
     // only needed when running as a server.
     if (m_isPrimary) {
-      // we can't pass options to show the dialog, this must be done by the gui.
       if (!AXIsProcessTrusted()) {
-        throw std::runtime_error("assistive devices does not trust this process, allow it in system settings.");
+        // On macOS 26 Tahoe, AXIsProcessTrusted() may return false even when the binary is in
+        // the Accessibility list. Log a warning and continue — the actual input APIs will fail
+        // with their own errors if the permission is genuinely missing.
+        LOG((CLOG_WARN "accessibility permission check returned false; continuing anyway (macOS 26 workaround)"));
       }
     }
 
@@ -1517,7 +1519,13 @@ bool OSXScreen::checkAXPermissions()
   if (AXIsProcessTrusted()) {
     return true;
   }
-  LOG_CRIT("process is not trusted anymore, quitting");
+  // On macOS 26 Tahoe, AXIsProcessTrusted() may transiently return false for unsigned builds.
+  // Only quit if it fails consistently — give it one more chance on the next timer tick.
+  if (m_axPermissionFailCount++ < 3) {
+    LOG((CLOG_WARN "accessibility permission check failed (attempt %d/3), retrying", m_axPermissionFailCount));
+    return false;
+  }
+  LOG_CRIT("process is not trusted, quitting");
   disable();
   App &app = App::instance();
   app.getEvents()->addEvent(Event(EventTypes::Quit, nullptr, new ExitEventData(s_exitFailed)));
