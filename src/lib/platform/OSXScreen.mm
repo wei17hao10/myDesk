@@ -1716,9 +1716,19 @@ CGEventRef OSXScreen::handleCGInputEvent(CGEventTapProxy proxy, CGEventType type
           screen->m_draggingFiles = true;
           screen->m_dragFiles.clear();
           for (NSURL *url in fileURLs) {
-            screen->m_dragFiles.push_back([[url path] UTF8String]);
+            // On macOS 26+, the drag pasteboard may return non-file URLs or URLs
+            // whose -path returns nil; guard both to avoid strlen(nullptr) SIGSEGV.
+            if (![url isFileURL]) continue;
+            NSString *p = [url path];
+            if (!p) continue;
+            const char *cstr = [p UTF8String];
+            if (cstr) screen->m_dragFiles.push_back(cstr);
           }
-          LOG_DEBUG("drag detected: %zu file(s)", screen->m_dragFiles.size());
+          if (!screen->m_dragFiles.empty()) {
+            LOG_DEBUG("drag detected: %zu file(s)", screen->m_dragFiles.size());
+          } else {
+            screen->m_draggingFiles = false; // no valid files, reset flag
+          }
         }
       }
     }
