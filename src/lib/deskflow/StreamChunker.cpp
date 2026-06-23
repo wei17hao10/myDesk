@@ -12,6 +12,7 @@
 #include "deskflow/ClipboardChunk.h"
 #include "deskflow/FileChunk.h"
 
+#include <QDir>
 #include <QFileInfo>
 
 #include <fstream>
@@ -59,7 +60,44 @@ void StreamChunker::sendClipboard(
   LOG_DEBUG("sent clipboard size=%d", sentLength);
 }
 
-void StreamChunker::sendFile(const std::string &filePath, IEventQueue *events, void *eventTarget)
+// Recursively enumerate and send all files in a directory tree.
+static void sendFolderRecursive(
+    const std::string &diskPath, const std::string &relPath, IEventQueue *events, void *eventTarget
+)
+{
+  QDir dir(QString::fromStdString(diskPath));
+  const auto entries = dir.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
+  for (const QFileInfo &fi : entries) {
+    const std::string childRel = relPath + "/" + fi.fileName().toStdString();
+    if (fi.isDir()) {
+      sendFolderRecursive(fi.absoluteFilePath().toStdString(), childRel, events, eventTarget);
+    } else {
+      StreamChunker::sendFile(fi.absoluteFilePath().toStdString(), events, eventTarget, childRel);
+    }
+  }
+}
+
+void StreamChunker::sendFolder(const std::string &folderPath, IEventQueue *events, void *eventTarget)
+{
+  const QDir dir(QString::fromStdString(folderPath));
+  if (!dir.exists()) {
+    LOG_WARN("file transfer: folder not found: %s", folderPath.c_str());
+    return;
+  }
+
+  const std::string folderName = dir.dirName().toStdString();
+  LOG_INFO("file transfer: sending folder '%s'", folderName.c_str());
+
+  events->addEvent(Event(EventTypes::FileSending, eventTarget, FileChunk::folderStart(folderName)));
+  sendFolderRecursive(folderPath, folderName, events, eventTarget);
+  events->addEvent(Event(EventTypes::FileSending, eventTarget, FileChunk::folderEnd()));
+
+  LOG_DEBUG("file transfer: folder '%s' queued", folderName.c_str());
+}
+
+void StreamChunker::sendFile(
+    const std::string &filePath, IEventQueue *events, void *eventTarget, const std::string &displayName
+)
 {
   std::ifstream file(filePath, std::ios::binary | std::ios::ate);
   if (!file.is_open()) {
@@ -70,7 +108,9 @@ void StreamChunker::sendFile(const std::string &filePath, IEventQueue *events, v
   const size_t fileSize = static_cast<size_t>(file.tellg());
   file.seekg(0, std::ios::beg);
 
-  const std::string filename = QFileInfo(QString::fromStdString(filePath)).fileName().toStdString();
+  const std::string filename = displayName.empty()
+                                   ? QFileInfo(QString::fromStdString(filePath)).fileName().toStdString()
+                                   : displayName;
 
   if (fileSize == 0) {
     LOG_WARN("file transfer: skipping empty file: %s", filename.c_str());

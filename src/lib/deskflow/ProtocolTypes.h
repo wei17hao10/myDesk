@@ -157,9 +157,11 @@ static constexpr uint32_t PROTOCOL_MAX_STRING_LENGTH = 1024 * 1024;
  */
 struct ChunkType
 {
-  inline static const auto DataStart = 1; ///< Start of transfer (contains file size)
-  inline static const auto DataChunk = 2; ///< Data chunk (contains file content)
-  inline static const auto DataEnd = 3;   ///< End of transfer (transfer complete)
+  inline static const auto DataStart = 1;   ///< Start of file transfer (payload: filename + '\0' + filesize)
+  inline static const auto DataChunk = 2;   ///< File data chunk
+  inline static const auto DataEnd = 3;     ///< End of file transfer
+  inline static const auto FolderStart = 4; ///< Start of folder transfer (payload: folder name)
+  inline static const auto FolderEnd = 5;   ///< All files in folder have been sent
 };
 
 /**
@@ -172,10 +174,12 @@ struct ChunkType
  */
 enum class TransferState : uint8_t
 {
-  Started,    ///< Reception started
-  InProgress, ///< Reception in progress
-  Finished,   ///< Reception completed successfully
-  Error       ///< Reception failed with error
+  Started,        ///< File reception started
+  InProgress,     ///< File reception in progress
+  Finished,       ///< File reception completed successfully
+  Error,          ///< Reception failed with error
+  FolderStarted,  ///< Folder transfer started (filename field = folder name)
+  FolderFinished, ///< All files in folder received
 };
 
 /** @} */ // end of protocol_enums group

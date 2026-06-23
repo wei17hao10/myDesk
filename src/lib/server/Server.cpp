@@ -522,10 +522,13 @@ void Server::initiateFileTransfer(BaseClientProxy *dst, const std::vector<std::s
   }
   dst->sendDragInfo(static_cast<uint32_t>(files.size()), info.c_str(), info.size());
 
-  // Queue file chunk events. ClientProxy1_5 registered a FileSending handler
-  // in its constructor that writes each chunk to the client's stream.
-  for (const auto &filePath : files) {
-    StreamChunker::sendFile(filePath, m_events, dst);
+  // Queue file/folder chunk events. ClientProxy1_5 handles them via its FileSending handler.
+  for (const auto &path : files) {
+    if (QFileInfo(QString::fromStdString(path)).isDir()) {
+      StreamChunker::sendFolder(path, m_events, dst);
+    } else {
+      StreamChunker::sendFile(path, m_events, dst);
+    }
   }
 }
 

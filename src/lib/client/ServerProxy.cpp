@@ -869,15 +869,71 @@ void ServerProxy::setActiveServerLanguage(const std::string_view &language)
 void ServerProxy::fileTransfer()
 {
   auto state = FileChunk::assemble(m_stream, m_fileDataCached, m_transferFilename);
-  if (state == TransferState::Finished) {
+  switch (state) {
+  case TransferState::Finished:
     saveReceivedFile(m_transferFilename, m_fileDataCached);
     m_fileDataCached.clear();
     m_transferFilename.clear();
-  } else if (state == TransferState::Error) {
+    break;
+  case TransferState::FolderStarted:
+    // m_transferFilename holds the folder name from the FolderStart payload.
+    beginFolderTransfer(m_transferFilename);
+    m_transferFilename.clear();
+    break;
+  case TransferState::FolderFinished:
+    completeFolderTransfer();
+    break;
+  case TransferState::Error:
     LOG_WARN("file transfer from server failed");
     m_fileDataCached.clear();
     m_transferFilename.clear();
+    m_currentFolderName.clear();
+    m_folderTargetPath.clear();
+    break;
+  default:
+    break;
   }
+}
+
+void ServerProxy::beginFolderTransfer(const std::string &folderName)
+{
+  const QString downloadsDir = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
+  const QDir dir(downloadsDir);
+  if (!dir.exists()) {
+    LOG_WARN("file transfer: downloads dir not found: %s", qPrintable(downloadsDir));
+    return;
+  }
+
+  // Resolve name conflict for the top-level folder.
+  QString targetPath = dir.filePath(QString::fromStdString(folderName));
+  if (QFile::exists(targetPath)) {
+    int n = 1;
+    do {
+      targetPath = dir.filePath(QStringLiteral("%1_%2").arg(QString::fromStdString(folderName)).arg(n++));
+    } while (QFile::exists(targetPath));
+  }
+
+  if (!QDir().mkpath(targetPath)) {
+    LOG_ERR("file transfer: could not create folder: %s", qPrintable(targetPath));
+    return;
+  }
+
+  m_currentFolderName = folderName;
+  m_folderTargetPath = targetPath;
+  LOG_INFO("file transfer: receiving folder '%s' → '%s'", folderName.c_str(), qPrintable(targetPath));
+}
+
+void ServerProxy::completeFolderTransfer()
+{
+  if (m_folderTargetPath.isEmpty()) {
+    LOG_WARN("file transfer: folder end received but no active folder transfer");
+    return;
+  }
+  LOG_INFO("file transfer: folder '%s' complete", m_currentFolderName.c_str());
+  m_client->setClipboardFile(m_folderTargetPath.toStdString());
+  m_events->addEvent(Event(EventTypes::FileReceived, m_client, static_cast<void *>(nullptr)));
+  m_currentFolderName.clear();
+  m_folderTargetPath.clear();
 }
 
 void ServerProxy::dragInfo()
@@ -892,16 +948,54 @@ void ServerProxy::dragInfo()
   LOG_INFO("incoming file drag: %u file(s)", fileCount);
 }
 
-void ServerProxy::saveReceivedFile(const std::string &filename, const std::string &data)
+void ServerProxy::saveReceivedFile(const std::string &relativePath, const std::string &data)
 {
-  const QString safeBase = QFileInfo(QString::fromStdString(filename)).fileName();
+  // --- Folder file: relative path like "FolderName/subdir/file.txt" ---
+  if (!m_folderTargetPath.isEmpty()) {
+    // Strip the top-level folder component (already created by beginFolderTransfer).
+    const auto sep = relativePath.find('/');
+    if (sep == std::string::npos) {
+      LOG_WARN("file transfer: folder file missing path separator: %s", relativePath.c_str());
+      return;
+    }
+    const QString relPart = QString::fromStdString(relativePath.substr(sep + 1));
+
+    // Reject path traversal attempts.
+    for (const QString &component : relPart.split('/')) {
+      if (component == ".." || component.isEmpty()) {
+        LOG_WARN("file transfer: rejected unsafe path in folder transfer: %s", relativePath.c_str());
+        return;
+      }
+    }
+
+    const QString filePath = m_folderTargetPath + "/" + relPart;
+    const QFileInfo fi(filePath);
+    if (!fi.dir().exists() && !QDir().mkpath(fi.dir().absolutePath())) {
+      LOG_ERR("file transfer: could not create subdir: %s", qPrintable(fi.dir().absolutePath()));
+      return;
+    }
+
+    QFile out(filePath);
+    if (!out.open(QIODevice::WriteOnly)) {
+      LOG_ERR("file transfer: can't write to %s", qPrintable(filePath));
+      return;
+    }
+    out.write(data.c_str(), static_cast<qint64>(data.size()));
+    out.close();
+    LOG_INFO("file transfer: saved '%s' (%zu bytes)", qPrintable(filePath), data.size());
+    // Don't call setClipboardFile here — wait for FolderEnd (completeFolderTransfer).
+    return;
+  }
+
+  // --- Single file transfer ---
+  const QString safeBase = QFileInfo(QString::fromStdString(relativePath)).fileName();
   if (safeBase.isEmpty()) {
     LOG_WARN("file transfer: empty filename, discarding");
     return;
   }
 
   const QString downloadsDir = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
-  QDir dir(downloadsDir);
+  const QDir dir(downloadsDir);
   if (!dir.exists()) {
     LOG_WARN("file transfer: downloads dir not found: %s", qPrintable(downloadsDir));
     return;
@@ -928,9 +1022,6 @@ void ServerProxy::saveReceivedFile(const std::string &filename, const std::strin
   out.close();
 
   LOG_INFO("file transfer: saved '%s' (%zu bytes)", qPrintable(targetPath), data.size());
-
-  // Put the received file into the local clipboard so the user can Ctrl+V it.
   m_client->setClipboardFile(targetPath.toStdString());
-
   m_events->addEvent(Event(EventTypes::FileReceived, m_client, static_cast<void *>(nullptr)));
 }

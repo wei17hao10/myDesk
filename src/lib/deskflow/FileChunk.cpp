@@ -60,6 +60,24 @@ FileChunk *FileChunk::end()
   return chunk;
 }
 
+FileChunk *FileChunk::folderStart(const std::string &folderName)
+{
+  size_t total = 1 + folderName.size();
+  auto *chunk = new FileChunk(total);
+  chunk->m_chunk[0] = ChunkType::FolderStart;
+  std::memcpy(&chunk->m_chunk[1], folderName.c_str(), folderName.size());
+  chunk->m_dataSize = total;
+  return chunk;
+}
+
+FileChunk *FileChunk::folderEnd()
+{
+  auto *chunk = new FileChunk(1);
+  chunk->m_chunk[0] = ChunkType::FolderEnd;
+  chunk->m_dataSize = 1;
+  return chunk;
+}
+
 TransferState FileChunk::assemble(deskflow::IStream *stream, std::string &dataCached, std::string &filename)
 {
   using enum TransferState;
@@ -91,15 +109,22 @@ TransferState FileChunk::assemble(deskflow::IStream *stream, std::string &dataCa
 
   } else if (mark == ChunkType::DataEnd) {
     if (dataCached.size() != s_expectedSize) {
-      LOG_ERR(
-          "file transfer corrupt: expected=%zu actual=%zu", //
-          s_expectedSize, dataCached.size()
-      );
+      LOG_ERR("file transfer corrupt: expected=%zu actual=%zu", s_expectedSize, dataCached.size());
       return Error;
     }
     filename = s_filename;
     LOG_DEBUG("file transfer complete: file=%s size=%zu", s_filename.c_str(), dataCached.size());
     return Finished;
+
+  } else if (mark == ChunkType::FolderStart) {
+    filename = payload; // folder name
+    dataCached.clear();
+    LOG_DEBUG("folder transfer started: folder=%s", payload.c_str());
+    return FolderStarted;
+
+  } else if (mark == ChunkType::FolderEnd) {
+    LOG_DEBUG("folder transfer complete");
+    return FolderFinished;
   }
 
   LOG_ERR("file transfer: unknown mark byte %d", mark);
@@ -130,6 +155,12 @@ void FileChunk::send(deskflow::IStream *stream, void *data)
     break;
   case ChunkType::DataEnd:
     LOG_VERBOSE("sending file chunk end");
+    break;
+  case ChunkType::FolderStart:
+    LOG_VERBOSE("sending folder start: %s", payload.c_str());
+    break;
+  case ChunkType::FolderEnd:
+    LOG_VERBOSE("sending folder end");
     break;
   default:
     break;

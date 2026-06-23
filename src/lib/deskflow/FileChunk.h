@@ -26,6 +26,10 @@ public:
   static FileChunk *data(const std::string &chunkData);
   static FileChunk *end();
 
+  // Folder transfer: FolderStart payload = folder name; FolderEnd has no payload.
+  static FileChunk *folderStart(const std::string &folderName);
+  static FileChunk *folderEnd();
+
   // Reassemble incoming kMsgDFileTransfer stream.
   // Returns Started / InProgress / Finished / Error.
   // On Finished, dataCached holds the complete file bytes and filename is set.

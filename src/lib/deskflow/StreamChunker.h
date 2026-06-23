@@ -22,6 +22,11 @@ public:
   );
 
   // Read filePath from disk and post FileSending events to eventTarget.
-  // eventTarget must be a ClientProxy1_5 (or subclass) that handles FileSending.
-  static void sendFile(const std::string &filePath, IEventQueue *events, void *eventTarget);
+  // displayName overrides the on-wire filename (use relative path for folder contents).
+  static void
+  sendFile(const std::string &filePath, IEventQueue *events, void *eventTarget, const std::string &displayName = {});
+
+  // Recursively transfer a folder: posts FolderStart, then sendFile() for every
+  // file in the tree, then FolderEnd.
+  static void sendFolder(const std::string &folderPath, IEventQueue *events, void *eventTarget);
 };

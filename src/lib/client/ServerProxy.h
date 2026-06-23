@@ -12,6 +12,8 @@
 #include "deskflow/KeyTypes.h"
 #include "deskflow/KeyboardLayoutManager.h"
 
+#include <QString>
+
 class Client;
 class ClientInfo;
 class EventQueueTimer;
@@ -102,7 +104,11 @@ private:
   // File transfer message handlers (server → client direction).
   void fileTransfer();
   void dragInfo();
-  void saveReceivedFile(const std::string &filename, const std::string &data);
+  void saveReceivedFile(const std::string &relativePath, const std::string &data);
+
+  // Folder transfer helpers.
+  void beginFolderTransfer(const std::string &folderName);
+  void completeFolderTransfer();
 
 private:
   using MessageParser = ConnectionResult (ServerProxy::*)(const uint8_t *);
@@ -135,4 +141,8 @@ private:
   // File transfer state (server → client).
   std::string m_fileDataCached;
   std::string m_transferFilename;
+
+  // Folder transfer state: set when a FolderStart is received, cleared on FolderEnd.
+  std::string m_currentFolderName;
+  QString m_folderTargetPath; // resolved Downloads path for the top-level folder
 };
