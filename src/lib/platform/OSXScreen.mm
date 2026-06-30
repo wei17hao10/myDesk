@@ -1486,6 +1486,17 @@ void OSXScreen::handlePowerChangeRequest(natural_t messageType, void *messageArg
 
   case kIOMessageSystemHasPoweredOn:
     LOG_DEBUG("system wakeup");
+    // Reset event-tap pass-through state immediately on wake. If the ScreenSuspend
+    // event was never dispatched before sleep (a race between IOAllowPowerChange
+    // and the event queue draining), m_isOnScreen remains false and the tap will
+    // swallow all local input after wake — causing beeping and UI interaction failures.
+    // Writing a plain bool from this thread is safe in practice (single-word store).
+    m_isOnScreen = m_isPrimary;
+    // The tap can be disabled by a CGEventTapDisabledByTimeout during sleep; ensure
+    // it is active before ScreenResume is processed by the app layer.
+    if (m_eventTapPort) {
+      CGEventTapEnable(m_eventTapPort, true);
+    }
     m_events->addEvent(Event(EventTypes::ScreenResume, getEventTarget()));
     break;
 
@@ -1748,8 +1759,12 @@ CGEventRef OSXScreen::handleCGInputEvent(CGEventTapProxy proxy, CGEventType type
     return event;
     break;
   case kCGEventScrollWheel:
+    // DeltaAxis2 (horizontal) is negated to match the sign convention used by the
+    // Windows MOUSEEVENTF_HWHEEL API: positive = scroll right. CGEvent's DeltaAxis2
+    // is positive for left-scroll (traditional convention), so we invert it.
+    // This mirrors the negation that the legacy Carbon path applies to xScroll.
     screen->onMouseWheel(
-        screen->mapScrollWheelToDeskflow(CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2)),
+        -screen->mapScrollWheelToDeskflow(CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2)),
         screen->mapScrollWheelToDeskflow(CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1))
     );
     break;

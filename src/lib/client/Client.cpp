@@ -667,7 +667,15 @@ void Client::handleResume()
     m_suspended = false;
     if (m_connectOnResume) {
       m_connectOnResume = false;
-      connect();
+      // Delay reconnection to allow network interfaces to re-establish after
+      // sleep before attempting to reach the server, avoiding an immediate
+      // connection-failure storm that can saturate the retry queue.
+      EventQueueTimer *timer = m_events->newOneShotTimer(2.0, nullptr);
+      m_events->addHandler(EventTypes::Timer, timer, [this, timer](const auto &) {
+        m_events->removeHandler(EventTypes::Timer, timer);
+        m_events->deleteTimer(timer);
+        connect();
+      });
     }
   }
 }

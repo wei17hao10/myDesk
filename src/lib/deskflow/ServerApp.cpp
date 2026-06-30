@@ -435,6 +435,15 @@ void ServerApp::handleResume()
     LOG_INFO("resume");
     startServer();
     m_suspended = false;
+  } else {
+    // handleSuspend was not called before sleep — this happens when the system
+    // sleeps before the ScreenSuspend event is drained from the queue (a race
+    // between IOAllowPowerChange and the event loop). Ensure the primary screen
+    // is in an interactive state so the event tap doesn't swallow local input.
+    LOG_WARN("resume without prior suspend — ensuring primary screen is entered");
+    if (m_serverScreen != nullptr) {
+      m_serverScreen->enter(0);
+    }
   }
 }
 
