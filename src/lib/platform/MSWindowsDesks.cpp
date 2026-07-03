@@ -541,6 +541,12 @@ void MSWindowsDesks::deskEnter(Desk *desk)
 {
   if (!m_isPrimary) {
     ReleaseCapture();
+    // The hider window's blank class cursor is the active cursor shape while it
+    // holds capture. Releasing capture does NOT fire WM_SETCURSOR, so the blank
+    // cursor persists until the mouse physically moves. Explicitly reset the
+    // shape here so the cursor is visible even when SendInput is UIPI-blocked
+    // (e.g. Task Manager elevated foreground) and no WM_MOUSEMOVE is generated.
+    SetCursor(LoadCursor(nullptr, IDC_ARROW));
     if (m_relativeMouseMoves) {
       restoreRelativeCursorPosition(desk);
     }
