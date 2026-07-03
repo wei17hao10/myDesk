@@ -85,6 +85,9 @@
         <file>icons/deskflow-dark/status/64/security-low.svg</file>
         <file>icons/deskflow-dark/status/64/security-medium.svg</file>
         <file>icons/deskflow-dark/index.theme</file>
+        <file alias="icons/myDesk-dark/index.theme">icons/deskflow-dark/index.theme</file>
+        <file alias="icons/myDesk-dark/apps/64/com.mydesk.app.svg">icons/deskflow-dark/apps/64/org.deskflow.deskflow.svg</file>
+        <file alias="icons/myDesk-dark/apps/64/com.mydesk.app-symbolic.svg">icons/deskflow-dark/apps/64/org.deskflow.deskflow-symbolic.svg</file>
         <file>icons/deskflow-light/actions/16/configure.svg</file>
         <file>icons/deskflow-light/actions/16/edit-clear-all.svg</file>
         <file>icons/deskflow-light/actions/16/edit-copy.svg</file>
@@ -171,5 +174,8 @@
         <file>icons/deskflow-light/status/64/security-low.svg</file>
         <file>icons/deskflow-light/status/64/security-medium.svg</file>
         <file>icons/deskflow-light/index.theme</file>
+        <file alias="icons/myDesk-light/index.theme">icons/deskflow-light/index.theme</file>
+        <file alias="icons/myDesk-light/apps/64/com.mydesk.app.svg">icons/deskflow-light/apps/64/org.deskflow.deskflow.svg</file>
+        <file alias="icons/myDesk-light/apps/64/com.mydesk.app-symbolic.svg">icons/deskflow-light/apps/64/org.deskflow.deskflow-symbolic.svg</file>
     </qresource>
 </RCC>
