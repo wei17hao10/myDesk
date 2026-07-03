@@ -93,7 +93,7 @@ static void send_keyboard_input(WORD wVk, WORD wScan, DWORD dwFlags)
   SendInput(1, &inp, sizeof(inp));
 }
 
-static void send_mouse_input(DWORD dwFlags, DWORD dx, DWORD dy, DWORD dwData)
+static UINT send_mouse_input(DWORD dwFlags, DWORD dx, DWORD dy, DWORD dwData)
 {
   INPUT inp;
   inp.type = INPUT_MOUSE;
@@ -103,7 +103,7 @@ static void send_mouse_input(DWORD dwFlags, DWORD dx, DWORD dy, DWORD dwData)
   inp.mi.mouseData = dwData;
   inp.mi.time = 0;
   inp.mi.dwExtraInfo = 0;
-  SendInput(1, &inp, sizeof(inp));
+  return SendInput(1, &inp, sizeof(inp));
 }
 
 //
@@ -457,10 +457,16 @@ void MSWindowsDesks::deskMouseMove(int32_t x, int32_t y) const
   // the primary screen.
   int32_t w = GetSystemMetrics(SM_CXSCREEN);
   int32_t h = GetSystemMetrics(SM_CYSCREEN);
-  send_mouse_input(
+  UINT sent = send_mouse_input(
       MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE, (DWORD)((65535.0f * x) / (w - 1) + 0.5f),
       (DWORD)((65535.0f * y) / (h - 1) + 0.5f), 0
   );
+  // SendInput is blocked by UIPI when the foreground window belongs to a
+  // higher-integrity process (e.g. Task Manager). SetCursorPos bypasses UIPI
+  // and physically repositions the cursor so it remains visible.
+  if (sent == 0) {
+    SetCursorPos(x, y);
+  }
 }
 
 void MSWindowsDesks::deskMouseRelativeMove(int32_t dx, int32_t dy) const
