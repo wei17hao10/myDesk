@@ -457,16 +457,16 @@ void MSWindowsDesks::deskMouseMove(int32_t x, int32_t y) const
   // the primary screen.
   int32_t w = GetSystemMetrics(SM_CXSCREEN);
   int32_t h = GetSystemMetrics(SM_CYSCREEN);
-  UINT sent = send_mouse_input(
+  send_mouse_input(
       MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE, (DWORD)((65535.0f * x) / (w - 1) + 0.5f),
       (DWORD)((65535.0f * y) / (h - 1) + 0.5f), 0
   );
-  // SendInput is blocked by UIPI when the foreground window belongs to a
-  // higher-integrity process (e.g. Task Manager). SetCursorPos bypasses UIPI
-  // and physically repositions the cursor so it remains visible.
-  if (sent == 0) {
-    SetCursorPos(x, y);
-  }
+  // Always sync cursor position with SetCursorPos in addition to SendInput.
+  // When an elevated window (e.g. Task Manager) has focus, UIPI may silently
+  // drop the SendInput event (returning 1 as if it succeeded) without moving
+  // the cursor. SetCursorPos bypasses UIPI entirely and guarantees the cursor
+  // tracks Mac mouse movement regardless of the foreground window's integrity.
+  SetCursorPos(x, y);
 }
 
 void MSWindowsDesks::deskMouseRelativeMove(int32_t dx, int32_t dy) const
