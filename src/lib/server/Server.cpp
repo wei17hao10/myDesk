@@ -445,13 +445,6 @@ void Server::switchScreen(BaseClientProxy *dst, int32_t x, int32_t y, bool forSc
         LOG_INFO("file drag detected: initiating transfer of %zu file(s) to '%s'", dragFiles.size(), getName(dst).c_str());
         initiateFileTransfer(dst, dragFiles);
       }
-
-      // Clipboard file transfer: user pressed Cmd+C on file(s), then moved to remote screen.
-      const auto clipFiles = m_primaryClient->getClipboardFiles();
-      if (!clipFiles.empty()) {
-        LOG_INFO("clipboard files detected: initiating transfer of %zu file(s) to '%s'", clipFiles.size(), getName(dst).c_str());
-        initiateFileTransfer(dst, clipFiles);
-      }
     }
 
     // leave active screen
