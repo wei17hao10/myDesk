@@ -897,12 +897,13 @@ void ServerProxy::fileTransfer()
 
 void ServerProxy::beginFolderTransfer(const std::string &folderName)
 {
-  const QString downloadsDir = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
-  const QDir dir(downloadsDir);
-  if (!dir.exists()) {
-    LOG_WARN("file transfer: downloads dir not found: %s", qPrintable(downloadsDir));
+  const QString tempBase = QStandardPaths::writableLocation(QStandardPaths::TempLocation);
+  const QString stagingDir = tempBase + "/myDesk-transfers";
+  if (!QDir().mkpath(stagingDir)) {
+    LOG_WARN("file transfer: could not create staging dir: %s", qPrintable(stagingDir));
     return;
   }
+  const QDir dir(stagingDir);
 
   // Resolve name conflict for the top-level folder.
   QString targetPath = dir.filePath(QString::fromStdString(folderName));
@@ -994,12 +995,15 @@ void ServerProxy::saveReceivedFile(const std::string &relativePath, const std::s
     return;
   }
 
-  const QString downloadsDir = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
-  const QDir dir(downloadsDir);
-  if (!dir.exists()) {
-    LOG_WARN("file transfer: downloads dir not found: %s", qPrintable(downloadsDir));
+  // Buffer files in a private temp subdirectory so they don't appear in the
+  // user's Downloads folder.  The user can then Ctrl+V to paste to any folder.
+  const QString tempBase = QStandardPaths::writableLocation(QStandardPaths::TempLocation);
+  const QString stagingDir = tempBase + "/myDesk-transfers";
+  if (!QDir().mkpath(stagingDir)) {
+    LOG_WARN("file transfer: could not create staging dir: %s", qPrintable(stagingDir));
     return;
   }
+  const QDir dir(stagingDir);
 
   // Avoid overwriting existing files.
   QString targetPath = dir.filePath(safeBase);
@@ -1021,7 +1025,7 @@ void ServerProxy::saveReceivedFile(const std::string &relativePath, const std::s
   out.write(data.c_str(), static_cast<qint64>(data.size()));
   out.close();
 
-  LOG_INFO("file transfer: saved '%s' (%zu bytes)", qPrintable(targetPath), data.size());
+  LOG_INFO("file transfer: staged '%s' (%zu bytes) — ready for Ctrl+V paste", qPrintable(targetPath), data.size());
   m_client->setClipboardFile(targetPath.toStdString());
   m_events->addEvent(Event(EventTypes::FileReceived, m_client, static_cast<void *>(nullptr)));
 }

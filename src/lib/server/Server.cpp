@@ -438,12 +438,14 @@ void Server::switchScreen(BaseClientProxy *dst, int32_t x, int32_t y, bool forSc
   // since that's a waste of time we skip that and just warp the
   // mouse.
   if (m_active != dst) {
-    // If a file drag is in progress on the primary screen, start the transfer now.
+    // Transfer clipboard files when leaving the primary screen (e.g. Cmd+C on Mac).
+    // Drag-based transfer is intentionally omitted: on macOS the system-level drag
+    // pasteboard is unreliable across screens and Mac → Windows drag is not supported.
     if (m_active == m_primaryClient && m_enableFileTransfer) {
-      const auto dragFiles = m_primaryClient->getDragFiles();
-      if (!dragFiles.empty()) {
-        LOG_INFO("file drag detected: initiating transfer of %zu file(s) to '%s'", dragFiles.size(), getName(dst).c_str());
-        initiateFileTransfer(dst, dragFiles);
+      const auto clipFiles = m_primaryClient->getClipboardFiles();
+      if (!clipFiles.empty()) {
+        LOG_INFO("clipboard files detected: initiating transfer of %zu file(s) to '%s'", clipFiles.size(), getName(dst).c_str());
+        initiateFileTransfer(dst, clipFiles);
       }
     }
 
