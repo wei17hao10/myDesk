@@ -40,7 +40,8 @@ private:
   // Receive one kMsgDDragInfo message from the connected client.
   void dragInfoReceived();
 
-  // Saves a fully-received file to the local Downloads directory.
+  // Stages a fully-received file in a private temp directory and places its
+  // path on the clipboard so the user can paste (Ctrl+V/Cmd+V) it anywhere.
   void saveReceivedFile(const std::string &filename, const std::string &data) const;
 
   IEventQueue *m_events = nullptr;

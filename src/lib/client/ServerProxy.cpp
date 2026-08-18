@@ -16,6 +16,7 @@
 #include "deskflow/ClipboardChunk.h"
 #include "deskflow/DeskflowException.h"
 #include "deskflow/FileChunk.h"
+#include "deskflow/FileTransferStaging.h"
 #include "deskflow/OptionTypes.h"
 #include "deskflow/ProtocolTypes.h"
 #include "deskflow/ProtocolUtil.h"
@@ -26,9 +27,12 @@
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
-#include <QStandardPaths>
 
 #include <cstring>
+
+using deskflow::fileTransferStagingDir;
+using deskflow::kFileTransferStagingMaxAgeMs;
+using deskflow::purgeStaleFileTransfers;
 
 //
 // ServerProxy
@@ -42,6 +46,8 @@ ServerProxy::ServerProxy(Client *client, deskflow::IStream *stream, IEventQueue 
   assert(m_client != nullptr);
   assert(m_stream != nullptr);
 
+  purgeStaleFileTransfers(fileTransferStagingDir(), kFileTransferStagingMaxAgeMs);
+
   // initialize modifier translation table
   for (KeyModifierID id = 0; id < kKeyModifierIDLast; ++id)
     m_modifierTranslationTable[id] = id;
@@ -52,6 +58,9 @@ ServerProxy::ServerProxy(Client *client, deskflow::IStream *stream, IEventQueue 
   });
   m_events->addHandler(EventTypes::ClipboardSending, this, [this](const auto &e) {
     ClipboardChunk::send(m_stream, e.getDataObject());
+  });
+  m_events->addHandler(EventTypes::FileSending, this, [this](const auto &e) {
+    FileChunk::send(m_stream, e.getDataObject());
   });
 
   // send heartbeat
@@ -897,8 +906,8 @@ void ServerProxy::fileTransfer()
 
 void ServerProxy::beginFolderTransfer(const std::string &folderName)
 {
-  const QString tempBase = QStandardPaths::writableLocation(QStandardPaths::TempLocation);
-  const QString stagingDir = tempBase + "/myDesk-transfers";
+  const QString stagingDir = fileTransferStagingDir();
+  purgeStaleFileTransfers(stagingDir, kFileTransferStagingMaxAgeMs);
   if (!QDir().mkpath(stagingDir)) {
     LOG_WARN("file transfer: could not create staging dir: %s", qPrintable(stagingDir));
     return;
@@ -949,6 +958,33 @@ void ServerProxy::dragInfo()
   LOG_INFO("incoming file drag: %u file(s)", fileCount);
 }
 
+void ServerProxy::sendDragInfo(uint32_t fileCount, const std::string &info)
+{
+  LOG_DEBUG("sending drag info: %u file(s)", fileCount);
+  ProtocolUtil::writef(m_stream, kMsgDDragInfo, fileCount, &info);
+}
+
+void ServerProxy::sendClipboardFiles(const std::vector<std::string> &files)
+{
+  // Build drag info: null-separated basenames.
+  std::string info;
+  for (const auto &path : files) {
+    info += QFileInfo(QString::fromStdString(path)).fileName().toStdString();
+    info += '\0';
+  }
+  sendDragInfo(static_cast<uint32_t>(files.size()), info);
+
+  // Queue file/folder chunk events; the FileSending handler registered in the
+  // constructor writes them out to the server via m_stream.
+  for (const auto &path : files) {
+    if (QFileInfo(QString::fromStdString(path)).isDir()) {
+      StreamChunker::sendFolder(path, m_events, this);
+    } else {
+      StreamChunker::sendFile(path, m_events, this);
+    }
+  }
+}
+
 void ServerProxy::saveReceivedFile(const std::string &relativePath, const std::string &data)
 {
   // --- Folder file: relative path like "FolderName/subdir/file.txt" ---
@@ -997,8 +1033,8 @@ void ServerProxy::saveReceivedFile(const std::string &relativePath, const std::s
 
   // Buffer files in a private temp subdirectory so they don't appear in the
   // user's Downloads folder.  The user can then Ctrl+V to paste to any folder.
-  const QString tempBase = QStandardPaths::writableLocation(QStandardPaths::TempLocation);
-  const QString stagingDir = tempBase + "/myDesk-transfers";
+  const QString stagingDir = fileTransferStagingDir();
+  purgeStaleFileTransfers(stagingDir, kFileTransferStagingMaxAgeMs);
   if (!QDir().mkpath(stagingDir)) {
     LOG_WARN("file transfer: could not create staging dir: %s", qPrintable(stagingDir));
     return;

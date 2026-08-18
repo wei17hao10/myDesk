@@ -33,6 +33,7 @@
 #include <Shlobj.h>
 #include <algorithm>
 #include <comutil.h>
+#include <shellapi.h>
 #include <string.h>
 
 // suppress warning about GetVersionEx, which is used indirectly in this
@@ -1768,9 +1769,64 @@ std::vector<std::string> MSWindowsScreen::getDragFiles() const
 
 std::vector<std::string> MSWindowsScreen::getClipboardFiles()
 {
-  // Windows is only ever the client (secondary screen) in our setup,
-  // so file detection on Windows clipboard is not needed for now.
-  return {};
+  // Fast path: nothing changed at all.
+  const DWORD sequence = GetClipboardSequenceNumber();
+  if (sequence == m_lastClipboardTransferSequence) {
+    return {};
+  }
+  m_lastClipboardTransferSequence = sequence;
+
+  if (!IsClipboardFormatAvailable(CF_HDROP)) {
+    // Clipboard no longer holds files — clear the remembered set so the user can
+    // re-copy the same files later and have them transfer again.
+    m_lastTransferredClipboardFiles.clear();
+    return {};
+  }
+
+  if (!OpenClipboard(m_window)) {
+    return {};
+  }
+
+  std::vector<std::string> files;
+  if (HANDLE hData = GetClipboardData(CF_HDROP)) {
+    if (HDROP hDrop = static_cast<HDROP>(GlobalLock(hData))) {
+      const UINT count = DragQueryFileW(hDrop, 0xFFFFFFFF, nullptr, 0);
+      for (UINT i = 0; i < count; ++i) {
+        WCHAR path[MAX_PATH] = {};
+        if (DragQueryFileW(hDrop, i, path, MAX_PATH) > 0) {
+          int needed = WideCharToMultiByte(CP_UTF8, 0, path, -1, nullptr, 0, nullptr, nullptr);
+          if (needed > 0) {
+            std::string utf8(needed - 1, '\0');
+            WideCharToMultiByte(CP_UTF8, 0, path, -1, utf8.data(), needed, nullptr, nullptr);
+            files.push_back(std::move(utf8));
+          }
+        }
+      }
+      GlobalUnlock(hData);
+    }
+  }
+  CloseClipboard();
+
+  if (files.empty()) {
+    m_lastTransferredClipboardFiles.clear();
+    return {};
+  }
+
+  // Guard against re-sending the same files when the Mac clipboard sync pushes
+  // content back to Windows and bumps the clipboard sequence number without
+  // the user doing a new Ctrl+C. Compare sorted path lists.
+  std::vector<std::string> sortedCurrent = files;
+  std::vector<std::string> sortedLast = m_lastTransferredClipboardFiles;
+  std::sort(sortedCurrent.begin(), sortedCurrent.end());
+  std::sort(sortedLast.begin(), sortedLast.end());
+  if (sortedCurrent == sortedLast) {
+    LOG_DEBUG("clipboard files unchanged since last transfer, skipping re-send");
+    return {};
+  }
+
+  m_lastTransferredClipboardFiles = files;
+  LOG_DEBUG("clipboard files detected: %zu file(s)", files.size());
+  return files;
 }
 
 void MSWindowsScreen::setClipboardFile(const std::string &path)
@@ -1818,5 +1874,11 @@ void MSWindowsScreen::setClipboardFile(const std::string &path)
     GlobalFree(hMem);
   }
   CloseClipboard();
+
+  // Update sequence and remembered files so we don't loop: the file we just
+  // wrote to the clipboard must not be detected as a new local copy and sent back.
+  m_lastClipboardTransferSequence = GetClipboardSequenceNumber();
+  m_lastTransferredClipboardFiles = {path};
+
   LOG_INFO("file transfer: put '%s' into clipboard (CF_HDROP)", path.c_str());
 }

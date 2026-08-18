@@ -340,6 +340,12 @@ private:
   // File drag-and-drop support (primary screen only).
   MSWindowsDropTarget *m_dropTarget = nullptr;
 
+  // Loop-prevention state for clipboard file transfer (mirrors OSXScreen):
+  // lets us tell a real local copy apart from the clipboard change caused by
+  // our own setClipboardFile() call.
+  DWORD m_lastClipboardTransferSequence = 0;
+  std::vector<std::string> m_lastTransferredClipboardFiles;
+
 public:
   std::vector<std::string> getDragFiles() const override;
   std::vector<std::string> getClipboardFiles() override;

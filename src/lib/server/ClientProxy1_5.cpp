@@ -12,6 +12,7 @@
 #include "base/IEventQueue.h"
 #include "base/Log.h"
 #include "deskflow/FileChunk.h"
+#include "deskflow/FileTransferStaging.h"
 #include "deskflow/ProtocolTypes.h"
 #include "deskflow/ProtocolUtil.h"
 #include "io/IStream.h"
@@ -20,7 +21,10 @@
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
-#include <QStandardPaths>
+
+using deskflow::fileTransferStagingDir;
+using deskflow::kFileTransferStagingMaxAgeMs;
+using deskflow::purgeStaleFileTransfers;
 
 ClientProxy1_5::ClientProxy1_5(
     const std::string &name, deskflow::IStream *stream, Server *server, IEventQueue *events
@@ -28,6 +32,8 @@ ClientProxy1_5::ClientProxy1_5(
     : ClientProxy1_4(name, stream, server, events)
     , m_events(events)
 {
+  purgeStaleFileTransfers(fileTransferStagingDir(), kFileTransferStagingMaxAgeMs);
+
   // Register FileSending event handler: when StreamChunker::sendFile() posts chunks,
   // this handler writes them to the remote client's stream.
   m_events->addHandler(EventTypes::FileSending, this, [this](const auto &e) {
@@ -101,14 +107,17 @@ void ClientProxy1_5::saveReceivedFile(const std::string &filename, const std::st
     return;
   }
 
-  const QString downloadsDir = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
-  QDir dir(downloadsDir);
-  if (!dir.exists()) {
-    LOG_WARN("file transfer: downloads dir missing: %s", qPrintable(downloadsDir));
+  // Buffer files in a private temp subdirectory so they don't appear in the
+  // user's Downloads folder. The user can then Ctrl+V / Cmd+V to paste to any folder.
+  const QString stagingDir = fileTransferStagingDir();
+  purgeStaleFileTransfers(stagingDir, kFileTransferStagingMaxAgeMs);
+  if (!QDir().mkpath(stagingDir)) {
+    LOG_WARN("file transfer: could not create staging dir: %s", qPrintable(stagingDir));
     return;
   }
+  const QDir dir(stagingDir);
 
-  // Resolve name collision.
+  // Avoid overwriting existing files.
   QString targetPath = dir.filePath(safeBase);
   if (QFile::exists(targetPath)) {
     const QFileInfo fi(safeBase);
@@ -128,7 +137,8 @@ void ClientProxy1_5::saveReceivedFile(const std::string &filename, const std::st
   out.write(data.c_str(), static_cast<qint64>(data.size()));
   out.close();
 
-  LOG_INFO("file transfer: saved '%s' (%zu bytes)", qPrintable(targetPath), data.size());
+  LOG_INFO("file transfer: staged '%s' (%zu bytes) — ready for Ctrl+V/Cmd+V paste", qPrintable(targetPath), data.size());
+  m_server->setClipboardFile(targetPath.toStdString());
 
   // Notify the server so it can surface a GUI alert.
   m_events->addEvent(Event(EventTypes::FileReceived, m_server, static_cast<void *>(nullptr)));

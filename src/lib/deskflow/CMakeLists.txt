@@ -39,6 +39,8 @@ add_library(${lib_name} STATIC ${PLATFORM_CODE}
   ClipboardChunk.h
   FileChunk.cpp
   FileChunk.h
+  FileTransferStaging.cpp
+  FileTransferStaging.h
   DeskflowException.cpp
   DeskflowException.h
   DisplayInvalidException.h

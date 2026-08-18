@@ -527,6 +527,11 @@ void Server::initiateFileTransfer(BaseClientProxy *dst, const std::vector<std::s
   }
 }
 
+void Server::setClipboardFile(const std::string &path)
+{
+  m_screen->setClipboardFile(path);
+}
+
 void Server::jumpToScreen(BaseClientProxy *newScreen)
 {
   assert(newScreen != nullptr);

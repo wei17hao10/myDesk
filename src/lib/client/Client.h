@@ -84,6 +84,11 @@ public:
   */
   void disconnect(const char *msg);
 
+  void setEnableFileTransfer(bool enable)
+  {
+    m_enableFileTransfer = enable;
+  }
+
   //! Refuse connection
   /*!
   Disconnects from the server with an optional error message.
@@ -202,6 +207,7 @@ private:
   IEventQueue *m_events = nullptr;
   bool m_useSecureNetwork = false;
   bool m_enableClipboard = true;
+  bool m_enableFileTransfer = true;
   bool m_relativeMouseMoves = false;
   bool m_hasRelativeRestorePosition = false;
   int32_t m_relativeRestoreX = 0;

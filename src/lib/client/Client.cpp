@@ -225,6 +225,14 @@ bool Client::leave()
     }
   }
 
+  if (m_enableFileTransfer) {
+    const auto clipFiles = m_screen->getClipboardFiles();
+    if (!clipFiles.empty()) {
+      LOG_INFO("clipboard files detected: initiating transfer of %zu file(s) to server", clipFiles.size());
+      m_server->sendClipboardFiles(clipFiles);
+    }
+  }
+
   return true;
 }
 

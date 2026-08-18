@@ -14,6 +14,9 @@
 
 #include <QString>
 
+#include <string>
+#include <vector>
+
 class Client;
 class ClientInfo;
 class EventQueueTimer;
@@ -49,6 +52,9 @@ public:
   void onInfoChanged();
   bool onGrabClipboard(ClipboardID);
   void onClipboardChanged(ClipboardID, const IClipboard *);
+
+  // Send clipboard files (from the local, client-side clipboard) up to the server.
+  void sendClipboardFiles(const std::vector<std::string> &files);
 
   //@}
 
@@ -105,6 +111,9 @@ private:
   void fileTransfer();
   void dragInfo();
   void saveReceivedFile(const std::string &relativePath, const std::string &data);
+
+  // File transfer sending (client → server direction).
+  void sendDragInfo(uint32_t fileCount, const std::string &info);
 
   // Folder transfer helpers.
   void beginFolderTransfer(const std::string &folderName);

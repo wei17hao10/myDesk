@@ -181,6 +181,10 @@ public:
     m_enableFileTransfer = enable;
   }
 
+  // Put a received file/folder path on the server machine's own clipboard so
+  // the user can paste it (Ctrl+V / Cmd+V) to wherever they want.
+  void setClipboardFile(const std::string &path);
+
   //@}
   //! @name accessors
   //@{
