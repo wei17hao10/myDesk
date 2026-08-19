@@ -80,29 +80,45 @@ void MonitorGraphicsItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     return;
   }
 
-  const QPointF delta = event->scenePos() - m_dragStartScenePos;
-  const QPointF candidateTopLeft = m_dragStartPositions.value(this) + delta;
+  const QPointF rawDelta = event->scenePos() - m_dragStartScenePos;
+  const QPointF candidateTopLeft = m_dragStartPositions.value(this) + rawDelta;
   const QRectF candidateRect(candidateTopLeft, m_localRect.size());
 
   const auto movers = m_dragStartPositions.keys();
-  QPointF target = m_ownerScene->snappedTopLeft(candidateRect, movers);
+  const QPointF snappedTarget = m_ownerScene->snappedTopLeft(candidateRect, movers);
+  const QPointF snappedDelta = snappedTarget - m_dragStartPositions.value(this);
+  const QPointF candidateDelta = candidateTopLeft - m_dragStartPositions.value(this);
 
-  // Never let a drag land on top of another machine's monitor. Snapping to
-  // touch an edge is fine (that's how cross-machine links get created); if
-  // snapping itself would create an overlap, fall back to the raw candidate
-  // position, and if even that overlaps, don't move at all this frame.
-  if (m_ownerScene->wouldOverlapOtherMachine(m_screenName, QRectF(target, m_localRect.size()), movers)) {
-    if (!m_ownerScene->wouldOverlapOtherMachine(m_screenName, candidateRect, movers)) {
-      target = candidateTopLeft;
+  // Never let a drag land on top of another machine's monitor — check EVERY
+  // monitor being moved together (a locked whole-machine drag moves all of
+  // that machine's monitors as a rigid group), not just the one directly
+  // under the cursor.
+  auto anyMoverOverlaps = [this, &movers](const QPointF &testDelta) {
+    for (auto it = m_dragStartPositions.constBegin(); it != m_dragStartPositions.constEnd(); ++it) {
+      MonitorGraphicsItem *mover = it.key();
+      const QRectF resultRect(it.value() + testDelta, mover->m_localRect.size());
+      if (m_ownerScene->wouldOverlapOtherMachine(mover->screenName(), resultRect, movers)) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  // Snapping to touch an edge is fine (that's how cross-machine links get
+  // created); if snapping itself would create an overlap, fall back to the
+  // raw (unsnapped) delta, and if even that overlaps, don't move at all.
+  QPointF finalDelta = snappedDelta;
+  if (anyMoverOverlaps(finalDelta)) {
+    if (!anyMoverOverlaps(candidateDelta)) {
+      finalDelta = candidateDelta;
     } else {
       event->accept();
       return;
     }
   }
 
-  const QPointF snappedDelta = target - m_dragStartPositions.value(this);
   for (auto it = m_dragStartPositions.constBegin(); it != m_dragStartPositions.constEnd(); ++it) {
-    it.key()->setPos(it.value() + snappedDelta);
+    it.key()->setPos(it.value() + finalDelta);
   }
   event->accept();
 }
