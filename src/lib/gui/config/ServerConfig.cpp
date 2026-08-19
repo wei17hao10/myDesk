@@ -245,10 +245,15 @@ Interval normalizeToBBox(Edge side, qreal ov0, qreal ov1, const QRectF &bbox)
   }
   start = std::clamp(start, 0.0, 1.0);
   end = std::clamp(end, 0.0, 1.0);
-  // Round to the nearest 1/100 to match Config::formatInterval's
-  // integer-percent grammar.
-  start = std::round(start * 100.0) / 100.0;
-  end = std::round(end * 100.0) / 100.0;
+  // Round OUTWARD to 1/100 (matching Config::formatInterval's integer-percent
+  // grammar) rather than to the nearest percent: floor the start, ceil the
+  // end. Physical monitor measurements and mm-to-canvas conversion already
+  // carry a little imprecision, and rounding to-nearest can shrink the true
+  // overlap by up to half a percent — enough to clip a sliver of real pixels
+  // right at a screen's edge/corner and make crossing fail there. Rounding
+  // outward only ever widens the interval slightly, never narrows it.
+  start = std::floor(start * 100.0) / 100.0;
+  end = std::ceil(end * 100.0) / 100.0;
   return {static_cast<float>(start), static_cast<float>(end)};
 }
 
