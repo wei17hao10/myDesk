@@ -582,14 +582,17 @@ void CoreProcess::onCoreIpcMessageReceived(const QString &command, const QString
       return;
     }
     const auto name = args.left(sep);
-    QList<QRect> monitors;
+    QList<ReportedMonitor> monitors;
     const auto rectPart = args.mid(sep + 1);
     for (const auto &rectString : rectPart.split(';', Qt::SkipEmptyParts)) {
       const auto parts = rectString.split(',');
-      if (parts.size() != 4) {
+      if (parts.size() != 6) {
         continue;
       }
-      monitors.append(QRect(parts[0].toInt(), parts[1].toInt(), parts[2].toInt(), parts[3].toInt()));
+      monitors.append(ReportedMonitor{
+          QRect(parts[0].toInt(), parts[1].toInt(), parts[2].toInt(), parts[3].toInt()),
+          QSize(parts[4].toInt(), parts[5].toInt())
+      });
     }
     m_clientMonitors[name] = monitors;
     Q_EMIT clientMonitorsChanged(name, monitors);

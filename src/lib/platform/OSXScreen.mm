@@ -1339,9 +1339,11 @@ bool OSXScreen::updateScreenShape()
   for (CGDisplayCount i = 0; i < displayCount; ++i) {
     CGRect bounds = CGDisplayBounds(displays[i]);
     totalBounds = CGRectUnion(totalBounds, bounds);
+    const CGSize mmSize = CGDisplayScreenSize(displays[i]);
     monitors.push_back(
         {static_cast<int32_t>(bounds.origin.x), static_cast<int32_t>(bounds.origin.y),
-         static_cast<int32_t>(bounds.size.width), static_cast<int32_t>(bounds.size.height)}
+         static_cast<int32_t>(bounds.size.width), static_cast<int32_t>(bounds.size.height),
+         static_cast<int32_t>(mmSize.width + 0.5), static_cast<int32_t>(mmSize.height + 0.5)}
     );
   }
   m_monitors = std::move(monitors);

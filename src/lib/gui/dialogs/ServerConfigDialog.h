@@ -41,14 +41,14 @@ public Q_SLOTS:
 
 protected Q_SLOTS:
   void onScreensChanged();
-  void onClientMonitorsChanged(const QString &name, const QList<QRect> &monitors);
+  void onClientMonitorsChanged(const QString &name, const QList<deskflow::gui::CoreProcess::ReportedMonitor> &monitors);
 
 protected:
   void addClient();
   void removeSelectedComputer();
   bool addComputer(const QString &clientName, bool doSilent);
   QPointF nextFreePlacement() const;
-  void applyLiveMonitors(Screen &screen, const QList<QRect> &liveMonitors);
+  void applyLiveMonitors(Screen &screen, const QList<deskflow::gui::CoreProcess::ReportedMonitor> &liveMonitors);
 
   void addHotkey();
   void editHotkey();

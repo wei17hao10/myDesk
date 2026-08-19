@@ -17,5 +17,11 @@ struct MonitorRect
   int32_t w = 0;
   int32_t h = 0;
 
+  // Real physical size in millimeters, 0 if the platform can't report it
+  // (used to size this monitor correctly on the arrangement canvas instead
+  // of assuming a fixed DPI).
+  int32_t mmWidth = 0;
+  int32_t mmHeight = 0;
+
   bool operator==(const MonitorRect &) const = default;
 };

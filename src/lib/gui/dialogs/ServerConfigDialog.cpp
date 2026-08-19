@@ -356,7 +356,9 @@ void ServerConfigDialog::onScreensChanged()
   onChange();
 }
 
-void ServerConfigDialog::onClientMonitorsChanged(const QString &name, const QList<QRect> &monitors)
+void ServerConfigDialog::onClientMonitorsChanged(
+    const QString &name, const QList<deskflow::gui::CoreProcess::ReportedMonitor> &monitors
+)
 {
   Screen *screen = canvasScene().findScreen(name);
   if (!screen || screen->isServer()) {
@@ -603,29 +605,34 @@ QPointF ServerConfigDialog::nextFreePlacement() const
   return unionRect.isEmpty() ? QPointF(0, 0) : QPointF(unionRect.right() + kGap, unionRect.bottom());
 }
 
-void ServerConfigDialog::applyLiveMonitors(Screen &screen, const QList<QRect> &liveMonitors)
+void ServerConfigDialog::applyLiveMonitors(
+    Screen &screen, const QList<deskflow::gui::CoreProcess::ReportedMonitor> &liveMonitors
+)
 {
   if (liveMonitors.isEmpty()) {
     return;
   }
 
-  // The protocol doesn't carry physical screen size yet, so approximate at
-  // a standard 96 DPI — this keeps remote boxes roughly consistent in scale
-  // with the local machine's real physical-size-based layout, rather than
-  // mixing raw pixel counts with millimeters.
+  // Prefer each monitor's own real physical size when the client reported
+  // one; otherwise approximate at a standard 96 DPI so it's at least roughly
+  // consistent in scale with the local machine's physical-size-based layout,
+  // rather than using raw pixel counts as millimeters.
   constexpr qreal kAssumedDpi = 96.0;
   constexpr qreal kMmPerInch = 25.4;
-  constexpr qreal kPxToMm = kMmPerInch / kAssumedDpi;
+  constexpr qreal kFallbackPxToMm = kMmPerInch / kAssumedDpi;
 
   // Build each monitor's rect relative to the group's own origin (mm), and
   // the group's own combined bounding box — this preserves the machine's
   // real relative arrangement among its own monitors.
-  const QPoint origin = liveMonitors.first().topLeft();
+  const QPoint origin = liveMonitors.first().rect.topLeft();
   QList<QRectF> relativeRects;
   QRectF groupBBox;
-  for (const auto &rect : liveMonitors) {
-    const QRectF relativePx = QRectF(rect).translated(-origin);
-    const QRectF relativeMm(relativePx.topLeft() * kPxToMm, relativePx.size() * kPxToMm);
+  for (const auto &monitor : liveMonitors) {
+    const qreal scale = (monitor.mmSize.width() > 0 && monitor.mmSize.height() > 0)
+                             ? static_cast<qreal>(monitor.mmSize.width()) / monitor.rect.width()
+                             : kFallbackPxToMm;
+    const QRectF relativePx = QRectF(monitor.rect).translated(-origin);
+    const QRectF relativeMm(relativePx.topLeft() * scale, relativePx.size() * scale);
     relativeRects.append(relativeMm);
     groupBBox = groupBBox.isEmpty() ? relativeMm : groupBBox.united(relativeMm);
   }
@@ -642,7 +649,7 @@ void ServerConfigDialog::applyLiveMonitors(Screen &screen, const QList<QRect> &l
   for (int i = 0; i < liveMonitors.size(); ++i) {
     monitors.append(gui::canvas::MonitorRect{
         relativeRects[i].translated(translation),
-        QStringLiteral("%1x%2").arg(liveMonitors[i].width()).arg(liveMonitors[i].height())
+        QStringLiteral("%1x%2").arg(liveMonitors[i].rect.width()).arg(liveMonitors[i].rect.height())
     });
   }
   screen.setMonitors(monitors);

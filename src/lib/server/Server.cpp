@@ -315,7 +315,9 @@ void Server::sendClientMonitorsIpc(const BaseClientProxy *client) const
 {
   QStringList rectStrings;
   for (const auto &m : client->getMonitors()) {
-    rectStrings.append(QStringLiteral("%1,%2,%3,%4").arg(m.x).arg(m.y).arg(m.w).arg(m.h));
+    rectStrings.append(
+        QStringLiteral("%1,%2,%3,%4,%5,%6").arg(m.x).arg(m.y).arg(m.w).arg(m.h).arg(m.mmWidth).arg(m.mmHeight)
+    );
   }
   const QString args = QString::fromStdString(client->getName()) + "|" + rectStrings.join(";");
   ipcSendToClient("clientMonitors", args);

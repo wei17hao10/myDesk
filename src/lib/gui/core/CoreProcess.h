@@ -17,6 +17,7 @@
 #include <QObject>
 #include <QProcess>
 #include <QRect>
+#include <QSize>
 #include <QTimer>
 
 namespace deskflow::gui {
@@ -38,6 +39,13 @@ public:
   {
     AddressMissing,
     StartFailed
+  };
+
+  // One monitor as self-reported by a connected client over the network.
+  struct ReportedMonitor
+  {
+    QRect rect;    // pixel geometry, in that client's own coordinate space
+    QSize mmSize;  // real physical size in millimeters; (0,0) if unknown
   };
 
   explicit CoreProcess(const ServerConfig &serverConfig);
@@ -71,7 +79,7 @@ public:
   {
     return m_connectionState;
   }
-  QList<QRect> clientMonitors(const QString &name) const
+  QList<ReportedMonitor> clientMonitors(const QString &name) const
   {
     return m_clientMonitors.value(name);
   }
@@ -94,7 +102,7 @@ Q_SIGNALS:
   void secureSocket(bool enabled);
   void daemonIpcClientConnectionFailed();
   void connectedClientsChanged(const QStringList &clients);
-  void clientMonitorsChanged(const QString &name, const QList<QRect> &monitors);
+  void clientMonitorsChanged(const QString &name, const QList<ReportedMonitor> &monitors);
   void securityLevelChanged(QString securityLevel);
   void unrecognisedClient(const QString &clientName);
   void connectionRefused(deskflow::core::ConnectionRefusal reason);
@@ -141,7 +149,7 @@ private:
   FileTail *m_daemonFileTail = nullptr;
   QProcess *m_process = nullptr;
   QString m_appPath;
-  QMap<QString, QList<QRect>> m_clientMonitors;
+  QMap<QString, QList<ReportedMonitor>> m_clientMonitors;
 };
 
 } // namespace deskflow::gui

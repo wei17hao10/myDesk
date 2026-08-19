@@ -170,12 +170,13 @@ void ClientProxy1_5::monitorInfoReceived()
   const QStringList rectStrings = QString::fromStdString(info).split(';', Qt::SkipEmptyParts);
   for (const QString &rectString : rectStrings) {
     const QStringList parts = rectString.split(',');
-    if (parts.size() != 4) {
+    if (parts.size() != 6) {
       continue;
     }
     monitors.push_back(
         {static_cast<int32_t>(parts[0].toInt()), static_cast<int32_t>(parts[1].toInt()),
-         static_cast<int32_t>(parts[2].toInt()), static_cast<int32_t>(parts[3].toInt())}
+         static_cast<int32_t>(parts[2].toInt()), static_cast<int32_t>(parts[3].toInt()),
+         static_cast<int32_t>(parts[4].toInt()), static_cast<int32_t>(parts[5].toInt())}
     );
   }
 

@@ -1445,15 +1445,27 @@ bool MSWindowsScreen::ignore() const
 BOOL CALLBACK MSWindowsScreen::monitorEnumProc(HMONITOR hMonitor, HDC, LPRECT, LPARAM data)
 {
   auto *monitors = reinterpret_cast<std::vector<MonitorRect> *>(data);
-  MONITORINFO info = {};
-  info.cbSize = sizeof(MONITORINFO);
-  if (GetMonitorInfo(hMonitor, &info)) {
-    monitors->push_back(
-        {static_cast<int32_t>(info.rcMonitor.left), static_cast<int32_t>(info.rcMonitor.top),
-         static_cast<int32_t>(info.rcMonitor.right - info.rcMonitor.left),
-         static_cast<int32_t>(info.rcMonitor.bottom - info.rcMonitor.top)}
-    );
+  MONITORINFOEXW info = {};
+  info.cbSize = sizeof(MONITORINFOEXW);
+  if (!GetMonitorInfoW(hMonitor, &info)) {
+    return TRUE;
   }
+
+  // Real physical size in millimeters, via a throwaway DC for this specific
+  // monitor's device (GetMonitorInfo alone only gives pixel geometry).
+  int32_t mmWidth = 0;
+  int32_t mmHeight = 0;
+  if (HDC hdc = CreateDCW(info.szDevice, info.szDevice, nullptr, nullptr)) {
+    mmWidth = GetDeviceCaps(hdc, HORZSIZE);
+    mmHeight = GetDeviceCaps(hdc, VERTSIZE);
+    DeleteDC(hdc);
+  }
+
+  monitors->push_back(
+      {static_cast<int32_t>(info.rcMonitor.left), static_cast<int32_t>(info.rcMonitor.top),
+       static_cast<int32_t>(info.rcMonitor.right - info.rcMonitor.left),
+       static_cast<int32_t>(info.rcMonitor.bottom - info.rcMonitor.top), mmWidth, mmHeight}
+  );
   return TRUE;
 }
 

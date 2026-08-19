@@ -417,7 +417,7 @@ void ServerProxy::sendMonitorInfo()
       rectString += ';';
     }
     rectString += std::to_string(m.x) + "," + std::to_string(m.y) + "," + std::to_string(m.w) + "," +
-                  std::to_string(m.h);
+                  std::to_string(m.h) + "," + std::to_string(m.mmWidth) + "," + std::to_string(m.mmHeight);
   }
   LOG_VERBOSE("sending monitor info: %zu monitor(s)", monitors.size());
   ProtocolUtil::writef(m_stream, kMsgDMonitorInfo, static_cast<uint32_t>(monitors.size()), &rectString);
