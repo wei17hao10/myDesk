@@ -10,6 +10,7 @@
 #include "deskflow/ClipboardTypes.h"
 #include "deskflow/IScreen.h"
 #include "deskflow/KeyTypes.h"
+#include "deskflow/MonitorInfo.h"
 #include "deskflow/MouseTypes.h"
 #include "deskflow/OptionTypes.h"
 
@@ -283,6 +284,7 @@ public:
   std::vector<std::string> getDragFiles() const;
   std::vector<std::string> getClipboardFiles();
   void setClipboardFile(const std::string &path);
+  std::vector<MonitorRect> getMonitors() const;
 
 
 protected:

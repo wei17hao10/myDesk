@@ -915,6 +915,7 @@ void XWindowsScreen::setShape(int32_t width, int32_t height)
   // we warp the pointer to the center of the first physical
   // screen instead of the logical screen.
   m_xinerama = false;
+  m_monitors.clear();
 #if HAVE_X11_EXTENSIONS_XINERAMA_H
   int eventBase;
   int errorBase;
@@ -923,6 +924,9 @@ void XWindowsScreen::setShape(int32_t width, int32_t height)
     XineramaScreenInfo *screens;
     screens = XineramaQueryScreens(m_display, &numScreens);
     if (screens != nullptr) {
+      for (int n = 0; n < numScreens; n++) {
+        m_monitors.push_back({screens[n].x_org, screens[n].y_org, screens[n].width, screens[n].height});
+      }
       if (numScreens > 1) {
         m_xinerama = true;
         for (int n = 0; n < numScreens; n++) {

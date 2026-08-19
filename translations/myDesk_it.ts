@@ -604,7 +604,7 @@ Inoltre, verifica di poter %1 il file di configurazione del server: %2</translat
     <message>
         <source>Unnamed</source>
         <extracomment>Used as the hostname. Translation may not contain spaces</extracomment>
-        <translation>Senzanome</translation>
+        <translation type="vanished">Senzanome</translation>
     </message>
 </context>
 <context>
@@ -764,6 +764,37 @@ Inoltre, verifica di poter %1 il file di configurazione del server: %2</translat
         <source>%1 is already running</source>
         <translation>%1 è già in esecuzione</translation>
     </message>
+    <message>
+        <source>Two monitors of &quot;%1&quot; overlap.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&quot;%1&quot; and &quot;%2&quot; have overlapping monitors.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&quot;%1&quot; has overlapping monitor links on one edge.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScreenCanvasView</name>
+    <message>
+        <source>Computer Settings…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unlock Monitor Layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lock Monitor Layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove Computer</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScreenSettingsDialog</name>
@@ -912,7 +943,7 @@ Inoltre, verifica di poter %1 il file di configurazione del server: %2</translat
     <name>ScreenSetupModel</name>
     <message>
         <source>&lt;center&gt;Screen: &lt;b&gt;%1&lt;/b&gt;&lt;/center&gt;&lt;br&gt;Double click to edit settings&lt;br&gt;Drag screen to the trashcan to remove it</source>
-        <translation>&lt;center&gt;Schermo: &lt;b&gt;%1&lt;/b&gt;&lt;/center&gt;&lt;br&gt;Fai doppio clic per modificare le impostazioni&lt;br&gt;Trascina lo schermo nel cestino per rimuoverlo</translation>
+        <translation type="vanished">&lt;center&gt;Schermo: &lt;b&gt;%1&lt;/b&gt;&lt;/center&gt;&lt;br&gt;Fai doppio clic per modificare le impostazioni&lt;br&gt;Trascina lo schermo nel cestino per rimuoverlo</translation>
     </message>
 </context>
 <context>
@@ -946,15 +977,15 @@ Inoltre, verifica di poter %1 il file di configurazione del server: %2</translat
     </message>
     <message>
         <source>Drag a computer from the grid to the trashcan to remove it.</source>
-        <translation>Trascina un computer dalla griglia nel cestino per rimuoverlo.</translation>
+        <translation type="vanished">Trascina un computer dalla griglia nel cestino per rimuoverlo.</translation>
     </message>
     <message>
         <source>Configure the layout of your computer displays by dragging to where you want.</source>
-        <translation>Configura il layout degli schermi dei tuoi computer trascinandoli dove desideri.</translation>
+        <translation type="vanished">Configura il layout degli schermi dei tuoi computer trascinandoli dove desideri.</translation>
     </message>
     <message>
         <source>Drag to the grid to add a new computer.</source>
-        <translation>Trascina nella griglia per aggiungere un nuovo computer.</translation>
+        <translation type="vanished">Trascina nella griglia per aggiungere un nuovo computer.</translation>
     </message>
     <message>
         <source>Hotkeys</source>
@@ -1113,6 +1144,10 @@ Enabling this setting will disable the server config GUI.</source>
 L&apos;abilitazione di questa impostazione disabiliterà l&apos;interfaccia grafica di configurazione del server.</translation>
     </message>
     <message>
+        <source>Invalid Computer Layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>%1 Configurations (*.conf);;All files (*.*)</source>
         <extracomment>%1 is replaced with the application names (*.conf) and (*.*) should not be translated</extracomment>
         <translation>%1 Configurazioni (*.conf);;Tutti i file (*.*)</translation>
@@ -1124,6 +1159,22 @@ L&apos;abilitazione di questa impostazione disabiliterà l&apos;interfaccia graf
     <message>
         <source>Enable lock to computer at startup</source>
         <translation type="unfinished">Abilita il blocco al computer all&apos;avvio</translation>
+    </message>
+    <message>
+        <source>Remove Selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drag each monitor to where it sits relative to the others.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add a new computer to the layout.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Computer…</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -408,6 +408,21 @@ void ServerProxy::sendInfo(const ClientInfo &info)
   ProtocolUtil::writef(m_stream, kMsgDInfo, info.m_x, info.m_y, info.m_w, info.m_h, 0, info.m_mx, info.m_my);
 }
 
+void ServerProxy::sendMonitorInfo()
+{
+  const auto monitors = m_client->getMonitors();
+  std::string rectString;
+  for (const auto &m : monitors) {
+    if (!rectString.empty()) {
+      rectString += ';';
+    }
+    rectString += std::to_string(m.x) + "," + std::to_string(m.y) + "," + std::to_string(m.w) + "," +
+                  std::to_string(m.h);
+  }
+  LOG_VERBOSE("sending monitor info: %zu monitor(s)", monitors.size());
+  ProtocolUtil::writef(m_stream, kMsgDMonitorInfo, static_cast<uint32_t>(monitors.size()), &rectString);
+}
+
 KeyID ServerProxy::translateKey(KeyID id) const
 {
   static const KeyID s_translationTable[kKeyModifierIDLast][2] = {
@@ -832,6 +847,7 @@ void ServerProxy::queryInfo()
   m_client->getShape(info.m_x, info.m_y, info.m_w, info.m_h);
   m_client->getCursorPos(info.m_mx, info.m_my);
   sendInfo(info);
+  sendMonitorInfo();
 }
 
 void ServerProxy::infoAcknowledgment()

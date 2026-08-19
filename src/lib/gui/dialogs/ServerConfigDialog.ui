@@ -45,18 +45,9 @@
           <number>6</number>
          </property>
          <item>
-          <widget class="TrashScreenWidget" name="lblRemoveScreen">
-           <property name="acceptDrops">
-            <bool>true</bool>
-           </property>
-           <property name="toolTip">
-            <string>Drag a computer from the grid to the trashcan to remove it.</string>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::Shape::StyledPanel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Shadow::Raised</enum>
+          <widget class="QPushButton" name="btnRemoveComputer">
+           <property name="text">
+            <string>Remove Selected</string>
            </property>
           </widget>
          </item>
@@ -88,7 +79,7 @@
             </size>
            </property>
            <property name="text">
-            <string>Configure the layout of your computer displays by dragging to where you want.</string>
+            <string>Drag each monitor to where it sits relative to the others.</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -115,15 +106,12 @@
           </spacer>
          </item>
          <item>
-          <widget class="NewScreenWidget" name="lblNewScreen">
+          <widget class="QPushButton" name="btnAddComputer">
            <property name="toolTip">
-            <string>Drag to the grid to add a new computer.</string>
+            <string>Add a new computer to the layout.</string>
            </property>
-           <property name="frameShape">
-            <enum>QFrame::Shape::StyledPanel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Shadow::Raised</enum>
+           <property name="text">
+            <string>Add Computer…</string>
            </property>
           </widget>
          </item>
@@ -146,18 +134,12 @@
         </spacer>
        </item>
        <item>
-        <widget class="ScreenSetupView" name="screenSetupView">
+        <widget class="ScreenCanvasView" name="screenCanvasView">
          <property name="sizePolicy">
           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
-         </property>
-         <property name="acceptDrops">
-          <bool>true</bool>
-         </property>
-         <property name="autoFillBackground">
-          <bool>false</bool>
          </property>
         </widget>
        </item>
@@ -1042,24 +1024,13 @@ Enabling this setting will disable the server config GUI.</string>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>ScreenSetupView</class>
-   <extends>QTableView</extends>
-   <header>widgets/ScreenSetupView.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>TrashScreenWidget</class>
-   <extends>QLabel</extends>
-   <header>widgets/TrashScreenWidget.h</header>
-  </customwidget>
-  <customwidget>
-   <class>NewScreenWidget</class>
-   <extends>QLabel</extends>
-   <header>widgets/NewScreenWidget.h</header>
+   <class>ScreenCanvasView</class>
+   <extends>QGraphicsView</extends>
+   <header>widgets/ScreenCanvasView.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>screenSetupView</tabstop>
+  <tabstop>screenCanvasView</tabstop>
   <tabstop>listHotkeys</tabstop>
   <tabstop>btnNewHotkey</tabstop>
   <tabstop>btnEditHotkey</tabstop>

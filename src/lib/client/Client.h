@@ -13,9 +13,11 @@
 #include "base/EventTypes.h"
 #include "common/Enums.h"
 #include "deskflow/IClipboard.h"
+#include "deskflow/MonitorInfo.h"
 #include "net/NetworkAddress.h"
 
 #include <climits>
+#include <vector>
 
 class Event;
 class EventQueueTimer;
@@ -139,6 +141,7 @@ public:
   bool getClipboard(ClipboardID id, IClipboard *) const override;
   void getShape(int32_t &x, int32_t &y, int32_t &width, int32_t &height) const override;
   void getCursorPos(int32_t &x, int32_t &y) const override;
+  std::vector<MonitorRect> getMonitors() const;
 
   // IClient overrides
   void enter(int32_t xAbs, int32_t yAbs, uint32_t seqNum, KeyModifierMask mask, bool forScreensaver) override;

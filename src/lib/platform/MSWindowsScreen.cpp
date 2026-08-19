@@ -1442,6 +1442,21 @@ bool MSWindowsScreen::ignore() const
   return (m_mark != m_markReceived);
 }
 
+BOOL CALLBACK MSWindowsScreen::monitorEnumProc(HMONITOR hMonitor, HDC, LPRECT, LPARAM data)
+{
+  auto *monitors = reinterpret_cast<std::vector<MonitorRect> *>(data);
+  MONITORINFO info = {};
+  info.cbSize = sizeof(MONITORINFO);
+  if (GetMonitorInfo(hMonitor, &info)) {
+    monitors->push_back(
+        {static_cast<int32_t>(info.rcMonitor.left), static_cast<int32_t>(info.rcMonitor.top),
+         static_cast<int32_t>(info.rcMonitor.right - info.rcMonitor.left),
+         static_cast<int32_t>(info.rcMonitor.bottom - info.rcMonitor.top)}
+    );
+  }
+  return TRUE;
+}
+
 void MSWindowsScreen::updateScreenShape()
 {
   // get shape and center
@@ -1454,6 +1469,9 @@ void MSWindowsScreen::updateScreenShape()
 
   // check for multiple monitors
   m_multimon = (m_w != GetSystemMetrics(SM_CXSCREEN) || m_h != GetSystemMetrics(SM_CYSCREEN));
+
+  m_monitors.clear();
+  EnumDisplayMonitors(nullptr, nullptr, monitorEnumProc, reinterpret_cast<LPARAM>(&m_monitors));
 
   // tell the desks
   m_desks->setShape(m_x, m_y, m_w, m_h, m_xCenter, m_yCenter, m_multimon);

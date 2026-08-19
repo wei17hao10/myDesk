@@ -311,6 +311,16 @@ void Server::sendConnectedClientsIpc() const
   ipcSendToClient("connectedClients", clientList.join(","));
 }
 
+void Server::sendClientMonitorsIpc(const BaseClientProxy *client) const
+{
+  QStringList rectStrings;
+  for (const auto &m : client->getMonitors()) {
+    rectStrings.append(QStringLiteral("%1,%2,%3,%4").arg(m.x).arg(m.y).arg(m.w).arg(m.h));
+  }
+  const QString args = QString::fromStdString(client->getName()) + "|" + rectStrings.join(";");
+  ipcSendToClient("clientMonitors", args);
+}
+
 std::string Server::getName(const BaseClientProxy *client) const
 {
   std::string name = m_config->getCanonicalName(client->getName());

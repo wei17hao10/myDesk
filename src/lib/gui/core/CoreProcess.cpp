@@ -575,6 +575,24 @@ void CoreProcess::onCoreIpcMessageReceived(const QString &command, const QString
   } else if (command == "connectedClients") {
     const auto clients = args.isEmpty() ? QStringList() : args.split(",");
     Q_EMIT connectedClientsChanged(clients);
+  } else if (command == "clientMonitors") {
+    const auto sep = args.indexOf('|');
+    if (sep == -1) {
+      qWarning("core ipc got malformed clientMonitors message: %s", args.toUtf8().constData());
+      return;
+    }
+    const auto name = args.left(sep);
+    QList<QRect> monitors;
+    const auto rectPart = args.mid(sep + 1);
+    for (const auto &rectString : rectPart.split(';', Qt::SkipEmptyParts)) {
+      const auto parts = rectString.split(',');
+      if (parts.size() != 4) {
+        continue;
+      }
+      monitors.append(QRect(parts[0].toInt(), parts[1].toInt(), parts[2].toInt(), parts[3].toInt()));
+    }
+    m_clientMonitors[name] = monitors;
+    Q_EMIT clientMonitorsChanged(name, monitors);
   } else if (command == "secureSocket") {
     Q_EMIT secureSocket(true);
     if (args != m_secureSocketVersion) {

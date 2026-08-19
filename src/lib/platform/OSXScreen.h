@@ -99,6 +99,10 @@ public:
   std::vector<std::string> getDragFiles() const override;
   std::vector<std::string> getClipboardFiles() override;
   void setClipboardFile(const std::string &path) override;
+  std::vector<MonitorRect> getMonitors() const override
+  {
+    return m_monitors;
+  }
 
 protected:
   // IPlatformScreen overrides
@@ -235,6 +239,7 @@ private:
   int32_t m_x, m_y;
   int32_t m_w, m_h;
   int32_t m_xCenter, m_yCenter;
+  std::vector<MonitorRect> m_monitors;
 
   // mouse state
   mutable int32_t m_xCursor, m_yCursor;

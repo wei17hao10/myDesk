@@ -12,28 +12,22 @@
 #include "common/Settings.h"
 
 #include <QAbstractButton>
+#include <QMap>
+#include <QPair>
 #include <QPushButton>
+
+#include <algorithm>
+#include <cmath>
+#include <optional>
 
 using enum ScreenConfig::Modifier;
 using enum ScreenConfig::SwitchCorner;
 using enum ScreenConfig::Fix;
+using gui::canvas::Edge;
+using gui::canvas::Interval;
+using gui::canvas::kMinOverlapPx;
 
-static const struct
-{
-  int x;
-  int y;
-  const char *name;
-} neighbourDirs[] = {
-    {1, 0, "right"},
-    {-1, 0, "left"},
-    {0, -1, "up"},
-    {0, 1, "down"},
-
-};
-
-const int serverDefaultIndex = 7;
-
-ServerConfig::ServerConfig(int columns, int rows) : m_Screens(columns), m_columns(columns), m_rows(rows)
+ServerConfig::ServerConfig()
 {
   recall();
 }
@@ -82,11 +76,6 @@ void ServerConfig::setupScreens()
   // m_NumSwitchCorners is used as a fixed size array. See Screen::init()
   for (int i = 0; i < static_cast<int>(NumSwitchCorners); i++)
     switchCorners() << false;
-
-  // There must always be screen objects for each cell in the screens QList.
-  // Unused screens are identified by having an empty name.
-  for (int i = 0; i < m_columns * m_rows; i++)
-    addScreen(Screen());
 }
 
 void ServerConfig::commit()
@@ -137,11 +126,10 @@ void ServerConfig::recall()
 
   settings().beginGroup("internalConfig");
 
-  m_columns = Settings::value(Settings::Server::GridWidth).toInt();
-  m_rows = Settings::value(Settings::Server::GridHeight).toInt();
+  // Only used to migrate screens saved by the old fixed grid, which had no
+  // canvas position of its own — see the migration loop below.
+  const int legacyColumns = Settings::value(Settings::Server::GridWidth).toInt();
 
-  // we need to know the number of columns and rows before we can set up
-  // ourselves
   setupScreens();
 
   setHeartbeat(settings().value("heartbeat", 5000).toInt());
@@ -160,13 +148,33 @@ void ServerConfig::recall()
   readSettings(settings(), switchCorners(), "switchCorner", false, static_cast<int>(NumSwitchCorners));
 
   int numScreens = settings().beginReadArray("screens");
-  Q_ASSERT(numScreens <= screens().size());
   for (int i = 0; i < numScreens; i++) {
     settings().setArrayIndex(i);
-    screens()[i].loadSettings(settings());
-    if (getServerName() == screens()[i].name()) {
-      screens()[i].markAsServer();
+    Screen screen;
+    screen.loadSettings(settings());
+    if (screen.isNull()) {
+      // Legacy fixed-grid configs padded unused cells with empty screens.
+      continue;
     }
+    if (getServerName() == screen.name()) {
+      screen.markAsServer();
+    }
+    if (screen.monitors().isEmpty()) {
+      // Migrating from the legacy fixed grid: synthesize a flush monitor
+      // rect from this screen's old row/column slot so the canvas link
+      // algorithm reproduces the exact same topology as the old grid writer,
+      // until the user actually starts dragging things.
+      constexpr qreal kLegacyCellW = 480.0;
+      constexpr qreal kLegacyCellH = 320.0;
+      const int row = legacyColumns > 0 ? i / legacyColumns : 0;
+      const int col = legacyColumns > 0 ? i % legacyColumns : i;
+      screen.setMonitors(
+          {gui::canvas::MonitorRect{
+              QRectF(col * kLegacyCellW, row * kLegacyCellH, kLegacyCellW, kLegacyCellH), QString()
+          }}
+      );
+    }
+    screens().append(screen);
   }
   settings().endArray();
 
@@ -182,22 +190,172 @@ void ServerConfig::recall()
   settings().endGroup();
 }
 
-int ServerConfig::adjacentScreenIndex(int idx, int deltaColumn, int deltaRow) const
+namespace {
+
+// Classifies how monitor rect a touches rect b (post-snap edges are exactly
+// flush, so exact equality within a small epsilon is enough — no fuzzy-gap
+// heuristic needed). Returns NoDirection-equivalent via std::nullopt if they
+// don't touch.
+std::optional<Edge> touchSide(const QRectF &a, const QRectF &b)
 {
-  if (screens()[idx].isNull())
-    return -1;
+  constexpr qreal kEps = 0.5;
+  if (std::abs(a.right() - b.left()) < kEps)
+    return Edge::Right;
+  if (std::abs(a.left() - b.right()) < kEps)
+    return Edge::Left;
+  if (std::abs(a.bottom() - b.top()) < kEps)
+    return Edge::Bottom;
+  if (std::abs(a.top() - b.bottom()) < kEps)
+    return Edge::Top;
+  return std::nullopt;
+}
 
-  // if we're at the left or right end of the table, don't find results going
-  // further left or right
-  if ((deltaColumn > 0 && (idx + 1) % m_columns == 0) || (deltaColumn < 0 && idx % m_columns == 0))
-    return -1;
+// Overlap of a and b along the axis perpendicular to side (the axis they
+// actually share an edge on), or an empty range if they don't overlap.
+std::pair<qreal, qreal> perpendicularOverlap(Edge side, const QRectF &a, const QRectF &b)
+{
+  if (side == Edge::Left || side == Edge::Right) {
+    return {std::max(a.top(), b.top()), std::min(a.bottom(), b.bottom())};
+  }
+  return {std::max(a.left(), b.left()), std::min(a.right(), b.right())};
+}
 
-  int arrayPos = idx + deltaColumn + deltaRow * m_columns;
+// Mirrors deskflow::server::Config::formatInterval(): whole-edge links
+// ((0,1)) are written bare, partial ones as "(startPercent,endPercent)".
+QString formatIntervalForConfig(const Interval &interval)
+{
+  if (interval.first == 0.0f && interval.second == 1.0f) {
+    return {};
+  }
+  return QStringLiteral("(%1,%2)")
+      .arg(static_cast<int>(std::lround(interval.first * 100.0)))
+      .arg(static_cast<int>(std::lround(interval.second * 100.0)));
+}
 
-  if (arrayPos >= screens().size() || arrayPos < 0)
-    return -1;
+Interval normalizeToBBox(Edge side, qreal ov0, qreal ov1, const QRectF &bbox)
+{
+  qreal start;
+  qreal end;
+  if (side == Edge::Left || side == Edge::Right) {
+    start = (ov0 - bbox.top()) / bbox.height();
+    end = (ov1 - bbox.top()) / bbox.height();
+  } else {
+    start = (ov0 - bbox.left()) / bbox.width();
+    end = (ov1 - bbox.left()) / bbox.width();
+  }
+  start = std::clamp(start, 0.0, 1.0);
+  end = std::clamp(end, 0.0, 1.0);
+  // Round to the nearest 1/100 to match Config::formatInterval's
+  // integer-percent grammar.
+  start = std::round(start * 100.0) / 100.0;
+  end = std::round(end * 100.0) / 100.0;
+  return {static_cast<float>(start), static_cast<float>(end)};
+}
 
-  return arrayPos;
+} // namespace
+
+QList<ServerConfig::TouchingPair> ServerConfig::computeCanvasLinks() const
+{
+  QList<TouchingPair> pairs;
+
+  for (int a = 0; a < screens().size(); ++a) {
+    const Screen &screenA = screens()[a];
+    if (screenA.isNull())
+      continue;
+    const QRectF bboxA = screenA.boundingRect();
+
+    for (int b = a + 1; b < screens().size(); ++b) {
+      const Screen &screenB = screens()[b];
+      if (screenB.isNull())
+        continue;
+      const QRectF bboxB = screenB.boundingRect();
+
+      for (const auto &monitorA : screenA.monitors()) {
+        for (const auto &monitorB : screenB.monitors()) {
+          const auto side = touchSide(monitorA.rect, monitorB.rect);
+          if (!side)
+            continue;
+
+          const auto [ov0, ov1] = perpendicularOverlap(*side, monitorA.rect, monitorB.rect);
+          if (ov1 - ov0 < kMinOverlapPx)
+            continue;
+
+          const Interval fracA = normalizeToBBox(*side, ov0, ov1, bboxA);
+          const Interval fracB = normalizeToBBox(gui::canvas::oppositeEdge(*side), ov0, ov1, bboxB);
+          if (fracA.first >= fracA.second || fracB.first >= fracB.second)
+            continue;
+
+          pairs.append(TouchingPair{screenA.name(), screenB.name(), *side, fracA, fracB});
+        }
+      }
+    }
+  }
+
+  return pairs;
+}
+
+bool ServerConfig::validateCanvasLayout(QStringList &errors) const
+{
+  errors.clear();
+
+  // Same-machine monitor overlap.
+  for (const auto &screen : screens()) {
+    if (screen.isNull())
+      continue;
+    const auto &monitors = screen.monitors();
+    for (int i = 0; i < monitors.size(); ++i) {
+      for (int j = i + 1; j < monitors.size(); ++j) {
+        if (monitors[i].rect.intersects(monitors[j].rect)) {
+          errors.append(QObject::tr("Two monitors of \"%1\" overlap.").arg(screen.name()));
+        }
+      }
+    }
+  }
+
+  // Cross-machine monitor overlap (interactive dragging already prevents
+  // this, but a locked group-move or a hand-edited config could still slip
+  // one through).
+  for (int a = 0; a < screens().size(); ++a) {
+    const Screen &screenA = screens()[a];
+    if (screenA.isNull())
+      continue;
+    for (int b = a + 1; b < screens().size(); ++b) {
+      const Screen &screenB = screens()[b];
+      if (screenB.isNull())
+        continue;
+      for (const auto &monitorA : screenA.monitors()) {
+        for (const auto &monitorB : screenB.monitors()) {
+          if (monitorA.rect.intersects(monitorB.rect)) {
+            errors.append(
+                QObject::tr("\"%1\" and \"%2\" have overlapping monitors.").arg(screenA.name(), screenB.name())
+            );
+          }
+        }
+      }
+    }
+  }
+
+  // Per-(screen,side) interval collision check, mirroring what
+  // deskflow::server::Config::connect() would otherwise reject at parse
+  // time with a much less actionable error.
+  QMap<QPair<QString, int>, QList<Interval>> intervalsBySide;
+  for (const auto &pair : computeCanvasLinks()) {
+    intervalsBySide[{pair.screenA, static_cast<int>(pair.sideOnA)}].append(pair.intervalOnA);
+    intervalsBySide[{pair.screenB, static_cast<int>(gui::canvas::oppositeEdge(pair.sideOnA))}].append(
+        pair.intervalOnB
+    );
+  }
+  for (auto it = intervalsBySide.constBegin(); it != intervalsBySide.constEnd(); ++it) {
+    auto sorted = it.value();
+    std::sort(sorted.begin(), sorted.end());
+    for (int i = 1; i < sorted.size(); ++i) {
+      if (sorted[i].first < sorted[i - 1].second) {
+        errors.append(QObject::tr("\"%1\" has overlapping monitor links on one edge.").arg(it.key().first));
+      }
+    }
+  }
+
+  return errors.isEmpty();
 }
 
 QTextStream &operator<<(QTextStream &outStream, const ServerConfig &config)
@@ -222,16 +380,28 @@ QTextStream &operator<<(QTextStream &outStream, const ServerConfig &config)
 
   outStream << "section: links" << Qt::endl;
 
-  for (int i = 0; const auto &screen : config.screens()) {
-    if (!screen.isNull()) {
-      outStream << "\t" << screen.name() << ":\n";
-      for (const auto &neighbour : std::as_const(neighbourDirs)) {
-        int idx = config.adjacentScreenIndex(i, neighbour.x, neighbour.y);
-        if (idx != -1 && !config.screens()[idx].isNull())
-          outStream << "\t\t" << neighbour.name << " = " << config.screens()[idx].name() << Qt::endl;
+  QMap<QString, QStringList> linkLinesByScreen;
+  for (const auto &pair : config.computeCanvasLinks()) {
+    const auto oppositeSide = gui::canvas::oppositeEdge(pair.sideOnA);
+    linkLinesByScreen[pair.screenA].append(QStringLiteral("\t\t%1%2 = %3%4")
+                                                .arg(gui::canvas::edgeConfigName(pair.sideOnA))
+                                                .arg(formatIntervalForConfig(pair.intervalOnA))
+                                                .arg(pair.screenB)
+                                                .arg(formatIntervalForConfig(pair.intervalOnB)));
+    linkLinesByScreen[pair.screenB].append(QStringLiteral("\t\t%1%2 = %3%4")
+                                                .arg(gui::canvas::edgeConfigName(oppositeSide))
+                                                .arg(formatIntervalForConfig(pair.intervalOnB))
+                                                .arg(pair.screenA)
+                                                .arg(formatIntervalForConfig(pair.intervalOnA)));
+  }
+
+  for (const Screen &s : config.screens()) {
+    if (!s.isNull()) {
+      outStream << "\t" << s.name() << ":\n";
+      for (const auto &line : linkLinesByScreen.value(s.name())) {
+        outStream << line << Qt::endl;
       }
     }
-    i++;
   }
 
   outStream << "end" << Qt::endl << Qt::endl;
@@ -317,20 +487,6 @@ bool ServerConfig::useExternalConfig() const
   return Settings::value(Settings::Server::ExternalConfig).toBool();
 }
 
-bool ServerConfig::isFull() const
-{
-  bool isFull = true;
-
-  for (const auto &screen : screens()) {
-    if (screen.isNull()) {
-      isFull = false;
-      break;
-    }
-  }
-
-  return isFull;
-}
-
 bool ServerConfig::screenExists(const QString &screenName) const
 {
   bool isExists = false;
@@ -345,20 +501,6 @@ bool ServerConfig::screenExists(const QString &screenName) const
   return isExists;
 }
 
-void ServerConfig::addClient(const QString &clientName)
-{
-  int serverIndex = -1;
-  const auto screenName = Settings::value(Settings::Core::ComputerName).toString();
-
-  if (findScreenName(screenName, serverIndex)) {
-    m_Screens[serverIndex].markAsServer();
-  } else {
-    fixNoServer(screenName, serverIndex);
-  }
-
-  m_Screens.addScreenByPriority(Screen(clientName));
-}
-
 void ServerConfig::setConfigFile(const QString &configFile) const
 {
   Settings::setValue(Settings::Server::ExternalConfigFile, configFile);
@@ -367,32 +509,6 @@ void ServerConfig::setConfigFile(const QString &configFile) const
 void ServerConfig::setUseExternalConfig(bool useExternalConfig) const
 {
   Settings::setValue(Settings::Server::ExternalConfig, useExternalConfig);
-}
-
-bool ServerConfig::findScreenName(const QString &name, int &index)
-{
-  bool found = false;
-  for (int i = 0; i < screens().size(); i++) {
-    if (!screens()[i].isNull() && screens()[i].name().compare(name) == 0) {
-      index = i;
-      found = true;
-      break;
-    }
-  }
-  return found;
-}
-
-bool ServerConfig::fixNoServer(const QString &name, int &index)
-{
-  bool fixed = false;
-  if (screens()[serverDefaultIndex].isNull()) {
-    m_Screens[serverDefaultIndex].setName(name);
-    m_Screens[serverDefaultIndex].markAsServer();
-    index = serverDefaultIndex;
-    fixed = true;
-  }
-
-  return fixed;
 }
 
 size_t ServerConfig::defaultClipboardSharingSize()

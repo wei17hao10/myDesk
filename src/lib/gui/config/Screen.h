@@ -8,6 +8,7 @@
 
 #pragma once
 
+#include "CanvasTypes.h"
 #include "ScreenConfig.h"
 
 #include "common/QSettingsProxy.h"
@@ -15,6 +16,7 @@
 #include <QIcon>
 #include <QList>
 #include <QPixmap>
+#include <QRectF>
 #include <QString>
 #include <QStringList>
 
@@ -25,8 +27,9 @@ class ScreenSettingsDialog;
 class Screen : public ScreenConfig
 {
   friend class ScreenSettingsDialog;
-  friend class ScreenSetupModel;
-  friend class ScreenSetupView;
+  friend class ScreenCanvasScene;
+  friend class ScreenCanvasView;
+  friend class MonitorGraphicsItem;
 
   friend QDataStream &operator<<(QDataStream &outStream, const Screen &screen)
   {
@@ -112,6 +115,28 @@ public:
     m_isServer = true;
   }
 
+  // This machine's individual monitors, in absolute canvas coordinates.
+  [[nodiscard]] const QList<gui::canvas::MonitorRect> &monitors() const
+  {
+    return m_Monitors;
+  }
+  void setMonitors(const QList<gui::canvas::MonitorRect> &monitors)
+  {
+    m_Monitors = monitors;
+  }
+  // Union of this machine's own monitors; empty if it has none placed yet.
+  [[nodiscard]] QRectF boundingRect() const
+  {
+    if (m_Monitors.isEmpty()) {
+      return {};
+    }
+    QRectF result = m_Monitors.first().rect;
+    for (int i = 1; i < m_Monitors.size(); ++i) {
+      result = result.united(m_Monitors[i].rect);
+    }
+    return result;
+  }
+
   bool operator==(const Screen &screen) const;
 
 protected:
@@ -165,5 +190,6 @@ private:
   int m_SwitchCornerSize = 0;
   QList<bool> m_Fixes{false, false, false, false};
   bool m_Swapped = false;
+  QList<gui::canvas::MonitorRect> m_Monitors;
   bool m_isServer = false;
 };

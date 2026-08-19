@@ -462,6 +462,7 @@ void EiScreen::updateShape()
   m_h = 1;
   m_x = std::numeric_limits<uint32_t>::max();
   m_y = std::numeric_limits<uint32_t>::max();
+  m_monitors.clear();
   for (auto it = m_eiDevices.begin(); it != m_eiDevices.end(); it++) {
     auto idx = 0;
     struct ei_region *r;
@@ -470,6 +471,10 @@ void EiScreen::updateShape()
       m_y = std::min(ei_region_get_y(r), m_y);
       m_w = std::max(ei_region_get_x(r) + ei_region_get_width(r), m_w);
       m_h = std::max(ei_region_get_y(r) + ei_region_get_height(r), m_h);
+      m_monitors.push_back(
+          {static_cast<int32_t>(ei_region_get_x(r)), static_cast<int32_t>(ei_region_get_y(r)),
+           static_cast<int32_t>(ei_region_get_width(r)), static_cast<int32_t>(ei_region_get_height(r))}
+      );
     }
   }
 

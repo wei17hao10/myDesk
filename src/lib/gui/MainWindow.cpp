@@ -607,7 +607,7 @@ void MainWindow::updateNetworkInfo()
 void MainWindow::serverConnectionConfigureClient(const QString &clientName)
 {
   m_serverConfigDialogVisible = true;
-  ServerConfigDialog dialog(this, m_serverConfig);
+  ServerConfigDialog dialog(this, m_serverConfig, m_coreProcess);
   if (dialog.addClient(clientName) && dialog.exec() == QDialog::Accepted) {
     m_coreProcess.restart();
   }
@@ -770,7 +770,7 @@ void MainWindow::handleUnrecognisedClient(const QString &clientName)
   if (Settings::value(Settings::Server::ExternalConfig).toBool())
     return;
 
-  if (m_serverConfig.isFull() || m_serverConfig.screenExists(clientName))
+  if (m_serverConfig.screenExists(clientName))
     return;
 
   m_newClientPromptShowing = true;
@@ -1067,7 +1067,7 @@ void MainWindow::updateText()
 
 void MainWindow::showConfigureServer(const QString &message)
 {
-  ServerConfigDialog dialog(this, serverConfig());
+  ServerConfigDialog dialog(this, serverConfig(), m_coreProcess);
   dialog.message(message);
   if ((dialog.exec() == QDialog::Accepted) && m_coreProcess.isStarted()) {
     m_coreProcess.restart();

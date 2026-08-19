@@ -604,7 +604,7 @@ Additionally, check you are able to %1 the server config file: %2</source>
     <message>
         <source>Unnamed</source>
         <extracomment>Used as the hostname. Translation may not contain spaces</extracomment>
-        <translation>未命名</translation>
+        <translation type="vanished">未命名</translation>
     </message>
 </context>
 <context>
@@ -766,6 +766,37 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <source>%1 is already running</source>
         <translation>%1 已经在运行中</translation>
     </message>
+    <message>
+        <source>Two monitors of &quot;%1&quot; overlap.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&quot;%1&quot; and &quot;%2&quot; have overlapping monitors.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&quot;%1&quot; has overlapping monitor links on one edge.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScreenCanvasView</name>
+    <message>
+        <source>Computer Settings…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unlock Monitor Layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lock Monitor Layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove Computer</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScreenSettingsDialog</name>
@@ -914,7 +945,7 @@ Additionally, check you are able to %1 the server config file: %2</source>
     <name>ScreenSetupModel</name>
     <message>
         <source>&lt;center&gt;Screen: &lt;b&gt;%1&lt;/b&gt;&lt;/center&gt;&lt;br&gt;Double click to edit settings&lt;br&gt;Drag screen to the trashcan to remove it</source>
-        <translation>&lt;center&gt;屏幕：&lt;b&gt;%1&lt;/b&gt;&lt;/center&gt;&lt;br&gt;双击编辑设置&lt;br&gt;将屏幕拖到垃圾桶以移除</translation>
+        <translation type="vanished">&lt;center&gt;屏幕：&lt;b&gt;%1&lt;/b&gt;&lt;/center&gt;&lt;br&gt;双击编辑设置&lt;br&gt;将屏幕拖到垃圾桶以移除</translation>
     </message>
 </context>
 <context>
@@ -948,15 +979,15 @@ Additionally, check you are able to %1 the server config file: %2</source>
     </message>
     <message>
         <source>Drag a computer from the grid to the trashcan to remove it.</source>
-        <translation>将计算机从网格拖到垃圾桶以将其移除。</translation>
+        <translation type="vanished">将计算机从网格拖到垃圾桶以将其移除。</translation>
     </message>
     <message>
         <source>Configure the layout of your computer displays by dragging to where you want.</source>
-        <translation>通过将计算机显示器拖动到所需位置来配置布局。</translation>
+        <translation type="vanished">通过将计算机显示器拖动到所需位置来配置布局。</translation>
     </message>
     <message>
         <source>Drag to the grid to add a new computer.</source>
-        <translation>拖动到网格以添加新计算机。</translation>
+        <translation type="vanished">拖动到网格以添加新计算机。</translation>
     </message>
     <message>
         <source>Hotkeys</source>
@@ -1115,6 +1146,10 @@ Enabling this setting will disable the server config GUI.</source>
         <translation>配置文件路径</translation>
     </message>
     <message>
+        <source>Invalid Computer Layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>%1 Configurations (*.conf);;All files (*.*)</source>
         <extracomment>%1 is replaced with the application names (*.conf) and (*.*) should not be translated</extracomment>
         <translation>%1 配置 (*.conf);;所有文件 (*.*)</translation>
@@ -1126,6 +1161,22 @@ Enabling this setting will disable the server config GUI.</source>
     <message>
         <source>Enable lock to computer at startup</source>
         <translation type="unfinished">启动时启用锁定到计算机</translation>
+    </message>
+    <message>
+        <source>Remove Selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drag each monitor to where it sits relative to the others.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add a new computer to the layout.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Computer…</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

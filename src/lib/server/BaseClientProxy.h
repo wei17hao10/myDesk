@@ -8,6 +8,9 @@
 #pragma once
 
 #include "deskflow/IClient.h"
+#include "deskflow/MonitorInfo.h"
+
+#include <vector>
 
 namespace deskflow {
 class IStream;
@@ -82,6 +85,14 @@ public:
   virtual void secureInputNotification(const std::string &app) const = 0;
   std::string getName() const override;
   virtual deskflow::IStream *getStream() const = 0;
+
+  // This client's individual monitors, as last reported via kMsgDMonitorInfo.
+  // Empty until reported (or for clients on protocol versions that don't
+  // send it). Used only by the GUI config editor, not by screen switching.
+  virtual std::vector<MonitorRect> getMonitors() const
+  {
+    return {};
+  }
 
 private:
   std::string m_name;

@@ -604,7 +604,7 @@ Additionally, check you are able to %1 the server config file: %2</source>
     <message>
         <source>Unnamed</source>
         <extracomment>Used as the hostname. Translation may not contain spaces</extracomment>
-        <translation>Без_имени</translation>
+        <translation type="vanished">Без_имени</translation>
     </message>
 </context>
 <context>
@@ -764,6 +764,37 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <source>%1 is already running</source>
         <translation>%1 уже запущен</translation>
     </message>
+    <message>
+        <source>Two monitors of &quot;%1&quot; overlap.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&quot;%1&quot; and &quot;%2&quot; have overlapping monitors.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&quot;%1&quot; has overlapping monitor links on one edge.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScreenCanvasView</name>
+    <message>
+        <source>Computer Settings…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unlock Monitor Layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lock Monitor Layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove Computer</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScreenSettingsDialog</name>
@@ -912,7 +943,7 @@ Additionally, check you are able to %1 the server config file: %2</source>
     <name>ScreenSetupModel</name>
     <message>
         <source>&lt;center&gt;Screen: &lt;b&gt;%1&lt;/b&gt;&lt;/center&gt;&lt;br&gt;Double click to edit settings&lt;br&gt;Drag screen to the trashcan to remove it</source>
-        <translation>&lt;center&gt;Экран: &lt;b&gt;%1&lt;/b&gt;&lt;/center&gt;&lt;br&gt;Двойной клик для настроек&lt;br&gt;Перетащите экран в корзину для удаления</translation>
+        <translation type="vanished">&lt;center&gt;Экран: &lt;b&gt;%1&lt;/b&gt;&lt;/center&gt;&lt;br&gt;Двойной клик для настроек&lt;br&gt;Перетащите экран в корзину для удаления</translation>
     </message>
 </context>
 <context>
@@ -946,15 +977,15 @@ Additionally, check you are able to %1 the server config file: %2</source>
     </message>
     <message>
         <source>Drag a computer from the grid to the trashcan to remove it.</source>
-        <translation>Перетащите компьютер в корзину, чтобы удалить его.</translation>
+        <translation type="vanished">Перетащите компьютер в корзину, чтобы удалить его.</translation>
     </message>
     <message>
         <source>Configure the layout of your computer displays by dragging to where you want.</source>
-        <translation>Настройте расположение мониторов, перетаскивая их в нужные места.</translation>
+        <translation type="vanished">Настройте расположение мониторов, перетаскивая их в нужные места.</translation>
     </message>
     <message>
         <source>Drag to the grid to add a new computer.</source>
-        <translation>Перетащите на сетку, чтобы добавить компьютер.</translation>
+        <translation type="vanished">Перетащите на сетку, чтобы добавить компьютер.</translation>
     </message>
     <message>
         <source>Hotkeys</source>
@@ -1111,6 +1142,10 @@ Enabling this setting will disable the server config GUI.</source>
         <translation>Путь к файлу конфигурации</translation>
     </message>
     <message>
+        <source>Invalid Computer Layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>%1 Configurations (*.conf);;All files (*.*)</source>
         <extracomment>%1 is replaced with the application names (*.conf) and (*.*) should not be translated</extracomment>
         <translation>Конфигурации %1 (*.conf);;Все файлы (*.*)</translation>
@@ -1122,6 +1157,22 @@ Enabling this setting will disable the server config GUI.</source>
     <message>
         <source>Enable lock to computer at startup</source>
         <translation>Включать привязку к компьютеру при запуске</translation>
+    </message>
+    <message>
+        <source>Remove Selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drag each monitor to where it sits relative to the others.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add a new computer to the layout.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Computer…</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

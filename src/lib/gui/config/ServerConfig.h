@@ -10,6 +10,7 @@
 
 #include "common/Constants.h"
 #include "gui/Hotkey.h"
+#include "gui/config/CanvasTypes.h"
 #include "gui/config/ScreenConfig.h"
 #include "gui/config/ScreenList.h"
 
@@ -27,7 +28,18 @@ class ServerConfig : public ScreenConfig
   friend QTextStream &operator<<(QTextStream &outStream, const ServerConfig &config);
 
 public:
-  explicit ServerConfig(int columns = kServerGridWidth, int rows = kServerGridHeight);
+  // A pair of touching monitors belonging to two different machines, with
+  // the Interval each side occupies along its own machine's whole edge.
+  struct TouchingPair
+  {
+    QString screenA;
+    QString screenB;
+    gui::canvas::Edge sideOnA;
+    gui::canvas::Interval intervalOnA;
+    gui::canvas::Interval intervalOnB;
+  };
+
+  explicit ServerConfig();
   ~ServerConfig() = default;
 
   bool operator==(const ServerConfig &sc) const;
@@ -97,14 +109,24 @@ public:
   bool save(const QString &fileName) const;
   bool screenExists(const QString &screenName) const;
   void save(QFile &file) const;
-  bool isFull() const;
   void commit();
   int numScreens() const;
   QString getServerName() const;
   void updateServerName();
   QString configFile() const;
   bool useExternalConfig() const;
-  void addClient(const QString &clientName);
+
+  // Derives cross-machine monitor links from the canvas layout (touching
+  // monitor pairs belonging to different machines). Same-machine monitor
+  // pairs never produce a link — that machine's own OS handles the
+  // transition between its own monitors natively.
+  QList<TouchingPair> computeCanvasLinks() const;
+
+  // Validates the canvas layout before it's written out. Returns false (with
+  // errors filled in) on same-machine monitor overlap or on colliding
+  // intervals on one machine's edge (which the server would otherwise only
+  // catch at config-parse time with a much less actionable error).
+  bool validateCanvasLayout(QStringList &errors) const;
 
 private:
   void recall();
@@ -173,9 +195,6 @@ private:
   {
     return m_Hotkeys;
   }
-  int adjacentScreenIndex(int idx, int deltaColumn, int deltaRow) const;
-  bool findScreenName(const QString &name, int &index);
-  bool fixNoServer(const QString &name, int &index);
 
 private:
   int m_Heartbeat = 0;
@@ -192,8 +211,6 @@ private:
   HotkeyList m_Hotkeys;
 
   ScreenList m_Screens;
-  int m_columns;
-  int m_rows;
   size_t m_ClipboardSharingSize = defaultClipboardSharingSize();
 };
 

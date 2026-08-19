@@ -604,7 +604,7 @@ Además, verifique que puede %1 el archivo de configuración del servidor: %2</t
     <message>
         <source>Unnamed</source>
         <extracomment>Used as the hostname. Translation may not contain spaces</extracomment>
-        <translation type="unfinished">Sin-nombre</translation>
+        <translation type="obsolete">Sin-nombre</translation>
     </message>
 </context>
 <context>
@@ -764,6 +764,37 @@ Además, verifique que puede %1 el archivo de configuración del servidor: %2</t
         <source>%1 is already running</source>
         <translation type="unfinished">%1 ya se está ejecutando</translation>
     </message>
+    <message>
+        <source>Two monitors of &quot;%1&quot; overlap.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&quot;%1&quot; and &quot;%2&quot; have overlapping monitors.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&quot;%1&quot; has overlapping monitor links on one edge.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScreenCanvasView</name>
+    <message>
+        <source>Computer Settings…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unlock Monitor Layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lock Monitor Layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove Computer</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScreenSettingsDialog</name>
@@ -912,7 +943,7 @@ Además, verifique que puede %1 el archivo de configuración del servidor: %2</t
     <name>ScreenSetupModel</name>
     <message>
         <source>&lt;center&gt;Screen: &lt;b&gt;%1&lt;/b&gt;&lt;/center&gt;&lt;br&gt;Double click to edit settings&lt;br&gt;Drag screen to the trashcan to remove it</source>
-        <translation type="unfinished">&lt;center&gt;Pantalla: &lt;b&gt;%1&lt;/b&gt;&lt;/center&gt;&lt;br&gt;Haga doble clic para editar la configuración&lt;br&gt;Arrastre la pantalla a la papelera para eliminarla</translation>
+        <translation type="obsolete">&lt;center&gt;Pantalla: &lt;b&gt;%1&lt;/b&gt;&lt;/center&gt;&lt;br&gt;Haga doble clic para editar la configuración&lt;br&gt;Arrastre la pantalla a la papelera para eliminarla</translation>
     </message>
 </context>
 <context>
@@ -946,15 +977,15 @@ Además, verifique que puede %1 el archivo de configuración del servidor: %2</t
     </message>
     <message>
         <source>Drag a computer from the grid to the trashcan to remove it.</source>
-        <translation type="unfinished">Arrastre una computadora desde la cuadrícula a la papelera para eliminarla.</translation>
+        <translation type="obsolete">Arrastre una computadora desde la cuadrícula a la papelera para eliminarla.</translation>
     </message>
     <message>
         <source>Configure the layout of your computer displays by dragging to where you want.</source>
-        <translation type="unfinished">Configura el diseño de las pantallas de tu computadora arrastrándolas hacia donde quieras.</translation>
+        <translation type="obsolete">Configura el diseño de las pantallas de tu computadora arrastrándolas hacia donde quieras.</translation>
     </message>
     <message>
         <source>Drag to the grid to add a new computer.</source>
-        <translation type="unfinished">Arrastre a la cuadrícula para agregar una nueva computadora.</translation>
+        <translation type="obsolete">Arrastre a la cuadrícula para agregar una nueva computadora.</translation>
     </message>
     <message>
         <source>Hotkeys</source>
@@ -1113,6 +1144,10 @@ Al habilitar esta opción, se deshabilitará la interfaz gráfica de usuario (GU
         <translation type="unfinished">Ruta del archivo de configuración</translation>
     </message>
     <message>
+        <source>Invalid Computer Layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>%1 Configurations (*.conf);;All files (*.*)</source>
         <extracomment>%1 is replaced with the application names (*.conf) and (*.*) should not be translated</extracomment>
         <translation type="unfinished">%1 Configuraciones (*.conf);;Todos los archivos (*.*)</translation>
@@ -1124,6 +1159,22 @@ Al habilitar esta opción, se deshabilitará la interfaz gráfica de usuario (GU
     <message>
         <source>Enable lock to computer at startup</source>
         <translation type="unfinished">Activar el bloqueo del ordenador al iniciar</translation>
+    </message>
+    <message>
+        <source>Remove Selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drag each monitor to where it sits relative to the others.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add a new computer to the layout.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Computer…</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

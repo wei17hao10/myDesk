@@ -32,18 +32,16 @@ add_library(${target} STATIC
   MainWindow.ui
   Messages.cpp
   Messages.h
-  ScreenSetupModel.cpp
-  ScreenSetupModel.h
   StyleUtils.h
   TlsUtility.cpp
   TlsUtility.h
   VersionChecker.cpp
   VersionChecker.h
+  config/CanvasTypes.h
   config/Screen.cpp
   config/Screen.h
   config/ScreenConfig.cpp
   config/ScreenConfig.h
-  config/ScreenList.cpp
   config/ScreenList.h
   config/ServerConfig.cpp
   config/ServerConfig.h
@@ -108,16 +106,16 @@ add_library(${target} STATIC
   widgets/LogDock.h
   widgets/LogWidget.h
   widgets/LogWidget.cpp
-  widgets/NewScreenWidget.cpp
-  widgets/NewScreenWidget.h
-  widgets/ScreenSetupView.cpp
-  widgets/ScreenSetupView.h
+  widgets/MonitorGraphicsItem.cpp
+  widgets/MonitorGraphicsItem.h
+  widgets/ScreenCanvasScene.cpp
+  widgets/ScreenCanvasScene.h
+  widgets/ScreenCanvasView.cpp
+  widgets/ScreenCanvasView.h
   widgets/SearchWidget.h
   widgets/SearchWidget.cpp
   widgets/StatusBar.cpp
   widgets/StatusBar.h
-  widgets/TrashScreenWidget.cpp
-  widgets/TrashScreenWidget.h
 )
 
 target_link_libraries(

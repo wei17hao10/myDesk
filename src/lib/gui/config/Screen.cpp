@@ -31,6 +31,20 @@ void Screen::loadSettings(QSettingsProxy &settings)
   readSettings(settings, modifiers(), "modifier", static_cast<int>(DefaultMod), static_cast<int>(NumModifiers));
   readSettings(settings, switchCorners(), "switchCorner", false, static_cast<int>(NumSwitchCorners));
   readSettings(settings, fixes(), "fix", 0, static_cast<int>(NumFixes));
+
+  m_Monitors.clear();
+  const int monitorCount = settings.beginReadArray("monitorsArray");
+  for (int i = 0; i < monitorCount; i++) {
+    settings.setArrayIndex(i);
+    gui::canvas::MonitorRect m;
+    m.rect = QRectF(
+        settings.value("x", 0.0).toReal(), settings.value("y", 0.0).toReal(), settings.value("w", 0.0).toReal(),
+        settings.value("h", 0.0).toReal()
+    );
+    m.label = settings.value("label").toString();
+    m_Monitors.append(m);
+  }
+  settings.endArray();
 }
 
 void Screen::saveSettings(QSettingsProxy &settings) const
@@ -46,6 +60,18 @@ void Screen::saveSettings(QSettingsProxy &settings) const
   writeSettings(settings, modifiers(), "modifier");
   writeSettings(settings, switchCorners(), "switchCorner");
   writeSettings(settings, fixes(), "fix");
+
+  settings.beginWriteArray("monitorsArray");
+  for (int i = 0; i < m_Monitors.size(); i++) {
+    settings.setArrayIndex(i);
+    const auto &m = m_Monitors[i];
+    settings.setValue("x", m.rect.x());
+    settings.setValue("y", m.rect.y());
+    settings.setValue("w", m.rect.width());
+    settings.setValue("h", m.rect.height());
+    settings.setValue("label", m.label);
+  }
+  settings.endArray();
 }
 
 QString Screen::screensSection() const
@@ -89,5 +115,6 @@ bool Screen::operator==(const Screen &screen) const
 {
   return m_Name == screen.m_Name && m_Aliases == screen.m_Aliases && m_Modifiers == screen.m_Modifiers &&
          m_SwitchCorners == screen.m_SwitchCorners && m_SwitchCornerSize == screen.m_SwitchCornerSize &&
-         m_Fixes == screen.m_Fixes && m_Swapped == screen.m_Swapped && m_isServer == screen.m_isServer;
+         m_Fixes == screen.m_Fixes && m_Swapped == screen.m_Swapped && m_isServer == screen.m_isServer &&
+         m_Monitors == screen.m_Monitors;
 }

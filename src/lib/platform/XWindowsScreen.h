@@ -76,6 +76,10 @@ public:
   void setSequenceNumber(uint32_t) override;
   bool isPrimary() const override;
   std::string getSecureInputApp() const override;
+  std::vector<MonitorRect> getMonitors() const override
+  {
+    return m_monitors;
+  }
 
 protected:
   // IPlatformScreen overrides
@@ -225,6 +229,7 @@ private:
   // a screen other than screen 0.
   bool m_xtestIsXineramaUnaware = true;
   bool m_xinerama;
+  std::vector<MonitorRect> m_monitors;
 
   // stuff to work around lost focus issues on certain systems
   // (ie: a MythTV front-end).

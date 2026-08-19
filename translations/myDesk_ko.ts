@@ -604,7 +604,7 @@ Additionally, check you are able to %1 the server config file: %2</source>
     <message>
         <source>Unnamed</source>
         <extracomment>Used as the hostname. Translation may not contain spaces</extracomment>
-        <translation>이름없음</translation>
+        <translation type="vanished">이름없음</translation>
     </message>
 </context>
 <context>
@@ -764,6 +764,37 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <source>%1 is already running</source>
         <translation>%1이(가) 이미 실행 중입니다</translation>
     </message>
+    <message>
+        <source>Two monitors of &quot;%1&quot; overlap.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&quot;%1&quot; and &quot;%2&quot; have overlapping monitors.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&quot;%1&quot; has overlapping monitor links on one edge.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScreenCanvasView</name>
+    <message>
+        <source>Computer Settings…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unlock Monitor Layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lock Monitor Layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove Computer</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScreenSettingsDialog</name>
@@ -912,7 +943,7 @@ Additionally, check you are able to %1 the server config file: %2</source>
     <name>ScreenSetupModel</name>
     <message>
         <source>&lt;center&gt;Screen: &lt;b&gt;%1&lt;/b&gt;&lt;/center&gt;&lt;br&gt;Double click to edit settings&lt;br&gt;Drag screen to the trashcan to remove it</source>
-        <translation>&lt;center&gt;컴퓨터: &lt;b&gt;%1&lt;/b&gt;&lt;/center&gt;&lt;br&gt;더블 클릭하여 설정 편집&lt;br&gt;휴지통으로 드래그하여 삭제</translation>
+        <translation type="vanished">&lt;center&gt;컴퓨터: &lt;b&gt;%1&lt;/b&gt;&lt;/center&gt;&lt;br&gt;더블 클릭하여 설정 편집&lt;br&gt;휴지통으로 드래그하여 삭제</translation>
     </message>
 </context>
 <context>
@@ -946,15 +977,15 @@ Additionally, check you are able to %1 the server config file: %2</source>
     </message>
     <message>
         <source>Drag a computer from the grid to the trashcan to remove it.</source>
-        <translation>컴퓨터를 삭제하려면 휴지통으로 드래그하세요.</translation>
+        <translation type="vanished">컴퓨터를 삭제하려면 휴지통으로 드래그하세요.</translation>
     </message>
     <message>
         <source>Configure the layout of your computer displays by dragging to where you want.</source>
-        <translation>원하는 위치로 드래그하여 컴퓨터 화면 배치를 설정하세요.</translation>
+        <translation type="vanished">원하는 위치로 드래그하여 컴퓨터 화면 배치를 설정하세요.</translation>
     </message>
     <message>
         <source>Drag to the grid to add a new computer.</source>
-        <translation>새 컴퓨터를 추가하려면 격자로 드래그하세요.</translation>
+        <translation type="vanished">새 컴퓨터를 추가하려면 격자로 드래그하세요.</translation>
     </message>
     <message>
         <source>Hotkeys</source>
@@ -1113,6 +1144,10 @@ Enabling this setting will disable the server config GUI.</source>
         <translation>설정 파일 경로</translation>
     </message>
     <message>
+        <source>Invalid Computer Layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>%1 Configurations (*.conf);;All files (*.*)</source>
         <extracomment>%1 is replaced with the application names (*.conf) and (*.*) should not be translated</extracomment>
         <translation>%1 설정 (*.conf);;모든 파일 (*.*)</translation>
@@ -1124,6 +1159,22 @@ Enabling this setting will disable the server config GUI.</source>
     <message>
         <source>Enable lock to computer at startup</source>
         <translation>시작 시 컴퓨터 잠금 사용</translation>
+    </message>
+    <message>
+        <source>Remove Selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drag each monitor to where it sits relative to the others.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add a new computer to the layout.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Computer…</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

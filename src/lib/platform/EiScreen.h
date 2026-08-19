@@ -77,6 +77,10 @@ public:
   void setOptions(const OptionsList &options) override;
   void setSequenceNumber(std::uint32_t) override;
   bool isPrimary() const override;
+  std::vector<MonitorRect> getMonitors() const override
+  {
+    return m_monitors;
+  }
 
 protected:
   // IPlatformScreen overrides
@@ -142,6 +146,7 @@ private:
   std::uint32_t m_y = 0;
   std::uint32_t m_w = 0;
   std::uint32_t m_h = 0;
+  std::vector<MonitorRect> m_monitors;
 
   // true if mouse has entered the screen
   bool m_isOnScreen;

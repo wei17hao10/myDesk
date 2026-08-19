@@ -6,9 +6,13 @@
 
 #pragma once
 
+#include "deskflow/MonitorInfo.h"
 #include "server/ClientProxy1_4.h"
 
+#include <QString>
+
 #include <string>
+#include <vector>
 
 class Server;
 class IEventQueue;
@@ -34,18 +38,35 @@ public:
 
   bool parseMessage(const uint8_t *code) override;
 
+  std::vector<MonitorRect> getMonitors() const override
+  {
+    return m_monitors;
+  }
+
 private:
   // Receive one kMsgDFileTransfer message from the connected client.
   void fileChunkReceived();
   // Receive one kMsgDDragInfo message from the connected client.
   void dragInfoReceived();
+  // Receive one kMsgDMonitorInfo message from the connected client.
+  void monitorInfoReceived();
 
   // Stages a fully-received file in a private temp directory and places its
   // path on the clipboard so the user can paste (Ctrl+V/Cmd+V) it anywhere.
   void saveReceivedFile(const std::string &filename, const std::string &data) const;
 
+  // Folder transfer helpers (mirror ServerProxy's client-side handling).
+  void beginFolderTransfer(const std::string &folderName);
+  void completeFolderTransfer();
+
   IEventQueue *m_events = nullptr;
   std::string m_fileDataCached;
   std::string m_transferFilename;
   uint16_t m_pendingFileCount = 0;
+
+  // Folder transfer state: set when a FolderStart is received, cleared on FolderEnd.
+  std::string m_currentFolderName;
+  QString m_folderTargetPath;
+
+  std::vector<MonitorRect> m_monitors;
 };

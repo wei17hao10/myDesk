@@ -18,28 +18,33 @@
 #include "dialogs/ScreenSettingsDialog.h"
 
 #include <QFileDialog>
+#include <QGuiApplication>
 #include <QMessageBox>
+#include <QScreen>
+
+#include <algorithm>
 
 using enum ScreenConfig::SwitchCorner;
 
-ServerConfigDialog::ServerConfigDialog(QWidget *parent, ServerConfig &config)
+ServerConfigDialog::ServerConfigDialog(QWidget *parent, ServerConfig &config, deskflow::gui::CoreProcess &coreProcess)
     : QDialog(parent, Qt::WindowTitleHint | Qt::WindowSystemMenuHint),
       ui{std::make_unique<Ui::ServerConfigDialog>()},
-      m_columns{Settings::value(Settings::Server::GridWidth).toInt()},
-      m_rows{Settings::value(Settings::Server::GridHeight).toInt()},
       m_originalServerConfig(config),
       m_originalServerConfigIsExternal(config.useExternalConfig()),
       m_originalServerConfigUsesExternalFile(config.configFile()),
       m_serverConfig(config),
-      m_screenSetupModel(m_serverConfig.screens(), m_columns, m_rows)
+      m_canvasScene(m_serverConfig.screens()),
+      m_coreProcess(coreProcess)
 {
   ui->setupUi(this);
 
+  connect(
+      &m_coreProcess, &deskflow::gui::CoreProcess::clientMonitorsChanged, this,
+      &ServerConfigDialog::onClientMonitorsChanged
+  );
+
   loadFromConfig();
 
-  ui->lblRemoveScreen->setPixmap(QIcon::fromTheme("user-trash").pixmap(QSize(64, 64)));
-  ui->lblNewScreen->setEnabled(!model().isFull());
-  ui->lblNewScreen->setPixmap(QIcon::fromTheme("video-display").pixmap(QSize(64, 64)));
   ui->btnBrowseConfigFile->setIcon(QIcon::fromTheme(QIcon::ThemeIcon::DocumentOpen));
 
   // force the first tab, since qt creator sets the active tab as the last one
@@ -70,6 +75,11 @@ void ServerConfigDialog::accept()
     if (selectedButton != QMessageBox::Ok || !browseConfigFile()) {
       return;
     }
+  }
+
+  if (QStringList errors; !serverConfig().validateCanvasLayout(errors)) {
+    QMessageBox::warning(this, tr("Invalid Computer Layout"), errors.join('\n'));
+    return;
   }
 
   // now that the dialog has been accepted, copy the new server config to the
@@ -336,10 +346,25 @@ void ServerConfigDialog::addClient()
   addComputer("", false);
 }
 
-void ServerConfigDialog::onScreenRemoved()
+void ServerConfigDialog::removeSelectedComputer()
 {
-  ui->lblNewScreen->setEnabled(true);
+  canvasScene().removeSelected();
+}
+
+void ServerConfigDialog::onScreensChanged()
+{
   onChange();
+}
+
+void ServerConfigDialog::onClientMonitorsChanged(const QString &name, const QList<QRect> &monitors)
+{
+  Screen *screen = canvasScene().findScreen(name);
+  if (!screen || screen->isServer()) {
+    return;
+  }
+  applyLiveMonitors(*screen, monitors);
+  m_canvasScene.rebuildFromScreens();
+  ui->screenCanvasView->fitContents();
 }
 
 void ServerConfigDialog::toggleExternalConfig(bool checked)
@@ -422,8 +447,6 @@ void ServerConfigDialog::loadFromConfig()
   for (const Hotkey &hotkey : std::as_const(serverConfig().hotkeys()))
     ui->listHotkeys->addItem(hotkey.text());
 
-  ui->screenSetupView->setModel(&m_screenSetupModel);
-
   auto &screens = serverConfig().screens();
   auto server = std::ranges::find_if(screens, [this](const Screen &screen) {
     return (screen.name() == serverConfig().getServerName());
@@ -432,17 +455,79 @@ void ServerConfigDialog::loadFromConfig()
   if (server == screens.end()) {
     Screen serverScreen(serverConfig().getServerName());
     serverScreen.markAsServer();
-    model().screen(m_columns / 2, m_rows / 2) = serverScreen;
+    screens.append(serverScreen);
+    server = screens.end() - 1;
   } else {
     server->markAsServer();
   }
+
+  // Always refresh the local machine's monitors from real, live geometry —
+  // this is the one machine we can query directly (this GUI process runs on
+  // it), so real detection takes priority over whatever was previously
+  // stored (a legacy-grid migration placeholder, or a stale prior layout).
+  //
+  // Sized by each screen's real physical dimensions (QScreen::physicalSize(),
+  // in millimeters — the same unit basis applyLiveMonitors() approximates
+  // for remote machines) rather than logical pixel count, so a large 27"
+  // monitor actually looks bigger on the canvas than a small high-DPI laptop
+  // panel with a similar or higher pixel count. Laid out purely left-to-right
+  // in real x-order (the common case) so a machine's own monitors are always
+  // placed edge-to-edge with no gap or overlap, regardless of how different
+  // their pixel densities are.
+  QList<gui::canvas::MonitorRect> localMonitors;
+  {
+    auto qscreens = QGuiApplication::screens();
+    std::sort(qscreens.begin(), qscreens.end(), [](const QScreen *a, const QScreen *b) {
+      return a->geometry().x() < b->geometry().x();
+    });
+
+    qreal xCursor = 0;
+    for (const QScreen *qscreen : std::as_const(qscreens)) {
+      const QRect geo = qscreen->geometry();
+      QSizeF mm = qscreen->physicalSize();
+      if (mm.width() <= 0 || mm.height() <= 0) {
+        // Some virtual/headless screens report no physical size — fall back
+        // to an assumed 96 DPI so it still renders at a sane size.
+        mm = QSizeF(geo.width() / 96.0 * 25.4, geo.height() / 96.0 * 25.4);
+      }
+      // Bottom-aligned at a shared y=0 baseline: monitors of different
+      // physical heights (e.g. an external display vs. a laptop panel)
+      // conventionally sit on the same desk, not flush at the top.
+      localMonitors.append(gui::canvas::MonitorRect{
+          QRectF(QPointF(xCursor, -mm.height()), mm), QStringLiteral("%1x%2").arg(geo.width()).arg(geo.height())
+      });
+      xCursor += mm.width();
+    }
+  }
+  if (localMonitors.isEmpty()) {
+    localMonitors.append(gui::canvas::MonitorRect{QRectF(0, 0, 480, 320), QString()});
+  }
+  server->setMonitors(localMonitors);
+
+  // Remote machines: populate from whatever the core process has last
+  // reported for them (empty if never connected while this GUI was open).
+  for (auto &screen : screens) {
+    if (screen.isNull() || screen.isServer()) {
+      continue;
+    }
+    const auto liveMonitors = m_coreProcess.clientMonitors(screen.name());
+    if (!liveMonitors.isEmpty()) {
+      applyLiveMonitors(screen, liveMonitors);
+    }
+  }
+
+  m_canvasScene.rebuildFromScreens();
+  ui->screenCanvasView->setScene(&m_canvasScene);
+  ui->screenCanvasView->fitContents();
 }
 
 void ServerConfigDialog::initConnections()
 {
   connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &ServerConfigDialog::accept);
   connect(ui->buttonBox, &QDialogButtonBox::rejected, this, &ServerConfigDialog::reject);
-  connect(ui->lblRemoveScreen, &TrashScreenWidget::screenRemoved, this, &ServerConfigDialog::onScreenRemoved);
+  connect(ui->btnAddComputer, &QPushButton::clicked, this, [this] { addClient(); });
+  connect(ui->btnRemoveComputer, &QPushButton::clicked, this, &ServerConfigDialog::removeSelectedComputer);
+  connect(&m_canvasScene, &ScreenCanvasScene::screensChanged, this, &ServerConfigDialog::onScreensChanged);
   connect(ui->btnNewHotkey, &QPushButton::clicked, this, &ServerConfigDialog::addHotkey);
   connect(ui->btnEditHotkey, &QPushButton::clicked, this, &ServerConfigDialog::editHotkey);
   connect(ui->btnRemoveHotkey, &QPushButton::clicked, this, &ServerConfigDialog::removeHotkey);
@@ -492,7 +577,75 @@ void ServerConfigDialog::initConnections()
       ui->cbDefaultLockToScreenState, &QCheckBox::toggled, this, &ServerConfigDialog::toggleDefaultLockToScreenState
   );
   connect(ui->cbDisableLockToScreen, &QCheckBox::toggled, this, &ServerConfigDialog::toggleLockToScreen);
-  connect(&m_screenSetupModel, &ScreenSetupModel::screensChanged, this, &ServerConfigDialog::onChange);
+}
+
+QPointF ServerConfigDialog::nextFreePlacement() const
+{
+  // Place a new machine's default position to the right of everything
+  // already on the canvas, with a gap so it doesn't accidentally touch (and
+  // thus link to) an existing machine. Returned as a BOTTOM-left anchor
+  // (x, baseline-Y) — real monitors of very different physical heights are
+  // conventionally bottom-aligned (they all sit on the same desk), not
+  // top-aligned, so every default placement targets the lowest bottom edge
+  // among everything already on the canvas.
+  QRectF unionRect;
+  for (const auto &screen : canvasScene().screens()) {
+    if (screen.isNull()) {
+      continue;
+    }
+    const QRectF bbox = screen.boundingRect();
+    if (bbox.isEmpty()) {
+      continue;
+    }
+    unionRect = unionRect.isEmpty() ? bbox : unionRect.united(bbox);
+  }
+  constexpr qreal kGap = 60.0;
+  return unionRect.isEmpty() ? QPointF(0, 0) : QPointF(unionRect.right() + kGap, unionRect.bottom());
+}
+
+void ServerConfigDialog::applyLiveMonitors(Screen &screen, const QList<QRect> &liveMonitors)
+{
+  if (liveMonitors.isEmpty()) {
+    return;
+  }
+
+  // The protocol doesn't carry physical screen size yet, so approximate at
+  // a standard 96 DPI — this keeps remote boxes roughly consistent in scale
+  // with the local machine's real physical-size-based layout, rather than
+  // mixing raw pixel counts with millimeters.
+  constexpr qreal kAssumedDpi = 96.0;
+  constexpr qreal kMmPerInch = 25.4;
+  constexpr qreal kPxToMm = kMmPerInch / kAssumedDpi;
+
+  // Build each monitor's rect relative to the group's own origin (mm), and
+  // the group's own combined bounding box — this preserves the machine's
+  // real relative arrangement among its own monitors.
+  const QPoint origin = liveMonitors.first().topLeft();
+  QList<QRectF> relativeRects;
+  QRectF groupBBox;
+  for (const auto &rect : liveMonitors) {
+    const QRectF relativePx = QRectF(rect).translated(-origin);
+    const QRectF relativeMm(relativePx.topLeft() * kPxToMm, relativePx.size() * kPxToMm);
+    relativeRects.append(relativeMm);
+    groupBBox = groupBBox.isEmpty() ? relativeMm : groupBBox.united(relativeMm);
+  }
+
+  // Translate the whole group so it sits bottom-aligned at the target
+  // anchor: preserve the machine's existing canvas position if it already
+  // had one, otherwise place it fresh at the next free spot.
+  const bool hadPreviousLayout = !screen.monitors().isEmpty();
+  const QPointF anchor =
+      hadPreviousLayout ? QPointF(screen.boundingRect().left(), screen.boundingRect().bottom()) : nextFreePlacement();
+  const QPointF translation = anchor - QPointF(groupBBox.left(), groupBBox.bottom());
+
+  QList<gui::canvas::MonitorRect> monitors;
+  for (int i = 0; i < liveMonitors.size(); ++i) {
+    monitors.append(gui::canvas::MonitorRect{
+        relativeRects[i].translated(translation),
+        QStringLiteral("%1x%2").arg(liveMonitors[i].width()).arg(liveMonitors[i].height())
+    });
+  }
+  screen.setMonitors(monitors);
 }
 
 bool ServerConfigDialog::addComputer(const QString &clientName, bool doSilent)
@@ -500,12 +653,17 @@ bool ServerConfigDialog::addComputer(const QString &clientName, bool doSilent)
   bool isAccepted = false;
   Screen newScreen(clientName);
 
-  if (ScreenSettingsDialog dlg(this, &newScreen, &model().m_Screens); doSilent || dlg.exec() == QDialog::Accepted) {
-    model().addScreen(newScreen);
+  if (ScreenSettingsDialog dlg(this, &newScreen, &canvasScene().screens()); doSilent || dlg.exec() == QDialog::Accepted) {
+    constexpr qreal kDefaultW = 480.0;
+    constexpr qreal kDefaultH = 320.0;
+    const QPointF anchor = nextFreePlacement();
+    const QPointF pos(anchor.x(), anchor.y() - kDefaultH);
+    newScreen.setMonitors({gui::canvas::MonitorRect{QRectF(pos, QSizeF(kDefaultW, kDefaultH)), QString()}});
+
+    canvasScene().addMachine(newScreen);
     isAccepted = true;
   }
 
-  ui->lblNewScreen->setEnabled(!model().isFull());
   return isAccepted;
 }
 

@@ -1063,6 +1063,29 @@ extern const char *const kMsgDFileTransfer;
  */
 extern const char *const kMsgDDragInfo;
 
+/**
+ * @brief Monitor geometry report
+ *
+ * **Message Code**: `"DMON"`
+ * **Direction**: Secondary → Primary
+ * **Format**: `"DMON%2i%s"`
+ * **Parameters**:
+ * - `$1`: Number of monitors (2 bytes)
+ * - `$2`: Monitor rects (string) - `"x,y,w,h;x,y,w,h;..."`, same
+ *   coordinate space as the sender's combined `kMsgDInfo` bounding box.
+ *
+ * Sent once after the handshake completes and again whenever the sender's
+ * screen shape changes (monitor added/removed/moved). Used by the server to
+ * report each connected client's real per-monitor layout up to the GUI
+ * config editor via the core↔GUI IPC channel; not used by the runtime
+ * screen-switching engine, which continues to operate on the combined
+ * bounding box from `kMsgDInfo`.
+ *
+ * @see kMsgDInfo
+ * @since Protocol version 1.8
+ */
+extern const char *const kMsgDMonitorInfo;
+
 /** @} */ // end of protocol_files group
 
 /**

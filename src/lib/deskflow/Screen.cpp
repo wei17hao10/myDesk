@@ -477,4 +477,9 @@ void Screen::setClipboardFile(const std::string &path)
   m_screen->setClipboardFile(path);
 }
 
+std::vector<MonitorRect> Screen::getMonitors() const
+{
+  return m_screen->getMonitors();
+}
+
 } // namespace deskflow

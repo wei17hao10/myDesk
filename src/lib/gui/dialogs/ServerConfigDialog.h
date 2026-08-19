@@ -8,11 +8,13 @@
 
 #pragma once
 
-#include "ScreenSetupModel.h"
 #include "common/NetworkProtocol.h"
 #include "config/ServerConfig.h"
+#include "gui/core/CoreProcess.h"
+#include "widgets/ScreenCanvasScene.h"
 
 #include <QDialog>
+#include <QRect>
 
 class QItemSelection;
 
@@ -25,7 +27,7 @@ class ServerConfigDialog : public QDialog
   Q_OBJECT
 
 public:
-  ServerConfigDialog(QWidget *parent, ServerConfig &config);
+  ServerConfigDialog(QWidget *parent, ServerConfig &config, deskflow::gui::CoreProcess &coreProcess);
   ~ServerConfigDialog() override;
   bool addClient(const QString &clientName);
 
@@ -38,11 +40,15 @@ public Q_SLOTS:
   }
 
 protected Q_SLOTS:
-  void onScreenRemoved();
+  void onScreensChanged();
+  void onClientMonitorsChanged(const QString &name, const QList<QRect> &monitors);
 
 protected:
   void addClient();
+  void removeSelectedComputer();
   bool addComputer(const QString &clientName, bool doSilent);
+  QPointF nextFreePlacement() const;
+  void applyLiveMonitors(Screen &screen, const QList<QRect> &liveMonitors);
 
   void addHotkey();
   void editHotkey();
@@ -90,9 +96,13 @@ protected:
   {
     m_originalServerConfig = s;
   }
-  ScreenSetupModel &model()
+  ScreenCanvasScene &canvasScene()
   {
-    return m_screenSetupModel;
+    return m_canvasScene;
+  }
+  const ScreenCanvasScene &canvasScene() const
+  {
+    return m_canvasScene;
   }
 
 private:
@@ -100,8 +110,6 @@ private:
   void initConnections();
   std::unique_ptr<Ui::ServerConfigDialog> ui;
   QString m_message = "";
-  int m_columns;
-  int m_rows;
   ServerConfig &m_originalServerConfig;
   NetworkProtocol m_protocol;
   bool m_enableHeartbeat;
@@ -110,7 +118,8 @@ private:
   bool m_originalServerConfigIsExternal;
   QString m_originalServerConfigUsesExternalFile;
   ServerConfig m_serverConfig;
-  ScreenSetupModel m_screenSetupModel;
+  ScreenCanvasScene m_canvasScene;
+  deskflow::gui::CoreProcess &m_coreProcess;
 
 private Q_SLOTS:
   void onChange();

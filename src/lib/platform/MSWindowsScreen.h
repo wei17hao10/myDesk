@@ -220,6 +220,10 @@ private: // HACK
   // our window proc
   static LRESULT CALLBACK wndProc(HWND, UINT, WPARAM, LPARAM);
 
+  // EnumDisplayMonitors callback: appends each monitor's rect to the
+  // std::vector<MonitorRect> pointed to by data.
+  static BOOL CALLBACK monitorEnumProc(HMONITOR, HDC, LPRECT, LPARAM data);
+
   // save last position of mouse to compute next delta movement
   void saveMousePosition(int32_t x, int32_t y);
 
@@ -346,8 +350,14 @@ private:
   DWORD m_lastClipboardTransferSequence = 0;
   std::vector<std::string> m_lastTransferredClipboardFiles;
 
+  std::vector<MonitorRect> m_monitors;
+
 public:
   std::vector<std::string> getDragFiles() const override;
   std::vector<std::string> getClipboardFiles() override;
   void setClipboardFile(const std::string &path) override;
+  std::vector<MonitorRect> getMonitors() const override
+  {
+    return m_monitors;
+  }
 };

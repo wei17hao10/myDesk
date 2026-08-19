@@ -208,6 +208,10 @@ public:
   void getClients(std::vector<std::string> &list) const;
   void sendConnectedClientsIpc() const;
 
+  // Reports a client's per-monitor layout up to the GUI process via the core
+  // IPC channel (used by the config editor's screen-arrangement canvas).
+  void sendClientMonitorsIpc(const BaseClientProxy *client) const;
+
   //@}
 
 private:

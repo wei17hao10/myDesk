@@ -1334,10 +1334,17 @@ bool OSXScreen::updateScreenShape()
 
   // get smallest rect enclosing all display rects
   CGRect totalBounds = CGRectZero;
+  std::vector<MonitorRect> monitors;
+  monitors.reserve(displayCount);
   for (CGDisplayCount i = 0; i < displayCount; ++i) {
     CGRect bounds = CGDisplayBounds(displays[i]);
     totalBounds = CGRectUnion(totalBounds, bounds);
+    monitors.push_back(
+        {static_cast<int32_t>(bounds.origin.x), static_cast<int32_t>(bounds.origin.y),
+         static_cast<int32_t>(bounds.size.width), static_cast<int32_t>(bounds.size.height)}
+    );
   }
+  m_monitors = std::move(monitors);
 
   // get shape of default screen
   m_x = (int32_t)totalBounds.origin.x;

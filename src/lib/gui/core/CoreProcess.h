@@ -12,9 +12,11 @@
 #include "gui/FileTail.h"
 #include "gui/config/ServerConfig.h"
 
+#include <QMap>
 #include <QMutex>
 #include <QObject>
 #include <QProcess>
+#include <QRect>
 #include <QTimer>
 
 namespace deskflow::gui {
@@ -69,6 +71,10 @@ public:
   {
     return m_connectionState;
   }
+  QList<QRect> clientMonitors(const QString &name) const
+  {
+    return m_clientMonitors.value(name);
+  }
 
   // setters
   void setAddress(const QString &address)
@@ -88,6 +94,7 @@ Q_SIGNALS:
   void secureSocket(bool enabled);
   void daemonIpcClientConnectionFailed();
   void connectedClientsChanged(const QStringList &clients);
+  void clientMonitorsChanged(const QString &name, const QList<QRect> &monitors);
   void securityLevelChanged(QString securityLevel);
   void unrecognisedClient(const QString &clientName);
   void connectionRefused(deskflow::core::ConnectionRefusal reason);
@@ -134,6 +141,7 @@ private:
   FileTail *m_daemonFileTail = nullptr;
   QProcess *m_process = nullptr;
   QString m_appPath;
+  QMap<QString, QList<QRect>> m_clientMonitors;
 };
 
 } // namespace deskflow::gui
