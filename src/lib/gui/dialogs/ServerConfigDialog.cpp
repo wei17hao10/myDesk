@@ -468,37 +468,40 @@ void ServerConfigDialog::loadFromConfig()
   // it), so real detection takes priority over whatever was previously
   // stored (a legacy-grid migration placeholder, or a stale prior layout).
   //
-  // Sized by each screen's real physical dimensions (QScreen::physicalSize(),
-  // in millimeters — the same unit basis applyLiveMonitors() approximates
-  // for remote machines) rather than logical pixel count, so a large 27"
-  // monitor actually looks bigger on the canvas than a small high-DPI laptop
-  // panel with a similar or higher pixel count. Laid out purely left-to-right
-  // in real x-order (the common case) so a machine's own monitors are always
-  // placed edge-to-edge with no gap or overlap, regardless of how different
-  // their pixel densities are.
+  // IMPORTANT: the relative POSITION between this machine's own monitors
+  // must come directly from QScreen::geometry() — the exact same
+  // pixel/point coordinate space the OS reports at runtime (CGDisplayBounds
+  // on macOS, the virtual-screen metrics on Windows) and that
+  // Server::mapToFraction()/mapToPixel() actually use when deciding where a
+  // crossing cursor lands. Re-deriving that relationship on the canvas
+  // (e.g. guessing a left-to-right, bottom-aligned layout from physical
+  // size) can silently diverge from the real OS arrangement and break
+  // cursor crossing at whatever edge the two disagree on. Physical size is
+  // only used to pick ONE uniform scale factor for the whole machine, so it
+  // renders at a roughly-true-to-life size without altering the real
+  // relative arrangement between its own monitors.
   QList<gui::canvas::MonitorRect> localMonitors;
   {
-    auto qscreens = QGuiApplication::screens();
-    std::sort(qscreens.begin(), qscreens.end(), [](const QScreen *a, const QScreen *b) {
-      return a->geometry().x() < b->geometry().x();
-    });
-
-    qreal xCursor = 0;
-    for (const QScreen *qscreen : std::as_const(qscreens)) {
+    const auto qscreens = QGuiApplication::screens();
+    qreal scaleSum = 0;
+    int scaleCount = 0;
+    for (const QScreen *qscreen : qscreens) {
+      const QSizeF mm = qscreen->physicalSize();
       const QRect geo = qscreen->geometry();
-      QSizeF mm = qscreen->physicalSize();
-      if (mm.width() <= 0 || mm.height() <= 0) {
-        // Some virtual/headless screens report no physical size — fall back
-        // to an assumed 96 DPI so it still renders at a sane size.
-        mm = QSizeF(geo.width() / 96.0 * 25.4, geo.height() / 96.0 * 25.4);
+      if (mm.width() > 0 && geo.width() > 0) {
+        scaleSum += mm.width() / geo.width();
+        ++scaleCount;
       }
-      // Bottom-aligned at a shared y=0 baseline: monitors of different
-      // physical heights (e.g. an external display vs. a laptop panel)
-      // conventionally sit on the same desk, not flush at the top.
+    }
+    // Assumed 96 DPI if no screen reports a physical size at all.
+    const qreal scale = scaleCount > 0 ? scaleSum / scaleCount : (25.4 / 96.0);
+
+    for (const QScreen *qscreen : qscreens) {
+      const QRect geo = qscreen->geometry();
       localMonitors.append(gui::canvas::MonitorRect{
-          QRectF(QPointF(xCursor, -mm.height()), mm), QStringLiteral("%1x%2").arg(geo.width()).arg(geo.height())
+          QRectF(geo.topLeft() * scale, QSizeF(geo.width() * scale, geo.height() * scale)),
+          QStringLiteral("%1x%2").arg(geo.width()).arg(geo.height())
       });
-      xCursor += mm.width();
     }
   }
   if (localMonitors.isEmpty()) {
@@ -613,13 +616,24 @@ void ServerConfigDialog::applyLiveMonitors(
     return;
   }
 
-  // Prefer each monitor's own real physical size when the client reported
-  // one; otherwise approximate at a standard 96 DPI so it's at least roughly
-  // consistent in scale with the local machine's physical-size-based layout,
-  // rather than using raw pixel counts as millimeters.
+  // Use ONE uniform scale factor for the whole machine (derived from
+  // whichever monitors reported a real physical size, averaged; falls back
+  // to an assumed 96 DPI if none did) — never a per-monitor scale. The
+  // relative PIXEL positions reported by the client already exactly match
+  // what that machine's own OS (and therefore the runtime crossing math)
+  // uses; scaling each monitor independently would distort that real
+  // relative arrangement if its monitors have different pixel densities.
   constexpr qreal kAssumedDpi = 96.0;
   constexpr qreal kMmPerInch = 25.4;
-  constexpr qreal kFallbackPxToMm = kMmPerInch / kAssumedDpi;
+  qreal scaleSum = 0;
+  int scaleCount = 0;
+  for (const auto &monitor : liveMonitors) {
+    if (monitor.mmSize.width() > 0 && monitor.rect.width() > 0) {
+      scaleSum += static_cast<qreal>(monitor.mmSize.width()) / monitor.rect.width();
+      ++scaleCount;
+    }
+  }
+  const qreal scale = scaleCount > 0 ? scaleSum / scaleCount : (kMmPerInch / kAssumedDpi);
 
   // Build each monitor's rect relative to the group's own origin (mm), and
   // the group's own combined bounding box — this preserves the machine's
@@ -628,9 +642,6 @@ void ServerConfigDialog::applyLiveMonitors(
   QList<QRectF> relativeRects;
   QRectF groupBBox;
   for (const auto &monitor : liveMonitors) {
-    const qreal scale = (monitor.mmSize.width() > 0 && monitor.mmSize.height() > 0)
-                             ? static_cast<qreal>(monitor.mmSize.width()) / monitor.rect.width()
-                             : kFallbackPxToMm;
     const QRectF relativePx = QRectF(monitor.rect).translated(-origin);
     const QRectF relativeMm(relativePx.topLeft() * scale, relativePx.size() * scale);
     relativeRects.append(relativeMm);
