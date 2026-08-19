@@ -32,6 +32,35 @@ void ScreenCanvasScene::rebuildFromScreens()
   }
 }
 
+QColor ScreenCanvasScene::colorForScreen(const QString &name) const
+{
+  // Light, low-saturation palette — just enough to tell machines apart,
+  // not attention-grabbing. Assigned by each non-null screen's position in
+  // the list, so it stays stable as long as machines aren't reordered.
+  static const QList<QColor> kPalette = {
+      QColor(0xE3, 0xF2, 0xFD), // light blue
+      QColor(0xE8, 0xF5, 0xE9), // light green
+      QColor(0xFF, 0xF3, 0xE0), // light orange
+      QColor(0xF3, 0xE5, 0xF5), // light purple
+      QColor(0xFF, 0xEB, 0xEE), // light pink
+      QColor(0xE0, 0xF2, 0xF1), // light teal
+      QColor(0xFF, 0xFD, 0xE7), // light yellow
+      QColor(0xEC, 0xEF, 0xF1), // light gray-blue
+  };
+
+  int index = 0;
+  for (const auto &screen : m_Screens) {
+    if (screen.isNull()) {
+      continue;
+    }
+    if (screen.name() == name) {
+      return kPalette[index % kPalette.size()];
+    }
+    ++index;
+  }
+  return kPalette.first();
+}
+
 Screen *ScreenCanvasScene::findScreen(const QString &name)
 {
   for (auto &screen : m_Screens) {

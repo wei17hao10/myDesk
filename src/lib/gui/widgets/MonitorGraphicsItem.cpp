@@ -36,7 +36,7 @@ void MonitorGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsIte
 {
   const QColor border = isSelected() ? QColor(66, 133, 244) : QColor(120, 120, 120);
   painter->setPen(QPen(border, isSelected() ? 3 : 2));
-  painter->setBrush(QColor(230, 230, 230, 180));
+  painter->setBrush(m_ownerScene->colorForScreen(m_screenName));
   painter->drawRect(m_localRect);
 
   QString text = m_screenName;

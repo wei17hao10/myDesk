@@ -8,6 +8,7 @@
 
 #include "gui/config/ScreenList.h"
 
+#include <QColor>
 #include <QGraphicsScene>
 #include <QList>
 #include <QPointF>
@@ -41,6 +42,10 @@ public:
   }
   Screen *findScreen(const QString &name);
   QList<MonitorGraphicsItem *> itemsForScreen(const QString &name) const;
+
+  // A stable, light fill color for this machine's monitors, distinct from
+  // other machines' — just enough to tell them apart at a glance.
+  QColor colorForScreen(const QString &name) const;
 
   // Given a dragged item's candidate scene rect, returns a snapped top-left
   // if any other item's edge (excluding the ones currently being dragged
