@@ -26,6 +26,7 @@
 #include <QSharedMemory>
 #include <QTextStream>
 #include <QThread>
+#include <QTimer>
 
 void qtMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &message)
 {
@@ -138,7 +139,14 @@ int main(int argc, char **argv)
 
   QThread coreThread;
   QObject::connect(&coreThread, &QThread::finished, &app, &QApplication::quit);
-  coreApp->run(coreThread);
+
+  // Defer starting the core thread until the main thread's event loop is
+  // actually pumping. Starting it any earlier lets the core thread's first
+  // keyboard-layout query (a macOS Text Input Source/TIS call) race against
+  // AppKit's own internal TIS/TSM startup bookkeeping on the main thread —
+  // Apple aborts the process if two threads touch TIS/TSM concurrently, and
+  // this window was intermittently wide enough to trigger that abort.
+  QTimer::singleShot(0, &app, [coreApp, &coreThread]() { coreApp->run(coreThread); });
 
   int exitCode = QApplication::exec();
   coreThread.wait();
