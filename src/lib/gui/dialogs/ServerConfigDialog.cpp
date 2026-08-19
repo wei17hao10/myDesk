@@ -361,7 +361,10 @@ void ServerConfigDialog::onClientMonitorsChanged(
 )
 {
   Screen *screen = canvasScene().findScreen(name);
-  if (!screen || screen->isServer()) {
+  if (!screen || screen->isServer() || !screen->monitors().isEmpty()) {
+    // Only auto-populate a machine that has no layout yet (e.g. it just
+    // connected for the first time this session) — never silently
+    // recompute one that's already arranged.
     return;
   }
   applyLiveMonitors(*screen, monitors);
@@ -509,10 +512,15 @@ void ServerConfigDialog::loadFromConfig()
   }
   server->setMonitors(localMonitors);
 
-  // Remote machines: populate from whatever the core process has last
-  // reported for them (empty if never connected while this GUI was open).
+  // Remote machines: auto-populate from live data ONLY the first time (this
+  // screen has no monitors yet). Once a layout exists — whether from a
+  // previous auto-population or the user's own dragging — it's the source
+  // of truth and must not be silently recomputed on every reopen: the
+  // scale/rounding involved in converting live px reports to canvas mm
+  // isn't perfectly idempotent, so redoing it each time could visibly drift
+  // a layout the user already arranged and saved.
   for (auto &screen : screens) {
-    if (screen.isNull() || screen.isServer()) {
+    if (screen.isNull() || screen.isServer() || !screen.monitors().isEmpty()) {
       continue;
     }
     const auto liveMonitors = m_coreProcess.clientMonitors(screen.name());
@@ -648,12 +656,10 @@ void ServerConfigDialog::applyLiveMonitors(
     groupBBox = groupBBox.isEmpty() ? relativeMm : groupBBox.united(relativeMm);
   }
 
-  // Translate the whole group so it sits bottom-aligned at the target
-  // anchor: preserve the machine's existing canvas position if it already
-  // had one, otherwise place it fresh at the next free spot.
-  const bool hadPreviousLayout = !screen.monitors().isEmpty();
-  const QPointF anchor =
-      hadPreviousLayout ? QPointF(screen.boundingRect().left(), screen.boundingRect().bottom()) : nextFreePlacement();
+  // Only ever called for a screen with no layout yet (see callers), so
+  // always place it fresh at the next free spot — never recompute an
+  // existing (possibly user-arranged) layout in place.
+  const QPointF anchor = nextFreePlacement();
   const QPointF translation = anchor - QPointF(groupBBox.left(), groupBBox.bottom());
 
   QList<gui::canvas::MonitorRect> monitors;
