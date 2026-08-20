@@ -315,6 +315,7 @@ jobs:
 
       - name: Update Development Documentation
         if: matrix.target.like == 'arch' && github.ref == 'refs/heads/master'
+        continue-on-error: true
         uses: JamesIves/github-pages-deploy-action@v4.8.0
         with:
           branch: gh-pages
@@ -405,6 +406,7 @@ jobs:
         run: flatpak-builder-lint --exceptions --user-exceptions deploy/linux/flatpak/ci-build-lint-exceptions.json repo repo
 
       - name: Upload
+        continue-on-error: true
         uses: actions/upload-artifact@v7
         with:
           name: package-${{ env.PACKAGE_PREFIX }}-flatpak-${{matrix.flatpak.arch}}
