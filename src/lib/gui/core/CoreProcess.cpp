@@ -589,10 +589,12 @@ void CoreProcess::onCoreIpcMessageReceived(const QString &command, const QString
       if (parts.size() != 6) {
         continue;
       }
-      monitors.append(ReportedMonitor{
-          QRect(parts[0].toInt(), parts[1].toInt(), parts[2].toInt(), parts[3].toInt()),
-          QSize(parts[4].toInt(), parts[5].toInt())
-      });
+      monitors.append(
+          ReportedMonitor{
+              QRect(parts[0].toInt(), parts[1].toInt(), parts[2].toInt(), parts[3].toInt()),
+              QSize(parts[4].toInt(), parts[5].toInt())
+          }
+      );
     }
     m_clientMonitors[name] = monitors;
     Q_EMIT clientMonitorsChanged(name, monitors);

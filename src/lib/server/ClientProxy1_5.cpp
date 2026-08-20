@@ -26,11 +26,9 @@ using deskflow::fileTransferStagingDir;
 using deskflow::kFileTransferStagingMaxAgeMs;
 using deskflow::purgeStaleFileTransfers;
 
-ClientProxy1_5::ClientProxy1_5(
-    const std::string &name, deskflow::IStream *stream, Server *server, IEventQueue *events
-)
-    : ClientProxy1_4(name, stream, server, events)
-    , m_events(events)
+ClientProxy1_5::ClientProxy1_5(const std::string &name, deskflow::IStream *stream, Server *server, IEventQueue *events)
+    : ClientProxy1_4(name, stream, server, events),
+      m_events(events)
 {
   purgeStaleFileTransfers(fileTransferStagingDir(), kFileTransferStagingMaxAgeMs);
 
@@ -261,7 +259,9 @@ void ClientProxy1_5::saveReceivedFile(const std::string &filename, const std::st
   out.write(data.c_str(), static_cast<qint64>(data.size()));
   out.close();
 
-  LOG_INFO("file transfer: staged '%s' (%zu bytes) — ready for Ctrl+V/Cmd+V paste", qPrintable(targetPath), data.size());
+  LOG_INFO(
+      "file transfer: staged '%s' (%zu bytes) — ready for Ctrl+V/Cmd+V paste", qPrintable(targetPath), data.size()
+  );
   m_server->setClipboardFile(targetPath.toStdString());
 
   // Notify the server so it can surface a GUI alert.

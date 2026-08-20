@@ -75,7 +75,8 @@ QList<MonitorGraphicsItem *> ScreenCanvasScene::itemsForScreen(const QString &na
 {
   QList<MonitorGraphicsItem *> result;
   for (auto *item : items()) {
-    if (auto *monitorItem = dynamic_cast<MonitorGraphicsItem *>(item); monitorItem && monitorItem->screenName() == name) {
+    if (auto *monitorItem = dynamic_cast<MonitorGraphicsItem *>(item);
+        monitorItem && monitorItem->screenName() == name) {
       result.append(monitorItem);
     }
   }
@@ -105,7 +106,8 @@ void ScreenCanvasScene::removeSelected()
 {
   QStringList names;
   for (auto *item : selectedItems()) {
-    if (auto *monitorItem = dynamic_cast<MonitorGraphicsItem *>(item); monitorItem && !names.contains(monitorItem->screenName())) {
+    if (auto *monitorItem = dynamic_cast<MonitorGraphicsItem *>(item);
+        monitorItem && !names.contains(monitorItem->screenName())) {
       names.append(monitorItem->screenName());
     }
   }
@@ -114,8 +116,8 @@ void ScreenCanvasScene::removeSelected()
   }
 }
 
-QPointF ScreenCanvasScene::snappedTopLeft(const QRectF &candidateRect, const QList<MonitorGraphicsItem *> &excluding)
-    const
+QPointF
+ScreenCanvasScene::snappedTopLeft(const QRectF &candidateRect, const QList<MonitorGraphicsItem *> &excluding) const
 {
   qreal snappedX = candidateRect.left();
   qreal snappedY = candidateRect.top();

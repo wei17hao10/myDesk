@@ -286,7 +286,6 @@ public:
   void setClipboardFile(const std::string &path);
   std::vector<MonitorRect> getMonitors() const;
 
-
 protected:
   void enablePrimary();
   void enableSecondary();

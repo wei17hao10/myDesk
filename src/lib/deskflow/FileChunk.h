@@ -33,8 +33,7 @@ public:
   // Reassemble incoming kMsgDFileTransfer stream.
   // Returns Started / InProgress / Finished / Error.
   // On Finished, dataCached holds the complete file bytes and filename is set.
-  static TransferState
-  assemble(deskflow::IStream *stream, std::string &dataCached, std::string &filename);
+  static TransferState assemble(deskflow::IStream *stream, std::string &dataCached, std::string &filename);
 
   // Write a FileChunk to stream (used as event handler payload).
   static void send(deskflow::IStream *stream, void *data);

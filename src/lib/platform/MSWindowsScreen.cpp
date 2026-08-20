@@ -1886,10 +1886,10 @@ void MSWindowsScreen::setClipboardFile(const std::string &path)
     return;
   }
   pDrop->pFiles = sizeof(DROPFILES);
-  pDrop->fWide  = TRUE;
+  pDrop->fWide = TRUE;
   wchar_t *dest = reinterpret_cast<wchar_t *>(reinterpret_cast<BYTE *>(pDrop) + sizeof(DROPFILES));
   std::copy(wpath.begin(), wpath.end(), dest);
-  dest[wpath.size()]     = L'\0';
+  dest[wpath.size()] = L'\0';
   dest[wpath.size() + 1] = L'\0'; // double-null terminator
   GlobalUnlock(hMem);
 

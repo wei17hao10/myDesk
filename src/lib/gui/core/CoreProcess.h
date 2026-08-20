@@ -44,8 +44,8 @@ public:
   // One monitor as self-reported by a connected client over the network.
   struct ReportedMonitor
   {
-    QRect rect;    // pixel geometry, in that client's own coordinate space
-    QSize mmSize;  // real physical size in millimeters; (0,0) if unknown
+    QRect rect;   // pixel geometry, in that client's own coordinate space
+    QSize mmSize; // real physical size in millimeters; (0,0) if unknown
   };
 
   explicit CoreProcess(const ServerConfig &serverConfig);

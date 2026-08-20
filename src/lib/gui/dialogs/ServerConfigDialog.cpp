@@ -501,10 +501,12 @@ void ServerConfigDialog::loadFromConfig()
 
     for (const QScreen *qscreen : qscreens) {
       const QRect geo = qscreen->geometry();
-      localMonitors.append(gui::canvas::MonitorRect{
-          QRectF(geo.topLeft() * scale, QSizeF(geo.width() * scale, geo.height() * scale)),
-          QStringLiteral("%1x%2").arg(geo.width()).arg(geo.height())
-      });
+      localMonitors.append(
+          gui::canvas::MonitorRect{
+              QRectF(geo.topLeft() * scale, QSizeF(geo.width() * scale, geo.height() * scale)),
+              QStringLiteral("%1x%2").arg(geo.width()).arg(geo.height())
+          }
+      );
     }
   }
   if (localMonitors.isEmpty()) {
@@ -664,10 +666,12 @@ void ServerConfigDialog::applyLiveMonitors(
 
   QList<gui::canvas::MonitorRect> monitors;
   for (int i = 0; i < liveMonitors.size(); ++i) {
-    monitors.append(gui::canvas::MonitorRect{
-        relativeRects[i].translated(translation),
-        QStringLiteral("%1x%2").arg(liveMonitors[i].rect.width()).arg(liveMonitors[i].rect.height())
-    });
+    monitors.append(
+        gui::canvas::MonitorRect{
+            relativeRects[i].translated(translation),
+            QStringLiteral("%1x%2").arg(liveMonitors[i].rect.width()).arg(liveMonitors[i].rect.height())
+        }
+    );
   }
   screen.setMonitors(monitors);
 }
@@ -677,7 +681,8 @@ bool ServerConfigDialog::addComputer(const QString &clientName, bool doSilent)
   bool isAccepted = false;
   Screen newScreen(clientName);
 
-  if (ScreenSettingsDialog dlg(this, &newScreen, &canvasScene().screens()); doSilent || dlg.exec() == QDialog::Accepted) {
+  if (ScreenSettingsDialog dlg(this, &newScreen, &canvasScene().screens());
+      doSilent || dlg.exec() == QDialog::Accepted) {
     constexpr qreal kDefaultW = 480.0;
     constexpr qreal kDefaultH = 320.0;
     const QPointF anchor = nextFreePlacement();

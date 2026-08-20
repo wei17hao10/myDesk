@@ -171,7 +171,9 @@ public:
   }
 
   // Place a received file into the local clipboard so the user can Ctrl+V it.
-  virtual void setClipboardFile(const std::string & /*path*/) {}
+  virtual void setClipboardFile(const std::string & /*path*/)
+  {
+  }
 
   // Return this machine's individual monitors (same coordinate space as
   // getShape()'s combined bounding box). Empty if the platform doesn't

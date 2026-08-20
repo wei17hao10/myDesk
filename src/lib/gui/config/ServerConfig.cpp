@@ -168,11 +168,9 @@ void ServerConfig::recall()
       constexpr qreal kLegacyCellH = 320.0;
       const int row = legacyColumns > 0 ? i / legacyColumns : 0;
       const int col = legacyColumns > 0 ? i % legacyColumns : i;
-      screen.setMonitors(
-          {gui::canvas::MonitorRect{
-              QRectF(col * kLegacyCellW, row * kLegacyCellH, kLegacyCellW, kLegacyCellH), QString()
-          }}
-      );
+      screen.setMonitors({gui::canvas::MonitorRect{
+          QRectF(col * kLegacyCellW, row * kLegacyCellH, kLegacyCellW, kLegacyCellH), QString()
+      }});
     }
     screens().append(screen);
   }
@@ -346,9 +344,7 @@ bool ServerConfig::validateCanvasLayout(QStringList &errors) const
   QMap<QPair<QString, int>, QList<Interval>> intervalsBySide;
   for (const auto &pair : computeCanvasLinks()) {
     intervalsBySide[{pair.screenA, static_cast<int>(pair.sideOnA)}].append(pair.intervalOnA);
-    intervalsBySide[{pair.screenB, static_cast<int>(gui::canvas::oppositeEdge(pair.sideOnA))}].append(
-        pair.intervalOnB
-    );
+    intervalsBySide[{pair.screenB, static_cast<int>(gui::canvas::oppositeEdge(pair.sideOnA))}].append(pair.intervalOnB);
   }
   for (auto it = intervalsBySide.constBegin(); it != intervalsBySide.constEnd(); ++it) {
     auto sorted = it.value();
@@ -389,15 +385,15 @@ QTextStream &operator<<(QTextStream &outStream, const ServerConfig &config)
   for (const auto &pair : config.computeCanvasLinks()) {
     const auto oppositeSide = gui::canvas::oppositeEdge(pair.sideOnA);
     linkLinesByScreen[pair.screenA].append(QStringLiteral("\t\t%1%2 = %3%4")
-                                                .arg(gui::canvas::edgeConfigName(pair.sideOnA))
-                                                .arg(formatIntervalForConfig(pair.intervalOnA))
-                                                .arg(pair.screenB)
-                                                .arg(formatIntervalForConfig(pair.intervalOnB)));
+                                               .arg(gui::canvas::edgeConfigName(pair.sideOnA))
+                                               .arg(formatIntervalForConfig(pair.intervalOnA))
+                                               .arg(pair.screenB)
+                                               .arg(formatIntervalForConfig(pair.intervalOnB)));
     linkLinesByScreen[pair.screenB].append(QStringLiteral("\t\t%1%2 = %3%4")
-                                                .arg(gui::canvas::edgeConfigName(oppositeSide))
-                                                .arg(formatIntervalForConfig(pair.intervalOnB))
-                                                .arg(pair.screenA)
-                                                .arg(formatIntervalForConfig(pair.intervalOnA)));
+                                               .arg(gui::canvas::edgeConfigName(oppositeSide))
+                                               .arg(formatIntervalForConfig(pair.intervalOnB))
+                                               .arg(pair.screenA)
+                                               .arg(formatIntervalForConfig(pair.intervalOnA)));
   }
 
   for (const Screen &s : config.screens()) {

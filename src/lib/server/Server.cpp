@@ -12,6 +12,7 @@
 #include "base/Log.h"
 #include "deskflow/AppUtil.h"
 #include "deskflow/DeskflowException.h"
+#include "deskflow/FileChunk.h"
 #include "deskflow/IPlatformScreen.h"
 #include "deskflow/OptionTypes.h"
 #include "deskflow/PacketStreamFilter.h"
@@ -24,7 +25,6 @@
 #include "server/ClientProxy.h"
 #include "server/ClientProxyUnknown.h"
 #include "server/PrimaryClient.h"
-#include "deskflow/FileChunk.h"
 
 #include <QFileInfo>
 #include <QString>
@@ -456,7 +456,10 @@ void Server::switchScreen(BaseClientProxy *dst, int32_t x, int32_t y, bool forSc
     if (m_active == m_primaryClient && m_enableFileTransfer) {
       const auto clipFiles = m_primaryClient->getClipboardFiles();
       if (!clipFiles.empty()) {
-        LOG_INFO("clipboard files detected: initiating transfer of %zu file(s) to '%s'", clipFiles.size(), getName(dst).c_str());
+        LOG_INFO(
+            "clipboard files detected: initiating transfer of %zu file(s) to '%s'", clipFiles.size(),
+            getName(dst).c_str()
+        );
         initiateFileTransfer(dst, clipFiles);
       }
     }

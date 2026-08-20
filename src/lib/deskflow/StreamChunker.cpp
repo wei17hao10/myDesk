@@ -61,9 +61,8 @@ void StreamChunker::sendClipboard(
 }
 
 // Recursively enumerate and send all files in a directory tree.
-static void sendFolderRecursive(
-    const std::string &diskPath, const std::string &relPath, IEventQueue *events, void *eventTarget
-)
+static void
+sendFolderRecursive(const std::string &diskPath, const std::string &relPath, IEventQueue *events, void *eventTarget)
 {
   QDir dir(QString::fromStdString(diskPath));
   const auto entries = dir.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
@@ -108,9 +107,8 @@ void StreamChunker::sendFile(
   const size_t fileSize = static_cast<size_t>(file.tellg());
   file.seekg(0, std::ios::beg);
 
-  const std::string filename = displayName.empty()
-                                   ? QFileInfo(QString::fromStdString(filePath)).fileName().toStdString()
-                                   : displayName;
+  const std::string filename =
+      displayName.empty() ? QFileInfo(QString::fromStdString(filePath)).fileName().toStdString() : displayName;
 
   if (fileSize == 0) {
     LOG_WARN("file transfer: skipping empty file: %s", filename.c_str());
