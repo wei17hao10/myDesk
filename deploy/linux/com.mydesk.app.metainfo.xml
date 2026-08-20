@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+	<id>com.mydesk.app</id>
+	<metadata_license>CC0-1.0</metadata_license>
+	<project_license>GPL-2.0-only</project_license>
+	<name>myDesk</name>
+	<developer id="com.mydesk.app">
+		<name>myDesk Devs</name>
+	</developer>
+	<summary>Software Keyboard and mouse sharing</summary>
+	<summary xml:lang="zh_CN">用软件共享键鼠</summary>
+	<summary xml:lang="ko">키보드 및 마우스 공유 소프트웨어</summary>
+	<description>
+		<p>
+			Use the keyboard, mouse, or trackpad of one computer to control nearby computers, and work seamlessly between them.
+		</p>
+		<p xml:lang="zh_CN">
+			使用一台计算机的键盘、鼠标或触控板来控制附近的其它计算机，并在它们之间无缝工作。
+		</p>
+		<p xml:lang="ko">
+			한 대의 컴퓨터에 연결된 키보드, 마우스 또는 트랙패드로 주변의 다른 컴퓨터를 제어하고, 컴퓨터 사이를 끊김 없이 오가며 작업할 수 있습니다.
+		</p>
+	</description>
+	<launchable type="desktop-id">com.mydesk.app.desktop</launchable>
+	<url type="homepage">https://deskflow.org</url>
+	<url type="bugtracker">https://github.com/deskflow/deskflow/issues</url>
+	<url type="faq">https://github.com/deskflow/deskflow/wiki/Project-FAQ</url>
+	<url type="help">https://github.com/deskflow/deskflow/wiki#user-guides</url>
+	<url type="vcs-browser">https://github.com/deskflow/deskflow</url>
+	<url type="contribute">https://github.com/deskflow/deskflow/wiki/Contributing</url>
+	<screenshots>
+		<screenshot type="default">
+			<image>https://deskflow.org/screenshots/deskflow-client.png</image>
+			<caption>myDesk in client mode on KDE</caption>
+		</screenshot>
+		<screenshot>
+			<image>https://deskflow.org/screenshots/deskflow-server.png</image>
+			<caption>myDesk in server mode on KDE</caption>
+		</screenshot>
+		<screenshot>
+			<image>https://deskflow.org/screenshots/deskflow-log.png</image>
+			<caption>myDesk with the log visible on KDE</caption>
+		</screenshot>
+		<screenshot>
+			<image>https://deskflow.org/screenshots/deskflow-client-dark.png</image>
+			<caption>myDesk in client mode on KDE (dark mode)</caption>
+		</screenshot>
+		<screenshot>
+			<image>https://deskflow.org/screenshots/deskflow-server-dark.png</image>
+			<caption>myDesk in server mode on KDE (dark mode)</caption>
+		</screenshot>
+		<screenshot>
+			<image>https://deskflow.org/screenshots/deskflow-log-dark.png</image>
+			<caption>myDesk with the log visible on KDE (dark mode)</caption>
+		</screenshot>
+	</screenshots>
+	<provides> <id>com.mydesk.app.desktop</id> </provides>
+	<categories>
+		<category>Utility</category>
+	</categories>
+	<keywords>
+		<keyword>Input</keyword>
+		<keyword xml:lang="zh_CN">输入</keyword>
+		<keyword xml:lang="ko">입력</keyword>
+		<keyword>Sharing</keyword>
+		<keyword xml:lang="zh_CN">共享</keyword>
+		<keyword xml:lang="ko">공유</keyword>
+		<keyword translate="no">KVM</keyword>
+		<keyword translate="no">Synergy</keyword>
+	</keywords>
+	<branding>
+		<color type="primary" scheme_preference="light">#dddddd</color>
+		<color type="primary" scheme_preference="dark">#555555</color>
+	</branding>
+	<content_rating type="oars-1.0" />
+	<releases>
+		<release version="1.26.0" date="2026-02-16" urgency="high">
+			<description>
+				<p>This stable release fixes known issues and adds a few new features, For the full changelog, see the release page.</p>
+			</description>
+			<url>https://github.com/deskflow/deskflow/releases/tag/v1.26.0</url>
+		</release>
+	</releases>
+</component>
