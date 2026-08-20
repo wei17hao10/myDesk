@@ -25,7 +25,7 @@ class MSWindowsDropTarget : public IDropTarget
 {
 public:
   MSWindowsDropTarget();
-  ~MSWindowsDropTarget() override;
+  ~MSWindowsDropTarget();
 
   // IUnknown
   STDMETHODIMP QueryInterface(REFIID riid, void **ppv) override;
