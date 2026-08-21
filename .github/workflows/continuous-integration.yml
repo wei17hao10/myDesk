@@ -275,10 +275,10 @@ jobs:
         id: generate_notes
         shell: bash
         run: |
-          mv $GITHUB_WORKSPACE/package-*/deskflow-* .
+          mv $GITHUB_WORKSPACE/package-*/myDesk-* .
           rm -rf $GITHUB_WORKSPACE/package-*
           echo "Build: ${{env.DESKFLOW_VERSION }}" > sums.txt
-          sha256sum deskflow-* >> sums.txt
+          sha256sum myDesk-* >> sums.txt
           export changes=$(git log --abbrev=8 --abbrev-commit --pretty=format:" - %s(%h) by %an" continuous..HEAD)
           echo -e "## Latest Changes:\n$changes" > changelog.txt
 
@@ -300,7 +300,7 @@ jobs:
           generate_release_notes: false
           body_path: changelog.txt
           files: |
-            deskflow-*
+            myDesk-*
             sums.txt
 
       - name: Deploy release
@@ -312,7 +312,7 @@ jobs:
           make_latest: true
           prerelease: false
           files: |
-            deskflow-*
+            myDesk-*
             sums.txt
 
       - name: Update Homebrewtap
