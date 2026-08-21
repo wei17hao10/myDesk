@@ -263,6 +263,8 @@ jobs:
     needs: ci-passed
     if: (github.ref == 'refs/heads/master') || (contains(github.ref, '/tags/v'))
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Fancy Checkout
