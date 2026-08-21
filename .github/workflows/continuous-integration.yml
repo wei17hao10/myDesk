@@ -203,7 +203,10 @@ jobs:
                   break
                 else
                   echo "Package attempt $i failed"
-                  sleep 1
+                  # A previous attempt may have left the DMG volume mounted
+                  # (busy hdiutil detach), which blocks the next attempt too.
+                  hdiutil detach "/Volumes/myDesk" -force > /dev/null 2>&1 || true
+                  sleep 2
                 fi
               done
               if [ "$packaged" -ne 1 ]; then
