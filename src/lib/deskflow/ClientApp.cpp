@@ -448,17 +448,16 @@ ISocketFactory *ClientApp::getSocketFactory() const
 
 double ClientApp::retryTime() const
 {
-  if (!Settings::value(Settings::Client::DynamicConnectionRetry).toBool() || m_retryCount < 300) // 5 minutes
+  // each attempt also waits up to 2s for the connect to time out
+  if (!Settings::value(Settings::Client::DynamicConnectionRetry).toBool() || m_retryCount < 20) // ~1 minute
     return 1;
-  if (m_retryCount < 360) // 5 minutes
+  if (m_retryCount < 30) // ~1 minute
     return 5;
-  if (m_retryCount < 390) // 5 minutes
-    return 10;
-  if (m_retryCount < 410) // 10 minutes
+  if (m_retryCount < 40) // ~3 minutes
+    return 15;
+  if (m_retryCount < 50) // ~5 minutes
     return 30;
-  if (m_retryCount < 420) // 10 minutes
+  if (m_retryCount < 60) // ~10 minutes
     return 60;
-  if (m_retryCount < 430) // 20 minutes
-    return 120;
   return 300;
 }
