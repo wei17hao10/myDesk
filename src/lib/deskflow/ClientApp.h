@@ -12,6 +12,9 @@
 #include "net/NetworkAddress.h"
 
 #include <QList>
+#include <QString>
+
+#include <chrono>
 
 namespace deskflow {
 class Screen;
@@ -88,6 +91,8 @@ private:
   ISocketFactory *getSocketFactory() const;
   NetworkAddress &getCurrentServerAddress();
   void tryNextServer();
+  void logConnectFailure(const QString &reason, const QString &message);
+  void logReconnected();
 
   bool m_suspended = false;
   Client *m_client = nullptr;
@@ -96,4 +101,11 @@ private:
   size_t m_currentServerIndex = 0;
   size_t m_lastServerAddressIndex = 0;
   uint m_retryCount = 0;
+
+  // Repeated identical connection failures (e.g. the server is asleep) are
+  // logged once as a warning, then only as debug with an hourly summary.
+  QString m_lastFailureReason;
+  uint m_failureCount = 0;
+  std::chrono::steady_clock::time_point m_failureStart;
+  std::chrono::steady_clock::time_point m_lastFailureSummary;
 };

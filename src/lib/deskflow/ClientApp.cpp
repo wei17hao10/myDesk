@@ -170,6 +170,7 @@ void ClientApp::scheduleClientRestart(double retryTime)
 void ClientApp::handleClientConnected()
 {
   LOG_DEBUG("connected to server");
+  logReconnected();
   ipcSendConnectionState(deskflow::core::ConnectionState::Connected);
   // Reset server index on successful connection
   m_currentServerIndex = 0;
@@ -182,7 +183,9 @@ void ClientApp::handleClientFailed(const Event &e)
     // Try next resolved address for current hostname
     std::unique_ptr<Client::FailInfo> info(static_cast<Client::FailInfo *>(e.getData()));
 
-    LOG_WARN("failed to connect to server=%s, trying next resolved address", qPrintable(info->m_what));
+    logConnectFailure(
+        info->m_what, QStringLiteral("failed to connect to server=%1, trying next resolved address").arg(info->m_what)
+    );
     if (!m_suspended) {
       scheduleClientRestart(retryTime());
     }
@@ -196,7 +199,9 @@ void ClientApp::handleClientFailed(const Event &e)
       handleClientRefused(e);
     } else {
       std::unique_ptr<Client::FailInfo> info(static_cast<Client::FailInfo *>(e.getData()));
-      LOG_WARN("failed to connect to server=%s, trying next server in list", qPrintable(info->m_what));
+      logConnectFailure(
+          info->m_what, QStringLiteral("failed to connect to server=%1, trying next server in list").arg(info->m_what)
+      );
       if (!m_suspended) {
         scheduleClientRestart(retryTime());
       }
@@ -212,7 +217,7 @@ void ClientApp::handleClientRefused(const Event &e)
     LOG_ERR("failed to connect to server: %s", qPrintable(info->m_what));
     getEvents()->addEvent(Event(EventTypes::Quit));
   } else {
-    LOG_WARN("failed to connect to server: %s", qPrintable(info->m_what));
+    logConnectFailure(info->m_what, QStringLiteral("failed to connect to server: %1").arg(info->m_what));
     if (!m_suspended) {
       scheduleClientRestart(retryTime());
       m_retryCount++;
@@ -314,6 +319,59 @@ void ClientApp::stopClient()
   m_client = nullptr;
   m_clientScreen = nullptr;
   m_retryCount = 0;
+  m_failureCount = 0;
+  m_lastFailureReason.clear();
+}
+
+namespace {
+QString formatDuration(std::chrono::steady_clock::duration duration)
+{
+  const auto minutes = std::chrono::duration_cast<std::chrono::minutes>(duration).count();
+  if (minutes < 60)
+    return QStringLiteral("%1m").arg(minutes);
+  return QStringLiteral("%1h %2m").arg(minutes / 60).arg(minutes % 60);
+}
+} // namespace
+
+void ClientApp::logConnectFailure(const QString &reason, const QString &message)
+{
+  using namespace std::chrono;
+  static constexpr auto s_summaryInterval = hours(1);
+  const auto now = steady_clock::now();
+
+  if (m_failureCount == 0 || reason != m_lastFailureReason) {
+    LOG_WARN("%s", qPrintable(message));
+    if (m_failureCount == 0)
+      m_failureStart = now;
+    m_lastFailureReason = reason;
+    m_lastFailureSummary = now;
+    m_failureCount++;
+    return;
+  }
+
+  m_failureCount++;
+  LOG_DEBUG("%s", qPrintable(message));
+
+  if (now - m_lastFailureSummary >= s_summaryInterval) {
+    m_lastFailureSummary = now;
+    LOG_WARN(
+        "still unable to connect to server: %s (%u attempts over %s)", qPrintable(reason), m_failureCount,
+        qPrintable(formatDuration(now - m_failureStart))
+    );
+  }
+}
+
+void ClientApp::logReconnected()
+{
+  if (m_failureCount == 0)
+    return;
+
+  LOG_INFO(
+      "connection to server restored after %u failed attempts over %s", m_failureCount,
+      qPrintable(formatDuration(std::chrono::steady_clock::now() - m_failureStart))
+  );
+  m_failureCount = 0;
+  m_lastFailureReason.clear();
 }
 
 int ClientApp::mainLoop()
