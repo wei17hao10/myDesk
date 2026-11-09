@@ -26,6 +26,132 @@
 
 using enum ScreenConfig::SwitchCorner;
 
+namespace {
+
+using ReportedMonitor = deskflow::gui::CoreProcess::ReportedMonitor;
+
+// Lays out one machine's monitors on the canvas, each at its own true
+// physical size (mm), keeping the OS arrangement between them: monitors that
+// share an edge in pixel space share it on the canvas too, aligned the same
+// way (top, bottom or centre). Each monitor's real pixel rect is kept so link
+// fractions can be mapped back per monitor (see ServerConfig::computeCanvasLinks).
+// The monitor at the pixel origin (the primary one) sits at canvas (0, 0).
+QList<gui::canvas::MonitorRect> layoutMonitors(const QList<ReportedMonitor> &reported)
+{
+  if (reported.isEmpty()) {
+    return {};
+  }
+
+  constexpr qreal kAssumedDpi = 96.0;
+  constexpr qreal kMmPerInch = 25.4;
+
+  // mm per pixel, per monitor; monitors without a usable physical size
+  // borrow the average of those that have one (or an assumed 96 DPI).
+  QList<qreal> scales;
+  qreal scaleSum = 0;
+  int scaleCount = 0;
+  for (const auto &monitor : reported) {
+    const bool known = monitor.mmSize.width() > 0 && monitor.rect.width() > 0;
+    scales.append(known ? static_cast<qreal>(monitor.mmSize.width()) / monitor.rect.width() : 0.0);
+    if (known) {
+      scaleSum += scales.last();
+      ++scaleCount;
+    }
+  }
+  const qreal fallbackScale = scaleCount > 0 ? scaleSum / scaleCount : (kMmPerInch / kAssumedDpi);
+  for (auto &scale : scales) {
+    if (scale <= 0) {
+      scale = fallbackScale;
+    }
+  }
+
+  const int count = static_cast<int>(reported.size());
+  QList<QRectF> rects;
+  for (int i = 0; i < count; ++i) {
+    rects.append(QRectF(QPointF(), QSizeF(reported[i].rect.size()) * scales[i]));
+  }
+
+  int anchor = 0;
+  for (int i = 0; i < count; ++i) {
+    if (reported[i].rect.contains(QPoint(0, 0))) {
+      anchor = i;
+      break;
+    }
+  }
+
+  // Perpendicular offset of n relative to placed m, given the pixel-space
+  // starts/ends of both along that axis.
+  auto alignedStart = [](qreal mStart, qreal mLen, qreal nLen, int mPxStart, int mPxEnd, int nPxStart, int nPxEnd,
+                         qreal mScale) {
+    if (nPxStart == mPxStart)
+      return mStart;
+    if (nPxEnd == mPxEnd)
+      return mStart + mLen - nLen;
+    if (nPxStart + nPxEnd == mPxStart + mPxEnd)
+      return mStart + (mLen - nLen) / 2;
+    return mStart + (nPxStart - mPxStart) * mScale;
+  };
+
+  QList<bool> placed(count, false);
+  placed[anchor] = true;
+  QList<int> queue{anchor};
+  while (!queue.isEmpty()) {
+    const int m = queue.takeFirst();
+    const QRect mp = reported[m].rect;
+    const QRectF &mr = rects[m];
+    for (int n = 0; n < count; ++n) {
+      if (placed[n])
+        continue;
+      const QRect np = reported[n].rect;
+      const bool overlapY = np.top() <= mp.bottom() && mp.top() <= np.bottom();
+      const bool overlapX = np.left() <= mp.right() && mp.left() <= np.right();
+      const qreal nw = rects[n].width();
+      const qreal nh = rects[n].height();
+      // QRect::right()/bottom() are inclusive, so x() + width() is the edge.
+      const int mpRight = mp.x() + mp.width();
+      const int mpBottom = mp.y() + mp.height();
+      const int npRight = np.x() + np.width();
+      const int npBottom = np.y() + np.height();
+      qreal x;
+      qreal y;
+      if (overlapY && (np.x() == mpRight || npRight == mp.x())) {
+        x = np.x() == mpRight ? mr.right() : mr.left() - nw;
+        y = alignedStart(mr.top(), mr.height(), nh, mp.y(), mpBottom, np.y(), npBottom, scales[m]);
+      } else if (overlapX && (np.y() == mpBottom || npBottom == mp.y())) {
+        y = np.y() == mpBottom ? mr.bottom() : mr.top() - nh;
+        x = alignedStart(mr.left(), mr.width(), nw, mp.x(), mpRight, np.x(), npRight, scales[m]);
+      } else {
+        continue;
+      }
+      rects[n].moveTopLeft(QPointF(x, y));
+      placed[n] = true;
+      queue.append(n);
+    }
+  }
+
+  // Monitors not edge-connected to the rest: position linearly relative to
+  // the anchor at the anchor's scale.
+  const QPoint anchorPx = reported[anchor].rect.topLeft();
+  for (int i = 0; i < count; ++i) {
+    if (!placed[i]) {
+      rects[i].moveTopLeft(QPointF(reported[i].rect.topLeft() - anchorPx) * scales[anchor]);
+    }
+  }
+
+  QList<gui::canvas::MonitorRect> monitors;
+  for (int i = 0; i < count; ++i) {
+    const QRect px = reported[i].rect;
+    monitors.append(
+        gui::canvas::MonitorRect{
+            rects[i], QStringLiteral("%1x%2").arg(px.width()).arg(px.height()), px
+        }
+    );
+  }
+  return monitors;
+}
+
+} // namespace
+
 ServerConfigDialog::ServerConfigDialog(QWidget *parent, ServerConfig &config, deskflow::gui::CoreProcess &coreProcess)
     : QDialog(parent, Qt::WindowTitleHint | Qt::WindowSystemMenuHint),
       ui{std::make_unique<Ui::ServerConfigDialog>()},
@@ -471,44 +597,17 @@ void ServerConfigDialog::loadFromConfig()
   // it), so real detection takes priority over whatever was previously
   // stored (a legacy-grid migration placeholder, or a stale prior layout).
   //
-  // IMPORTANT: the relative POSITION between this machine's own monitors
-  // must come directly from QScreen::geometry() — the exact same
-  // pixel/point coordinate space the OS reports at runtime (CGDisplayBounds
-  // on macOS, the virtual-screen metrics on Windows) and that
-  // Server::mapToFraction()/mapToPixel() actually use when deciding where a
-  // crossing cursor lands. Re-deriving that relationship on the canvas
-  // (e.g. guessing a left-to-right, bottom-aligned layout from physical
-  // size) can silently diverge from the real OS arrangement and break
-  // cursor crossing at whatever edge the two disagree on. Physical size is
-  // only used to pick ONE uniform scale factor for the whole machine, so it
-  // renders at a roughly-true-to-life size without altering the real
-  // relative arrangement between its own monitors.
-  QList<gui::canvas::MonitorRect> localMonitors;
-  {
-    const auto qscreens = QGuiApplication::screens();
-    qreal scaleSum = 0;
-    int scaleCount = 0;
-    for (const QScreen *qscreen : qscreens) {
-      const QSizeF mm = qscreen->physicalSize();
-      const QRect geo = qscreen->geometry();
-      if (mm.width() > 0 && geo.width() > 0) {
-        scaleSum += mm.width() / geo.width();
-        ++scaleCount;
-      }
-    }
-    // Assumed 96 DPI if no screen reports a physical size at all.
-    const qreal scale = scaleCount > 0 ? scaleSum / scaleCount : (25.4 / 96.0);
-
-    for (const QScreen *qscreen : qscreens) {
-      const QRect geo = qscreen->geometry();
-      localMonitors.append(
-          gui::canvas::MonitorRect{
-              QRectF(geo.topLeft() * scale, QSizeF(geo.width() * scale, geo.height() * scale)),
-              QStringLiteral("%1x%2").arg(geo.width()).arg(geo.height())
-          }
-      );
-    }
+  // Each monitor is drawn at its own physical size; its real
+  // QScreen::geometry() — the same pixel/point space the OS reports at
+  // runtime (CGDisplayBounds on macOS, the virtual-screen metrics on
+  // Windows) and that Server::mapToFraction()/mapToPixel() use — is kept
+  // alongside so links map back to the right pixels on each monitor.
+  QList<ReportedMonitor> localReported;
+  for (const QScreen *qscreen : QGuiApplication::screens()) {
+    const QSizeF mm = qscreen->physicalSize();
+    localReported.append(ReportedMonitor{qscreen->geometry(), QSize(qRound(mm.width()), qRound(mm.height()))});
   }
+  QList<gui::canvas::MonitorRect> localMonitors = layoutMonitors(localReported);
   if (localMonitors.isEmpty()) {
     localMonitors.append(gui::canvas::MonitorRect{QRectF(0, 0, 480, 320), QString()});
   }
@@ -626,52 +725,18 @@ void ServerConfigDialog::applyLiveMonitors(
     return;
   }
 
-  // Use ONE uniform scale factor for the whole machine (derived from
-  // whichever monitors reported a real physical size, averaged; falls back
-  // to an assumed 96 DPI if none did) — never a per-monitor scale. The
-  // relative PIXEL positions reported by the client already exactly match
-  // what that machine's own OS (and therefore the runtime crossing math)
-  // uses; scaling each monitor independently would distort that real
-  // relative arrangement if its monitors have different pixel densities.
-  constexpr qreal kAssumedDpi = 96.0;
-  constexpr qreal kMmPerInch = 25.4;
-  qreal scaleSum = 0;
-  int scaleCount = 0;
-  for (const auto &monitor : liveMonitors) {
-    if (monitor.mmSize.width() > 0 && monitor.rect.width() > 0) {
-      scaleSum += static_cast<qreal>(monitor.mmSize.width()) / monitor.rect.width();
-      ++scaleCount;
-    }
-  }
-  const qreal scale = scaleCount > 0 ? scaleSum / scaleCount : (kMmPerInch / kAssumedDpi);
-
-  // Build each monitor's rect relative to the group's own origin (mm), and
-  // the group's own combined bounding box — this preserves the machine's
-  // real relative arrangement among its own monitors.
-  const QPoint origin = liveMonitors.first().rect.topLeft();
-  QList<QRectF> relativeRects;
+  auto monitors = layoutMonitors(liveMonitors);
   QRectF groupBBox;
-  for (const auto &monitor : liveMonitors) {
-    const QRectF relativePx = QRectF(monitor.rect).translated(-origin);
-    const QRectF relativeMm(relativePx.topLeft() * scale, relativePx.size() * scale);
-    relativeRects.append(relativeMm);
-    groupBBox = groupBBox.isEmpty() ? relativeMm : groupBBox.united(relativeMm);
+  for (const auto &monitor : monitors) {
+    groupBBox = groupBBox.isEmpty() ? monitor.rect : groupBBox.united(monitor.rect);
   }
 
   // Only ever called for a screen with no layout yet (see callers), so
   // always place it fresh at the next free spot — never recompute an
   // existing (possibly user-arranged) layout in place.
-  const QPointF anchor = nextFreePlacement();
-  const QPointF translation = anchor - QPointF(groupBBox.left(), groupBBox.bottom());
-
-  QList<gui::canvas::MonitorRect> monitors;
-  for (int i = 0; i < liveMonitors.size(); ++i) {
-    monitors.append(
-        gui::canvas::MonitorRect{
-            relativeRects[i].translated(translation),
-            QStringLiteral("%1x%2").arg(liveMonitors[i].rect.width()).arg(liveMonitors[i].rect.height())
-        }
-    );
+  const QPointF translation = nextFreePlacement() - QPointF(groupBBox.left(), groupBBox.bottom());
+  for (auto &monitor : monitors) {
+    monitor.rect.translate(translation);
   }
   screen.setMonitors(monitors);
 }

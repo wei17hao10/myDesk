@@ -161,7 +161,7 @@ bool ScreenCanvasScene::wouldOverlapOtherMachine(
     if (!other || excluding.contains(other) || other->screenName() == screenName) {
       continue;
     }
-    if (other->sceneRect().intersects(rect)) {
+    if (gui::canvas::rectsOverlap(other->sceneRect(), rect)) {
       return true;
     }
   }

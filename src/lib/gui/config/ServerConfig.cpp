@@ -230,19 +230,35 @@ QString formatIntervalForConfig(const Interval &interval)
       .arg(static_cast<int>(std::lround(interval.second * 100.0)));
 }
 
-Interval normalizeToBBox(Edge side, qreal ov0, qreal ov1, const QRectF &bbox)
+// Maps canvas coordinate pos (on the axis perpendicular to side) on
+// monitor of screen to a [0,1] fraction of that machine's whole edge.
+qreal edgeFraction(Edge side, qreal pos, const Screen &screen, const gui::canvas::MonitorRect &monitor)
 {
-  qreal start;
-  qreal end;
-  if (side == Edge::Left || side == Edge::Right) {
-    start = (ov0 - bbox.top()) / bbox.height();
-    end = (ov1 - bbox.top()) / bbox.height();
-  } else {
-    start = (ov0 - bbox.left()) / bbox.width();
-    end = (ov1 - bbox.left()) / bbox.width();
+  const bool vertical = side == Edge::Left || side == Edge::Right;
+  if (!screen.hasPixelGeometry()) {
+    // Uniform-scale layout: the canvas bbox maps linearly onto pixels.
+    const QRectF bbox = screen.boundingRect();
+    return vertical ? (pos - bbox.top()) / bbox.height() : (pos - bbox.left()) / bbox.width();
   }
-  start = std::clamp(start, 0.0, 1.0);
-  end = std::clamp(end, 0.0, 1.0);
+
+  // Per-monitor scale: map through this monitor's own canvas->pixel
+  // relationship, then normalize against the machine's real pixel bbox,
+  // which is what Server::mapToFraction() normalizes against at runtime.
+  const QRectF canvas = monitor.rect;
+  const QRectF pixels(monitor.pixelRect);
+  const QRectF pixelBBox(screen.pixelBoundingRect());
+  if (vertical) {
+    const qreal px = pixels.top() + (pos - canvas.top()) * pixels.height() / canvas.height();
+    return (px - pixelBBox.top()) / pixelBBox.height();
+  }
+  const qreal px = pixels.left() + (pos - canvas.left()) * pixels.width() / canvas.width();
+  return (px - pixelBBox.left()) / pixelBBox.width();
+}
+
+Interval edgeInterval(Edge side, qreal ov0, qreal ov1, const Screen &screen, const gui::canvas::MonitorRect &monitor)
+{
+  qreal start = std::clamp(edgeFraction(side, ov0, screen, monitor), 0.0, 1.0);
+  qreal end = std::clamp(edgeFraction(side, ov1, screen, monitor), 0.0, 1.0);
   // Round OUTWARD to 1/100 (matching Config::formatInterval's integer-percent
   // grammar) rather than to the nearest percent: floor the start, ceil the
   // end. Physical monitor measurements and mm-to-canvas conversion already
@@ -265,13 +281,11 @@ QList<ServerConfig::TouchingPair> ServerConfig::computeCanvasLinks() const
     const Screen &screenA = screens()[a];
     if (screenA.isNull())
       continue;
-    const QRectF bboxA = screenA.boundingRect();
 
     for (int b = a + 1; b < screens().size(); ++b) {
       const Screen &screenB = screens()[b];
       if (screenB.isNull())
         continue;
-      const QRectF bboxB = screenB.boundingRect();
 
       for (const auto &monitorA : screenA.monitors()) {
         for (const auto &monitorB : screenB.monitors()) {
@@ -283,8 +297,8 @@ QList<ServerConfig::TouchingPair> ServerConfig::computeCanvasLinks() const
           if (ov1 - ov0 < kMinOverlapPx)
             continue;
 
-          const Interval fracA = normalizeToBBox(*side, ov0, ov1, bboxA);
-          const Interval fracB = normalizeToBBox(gui::canvas::oppositeEdge(*side), ov0, ov1, bboxB);
+          const Interval fracA = edgeInterval(*side, ov0, ov1, screenA, monitorA);
+          const Interval fracB = edgeInterval(gui::canvas::oppositeEdge(*side), ov0, ov1, screenB, monitorB);
           if (fracA.first >= fracA.second || fracB.first >= fracB.second)
             continue;
 
@@ -308,7 +322,7 @@ bool ServerConfig::validateCanvasLayout(QStringList &errors) const
     const auto &monitors = screen.monitors();
     for (int i = 0; i < monitors.size(); ++i) {
       for (int j = i + 1; j < monitors.size(); ++j) {
-        if (monitors[i].rect.intersects(monitors[j].rect)) {
+        if (gui::canvas::rectsOverlap(monitors[i].rect, monitors[j].rect)) {
           errors.append(QObject::tr("Two monitors of \"%1\" overlap.").arg(screen.name()));
         }
       }
@@ -328,7 +342,7 @@ bool ServerConfig::validateCanvasLayout(QStringList &errors) const
         continue;
       for (const auto &monitorA : screenA.monitors()) {
         for (const auto &monitorB : screenB.monitors()) {
-          if (monitorA.rect.intersects(monitorB.rect)) {
+          if (gui::canvas::rectsOverlap(monitorA.rect, monitorB.rect)) {
             errors.append(
                 QObject::tr("\"%1\" and \"%2\" have overlapping monitors.").arg(screenA.name(), screenB.name())
             );

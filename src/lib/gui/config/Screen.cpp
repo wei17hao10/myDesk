@@ -42,6 +42,12 @@ void Screen::loadSettings(QSettingsProxy &settings)
         settings.value("h", 0.0).toReal()
     );
     m.label = settings.value("label").toString();
+    if (settings.contains("pw")) {
+      m.pixelRect = QRect(
+          settings.value("px").toInt(), settings.value("py").toInt(), settings.value("pw").toInt(),
+          settings.value("ph").toInt()
+      );
+    }
     m_Monitors.append(m);
   }
   settings.endArray();
@@ -70,6 +76,12 @@ void Screen::saveSettings(QSettingsProxy &settings) const
     settings.setValue("w", m.rect.width());
     settings.setValue("h", m.rect.height());
     settings.setValue("label", m.label);
+    if (!m.pixelRect.isEmpty()) {
+      settings.setValue("px", m.pixelRect.x());
+      settings.setValue("py", m.pixelRect.y());
+      settings.setValue("pw", m.pixelRect.width());
+      settings.setValue("ph", m.pixelRect.height());
+    }
   }
   settings.endArray();
 }

@@ -20,6 +20,8 @@
 #include <QString>
 #include <QStringList>
 
+#include <algorithm>
+
 class QSettings;
 class QTextStream;
 class ScreenSettingsDialog;
@@ -133,6 +135,23 @@ public:
     QRectF result = m_Monitors.first().rect;
     for (int i = 1; i < m_Monitors.size(); ++i) {
       result = result.united(m_Monitors[i].rect);
+    }
+    return result;
+  }
+  // True if every monitor knows its real OS pixel geometry (see
+  // gui::canvas::MonitorRect::pixelRect).
+  [[nodiscard]] bool hasPixelGeometry() const
+  {
+    return !m_Monitors.isEmpty() &&
+           std::ranges::all_of(m_Monitors, [](const auto &m) { return !m.pixelRect.isEmpty(); });
+  }
+  // Union of this machine's monitors in its own OS pixel space; only
+  // meaningful when hasPixelGeometry().
+  [[nodiscard]] QRect pixelBoundingRect() const
+  {
+    QRect result;
+    for (const auto &m : m_Monitors) {
+      result = result.united(m.pixelRect);
     }
     return result;
   }
